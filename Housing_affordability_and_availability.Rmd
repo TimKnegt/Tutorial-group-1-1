@@ -1,6 +1,6 @@
 ---
-title: "The change in housing affordability and availability in the Netherlands for young adults"
-author: "Björn Hildering 2887258, Tim Knegt 2882977, Willem van Beuningen 2787054, Robin Versnel, Seeger Tromp, Jaydane Levant"
+title: "Template"
+author: "Studentnames and studentnumbers here"
 date: "`r Sys.Date()`"
 output: pdf_document
 ---
