@@ -17,6 +17,7 @@ install.packages("rmarkdown")
 require(tidyverse)
 require(rmarkdown)
 require(yaml)
+library(readr)
 ```
 
 # Title Page
@@ -62,6 +63,15 @@ In this case we see 28 variables, but we miss some information on what units the
 ``` r
 inline_code = TRUE
 ```
+
+```{r}
+huizenprijzen <- read_csv("data/Huizenprijzen_verschillende_woningtypes.csv")
+
+huizenprijzen$Perioden
+
+names(huizenprijzen)[names(huizenprijzen) == "Perioden"] <- "Jaren"
+```
+
 
 These are things that are usually included in the metadata of the dataset. For your project, you need to provide us with the information from your metadata that we need to understand your dataset of choice.
 
