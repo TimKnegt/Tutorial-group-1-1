@@ -62,7 +62,15 @@ midwest is an example dataset included in the tidyverse package
 ```{r}
 bevolkingsgroei <-read.csv("data/Bevolkingsgroei_opbouw_2005_2019.csv")
 bevolkingsgroei <- bevolkingsgroei %>%
-  rename( Jong_volwassenen = Bevolking.op.1.januari.Naar.leeftijd.20.tot.45.jaar..x.1.000.)
+  rename( jong_volwassenen_20_tot_45_jaar = Bevolking.op.1.januari.Naar.leeftijd.20.tot.45.jaar..x.1.000.)
+
+bevolkingsgroei <- bevolkingsgroei%>%
+  transmute(jong_volwassenen_20_tot_45_jaar)
+
+bevolkingsgroei <- bevolkingsgroei %>%
+  mutate(Jaar = 2005:2019)
+bevolkingsgroei <- bevolkingsgroei %>%
+  relocate(Jaar)
 head(bevolkingsgroei)
 ```
 
