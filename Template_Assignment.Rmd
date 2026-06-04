@@ -65,6 +65,13 @@ inline_code = TRUE
 
 These are things that are usually included in the metadata of the dataset. For your project, you need to provide us with the information from your metadata that we need to understand your dataset of choice.
 
+```{r}
+
+
+
+```
+
+
 ## 2.3 Describe the type of variables included
 
 Think of things like:
