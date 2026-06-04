@@ -87,7 +87,6 @@ names(huizenprijzen)[names(huizenprijzen) == "Perioden"] <- "Jaren"
 names(huizenprijzen)[names(huizenprijzen) == "Type.woning"] <- "Woningtype"
 names(huizenprijzen)[names(huizenprijzen) == "Prijsindex.bestaande.koopwoningen.Prijsindex.verkoopprijzen..2020.100."] <- "Verkoopprijzen.bestaande.koopwoningen"
 names(huizenprijzen)[names(huizenprijzen) == "Prijsindex.bestaande.koopwoningen.Ontwikkeling..t.o.v..een.jaar.eerder...."] <- "Verkoopprijzen.tov.voorgaand.jaar"
-write.csv(huizenprijzen, "data/nieuw_Huizenprijzen_per_woningtype.csv , row.names = FALSE ")
 write.csv(huizenprijzen, "data/nieuw_Huizenprijzen_per_woningtype.csv" , row.names = FALSE)
 ```
 
