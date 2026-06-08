@@ -70,6 +70,7 @@ write.csv(inflatie, "data/Inflatie_nieuw.csv", row.names = FALSE)
 ```
 
 ```{r}
+#Here we modify the dataset Welvaart_van_huishoudens__kerncijfers
 welvaart <- read.csv("data/Welvaart_van_huishoudens__kerncijfers.csv")
 welvaart <- welvaart %>%
   rename(leeftijd_kostwinner = Kenmerken.van.huishoudens) %>%
@@ -147,6 +148,7 @@ inline_code = TRUE
 ```
 
 ```{r}
+#Here we modify the dataset Huizenprijzen_verschillende_woningtypes
 huizenprijzen <- read_csv("data/Huizenprijzen_verschillende_woningtypes.csv")
 names(huizenprijzen)[names(huizenprijzen) == "Perioden"] <- "Jaren"
 names(huizenprijzen)[names(huizenprijzen) == "Type.woning"] <- "Woningtype"
