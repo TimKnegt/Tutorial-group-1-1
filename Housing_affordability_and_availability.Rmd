@@ -59,14 +59,13 @@ midwest is an example dataset included in the tidyverse package
 ## 2.2 Provide a short summary of the dataset(s)
 
 ```{r}
-<<<<<<< Updated upstream
+
 #Here we modify the dataset Inflatie
 inflatie <- read.csv("data/Inflatie.csv")
 inflatie <- inflatie %>%
   rename(Jaartal = Perioden) %>%
   rename(Inflatie = Jaarmutatie.CPI....) %>%
   select(Jaartal,Inflatie)
-
 write.csv(inflatie, "data/Inflatie_nieuw.csv", row.names = FALSE)
 ```
 
@@ -74,9 +73,8 @@ write.csv(inflatie, "data/Inflatie_nieuw.csv", row.names = FALSE)
 
 ```{r}
 #Here we modify the dataset Huizenprijzen_Huizenvoorraad
-=======
+
 #here we modify the dataset Huizenprijzen_Huizenvoorraad
->>>>>>> Stashed changes
 huizenvoorraad <-read.csv("data/Huizenprijzen_Huizenvoorraad.csv")
 huizenvoorraad <- huizenvoorraad %>%
   rename(Jaartal = Perioden) %>%
