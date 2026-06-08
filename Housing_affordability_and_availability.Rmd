@@ -73,8 +73,6 @@ write.csv(inflatie, "data/Inflatie_nieuw.csv", row.names = FALSE)
 
 ```{r}
 #Here we modify the dataset Huizenprijzen_Huizenvoorraad
-
-#here we modify the dataset Huizenprijzen_Huizenvoorraad
 huizenvoorraad <-read.csv("data/Huizenprijzen_Huizenvoorraad.csv")
 huizenvoorraad <- huizenvoorraad %>%
   rename(Jaartal = Perioden) %>%
@@ -85,7 +83,9 @@ huizenvoorraad <- huizenvoorraad %>%
   
   write.csv(huizenvoorraad, "data/Huizenprijzen_Huizenvoorraad_nieuw.csv", row.names = FALSE)
 ```
+
 ```{r}
+#Here we modify the dataset bruto_en_besteedbaar_inkomen_leeftijdsgroep
 inkomen <- read.csv("data/bruto_en_besteedbaar_inkomen_leeftijdsgroep.csv")
 inkomen <- inkomen %>%
   slice(-1) %>%
@@ -93,12 +93,15 @@ inkomen <- inkomen %>%
   rename(Jaren = V3) %>%
   rename(Kenmerken_van_huishoudens = V2) %>%
   rename(Particuliere_huishoudens_x1000 = V4) %>%
-  
-
+  rename(Totaal_inkomen_mln.euro = V5) %>%
+  rename(Gemiddeld_inkomen_1000.euro = V6) %>%
+  rename(Mediaan_inkomen_1000.euro = V7) %>%
+  select(Inkomensbronnen, Jaren, Kenmerken_van_huishoudens, Particuliere_huishoudens_x1000, Totaal_inkomen_mln.euro, Gemiddeld_inkomen_1000.euro, Mediaan_inkomen_1000.euro)
+write.csv(inkomen, "data/bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv", row.names = FALSE)
 ```
 
 ```{r}
-#here we modify the dataset Bestaand_koopwoningen verkoopprijzen
+#Here we modify the dataset Bestaand_koopwoningen verkoopprijzen
 Bestaande_koopwoningen_verkoopprijzen_woningtype <- read.csv("data/Bestaande_koopwoningen_verkoopprijzen_woningtype.csv")
 Bestaande_koopwoningen_verkoopprijzen_woningtype <- Bestaande_koopwoningen_verkoopprijzen_woningtype %>%
   rename( Jaartal = Perioden)
