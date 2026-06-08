@@ -59,7 +59,22 @@ midwest is an example dataset included in the tidyverse package
 ## 2.2 Provide a short summary of the dataset(s)
 
 ```{r}
-#Here we modify the dataset to only keep the relevant information and use the right years.
+#here we modify the dataset Bestaand_koopwoningen verkoopprijzen
+Bestaande_koopwoningen_verkoopprijzen_woningtype <- read.csv("data/Bestaande_koopwoningen_verkoopprijzen_woningtype.csv")
+Bestaande_koopwoningen_verkoopprijzen_woningtype <- Bestaande_koopwoningen_verkoopprijzen_woningtype %>%
+  rename( Jaartal = Perioden)
+Bestaande_koopwoningen_verkoopprijzen_woningtype <- Bestaande_koopwoningen_verkoopprijzen_woningtype %>%
+  rename(Aantal_verkochte_woningen = Verkochte.bestaande.koopwoningen.Verkochte.woningen..aantal.)
+Bestaande_koopwoningen_verkoopprijzen_woningtype <- Bestaande_koopwoningen_verkoopprijzen_woningtype %>%
+  rename( Gemiddelde_verkoopprijs_euro = Gemiddelde.verkoopprijs..euro.)
+Bestaande_koopwoningen_verkoopprijzen_woningtype <- Bestaande_koopwoningen_verkoopprijzen_woningtype %>%
+  select(Jaartal, Aantal_verkochte_woningen, Gemiddelde_verkoopprijs_euro)
+  write.csv(Bestaande_koopwoningen_verkoopprijzen_woningtype, "data/Bestaande_koopwoningen_verkoopprijzen_woningtype_nieuw.csv", row.names = FALSE)
+```
+
+
+```{r}
+#Here we modify the dataset bevolkingsgroei to only keep the relevant information and use the right years.
 bevolkingsgroei <-read.csv("data/Bevolkingsgroei_opbouw_2005_2019.csv")
 bevolkingsgroei <- bevolkingsgroei %>%
   rename( jong_volwassenen_20_tot_45_jaar = Bevolking.op.1.januari.Naar.leeftijd.20.tot.45.jaar..x.1.000.)
@@ -71,7 +86,6 @@ bevolkingsgroei <- bevolkingsgroei %>%
   mutate(Jaar = 2005:2019)
 bevolkingsgroei <- bevolkingsgroei %>%
   relocate(Jaar)
-head(bevolkingsgroei)
 write.csv(bevolkingsgroei, "data/Bevolkingsgroei_nieuw.csv", row.names = FALSE)
 ```
 
