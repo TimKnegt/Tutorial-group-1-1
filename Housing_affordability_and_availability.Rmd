@@ -69,6 +69,15 @@ inflatie <- inflatie %>%
 write.csv(inflatie, "data/Inflatie_nieuw.csv", row.names = FALSE)
 ```
 
+```{r}
+welvaart <- read.csv("data/Welvaart_van_huishoudens__kerncijfers.csv")
+welvaart <- welvaart %>%
+  rename(leeftijd_kostwinner = Kenmerken.van.huishoudens) %>%
+  rename(Jaartal = Perioden) %>%
+  rename(Gemiddeld_gestandaardiseerd_inkomen_x1000_euro = Gemiddeld.gestandaardiseerd.inkomen..1.000.euro.)
+head(welvaart)
+write.csv(welvaart, "data/Welvaart_van_huishoudens_kerncijfers_nieuw.csv", row.names = FALSE)
+```
 
 
 ```{r}
