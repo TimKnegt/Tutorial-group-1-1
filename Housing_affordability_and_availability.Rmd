@@ -41,6 +41,9 @@ output: pdf_document
 ---
 
 # Part 1 - Identify a Social Problem
+The Dutch housing market has changed significantly over the past two decades. For young adults, finding suitable housing has become increasingly difficult due to rising house prices, higher rents, and a continuing housing shortage (Nederlands Jeugdinstituut, n.d.). As a result, many young people struggle to enter the housing market.
+
+This research examines how housing affordability and availability for young adults in the Netherlands changed between 2005 and 2025. It focuses on trends in house prices, rental costs, incomes and housing shortages to understand the main developments during this period.
 
 Use APA referencing throughout your document. [Here's a link to some explanation.](https://www.mendeley.com/guides/apa-citation-guide/)
 
