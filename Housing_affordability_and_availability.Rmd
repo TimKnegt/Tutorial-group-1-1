@@ -1,17 +1,8 @@
 ---
-title: "Qualifying a social problem - The change of affordability and availability in the housing market for young adults in the Netherlands from 2005 until 2025"
-subtitle: "Course: CPR01 - NL | Docent: Chantal Schouwenaar"
-author:
-  - "Björn Hildering (2887258)"
-  - "Tim Knegt (2882977)"
-  - "Willem van Beuningen (2787054)"
-  - "Robin Versnel(2862644)"
-  - "Seeger Tromp (2889983)"
-  - "Jaydane Levant (2851422)"
-date: "23-06-2026"
-output: 
-  pdf_document:
-    toc: true
+title: "The change of affordability and availability in the housing market for young adults in the Netherlands from 2005 until 2025."
+author: "Björn Hildering 2887258, Tim Knegt 2882977, Willem van Beuningen 2787054, Robin Versnel, Seeger Tromp, Jaydane Levant 2851422"
+date: "`r Sys.Date()`"
+output: pdf_document
 ---
 
 # Set-up your environment
@@ -32,7 +23,6 @@ require(yaml)
 require(readr)
 require(dplyr)
 require(ggplot2)
-
 ```
 
 
@@ -47,9 +37,7 @@ author:
   - "Seeger Tromp (2889983)"
   - "Jaydane Levant (2851422)"
 date: "23-06-2026"
-output: 
-  pdf_document:
-    toc: true
+output: pdf_document
 ---
 
 # Part 1 - Identify a Social Problem
@@ -207,7 +195,14 @@ Think of things like:
 Say we want to include only larger distances (above 2) in our dataset, we can filter for this.
 
 ```{r data_cleaning}
-mean(dataset$percollege)
+#Start joining dataset inflatie_nieuw and Welvaart_van_huishoudens_kerncijfers_nieuw
+welvaart <- read_csv("data/Welvaart_van_huishoudens_kerncijfers_nieuw.csv")
+welvaart <- welvaart %>%
+  mutate(Jaartal = as.numeric(Jaartal))
+inflatie <- read_csv("data/Inflatie_nieuw.csv")
+result <- left_join(welvaart, inflatie, by = "Jaartal")
+head(result)
+
 ```
 
 Please use a separate 'R block' of code for each type of cleaning. So, e.g. one for missing values, a new one for removing unnecessary variables etc.
