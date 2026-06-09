@@ -26,13 +26,20 @@ require(ggplot2)
 
 ```
 
-# Title Page
 
-Include your names
-
-Include the tutorial group number
-
-Include your tutorial lecturer's name
+---
+title: "Qualifying a social problem - The change of affordability and availability in the housing market for young adults in the Netherlands from 2005 until 2025"
+subtitle: "Course: CPR01 - NL | Docent: Chantal Schouwenaar"
+author:
+  - "Björn Hildering (2887258)"
+  - "Tim Knegt (2882977)"
+  - "Willem van Beuningen (2787054)"
+  - "Robin Versnel"
+  - "Seeger Tromp (2889983)"
+  - "Jaydane Levant (2851422)"
+date: "23-06-2026"
+output: pdf_document
+---
 
 # Part 1 - Identify a Social Problem
 
