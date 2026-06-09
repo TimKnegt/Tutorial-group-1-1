@@ -166,7 +166,7 @@ huizenprijzen <- read_csv("data/Huizenprijzen_per_woningtype_nieuw.csv")
 inkomen <- read_csv("data/bruto_en_besteedbaar_inkomen_leeftijdsgroep.csv")
 colnames(huizenprijzen)
 colnames(inkomen)
-grafiek <- inner_join(huizenprijzen, inkomen, by =c("jaren" = "V2")
+grafiek <- inner_join(huizenprijzen, inkomen, by  c("jaren" = "V")
 head(grafiek)
 ```
 
