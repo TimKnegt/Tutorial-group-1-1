@@ -160,6 +160,16 @@ write.csv(huizenprijzen, "data/nieuw_Huizenprijzen_per_woningtype.csv" , row.nam
 ```
 
 
+```{r}
+#Here we start joining datasets.
+huizenprijzen <- read_csv("data/Huizenprijzen_per_woningtype_nieuw.csv")
+inkomen <- read_csv("data/bruto_en_besteedbaar_inkomen_leeftijdsgroep.csv")
+colnames(huizenprijzen)
+colnames(inkomen)
+grafiek <- inner_join(huizenprijzen, inkomen, by =c("jaren" = "V2")
+head(grafiek)
+```
+
 These are things that are usually included in the metadata of the dataset. For your project, you need to provide us with the information from your metadata that we need to understand your dataset of choice.
 
 ## 2.3 Describe the type of variables included
