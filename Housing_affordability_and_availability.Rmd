@@ -77,7 +77,7 @@ inflatie <- inflatie %>%
   rename(Jaartal = Perioden) %>%
   rename(Inflatie = Jaarmutatie.CPI....) %>%
   select(Jaartal,Inflatie)
-write.csv(inflatie, "data/Inflatie_nieuw.csv", row.names = FALSE)
+write.csv(inflatie, "data2.0/Inflatie_nieuw.csv", row.names = FALSE)
 ```
 
 ```{r}
@@ -88,7 +88,7 @@ welvaart <- welvaart %>%
   rename(Jaartal = Perioden) %>%
   rename(Gemiddeld_gestandaardiseerd_inkomen_x1000_euro = Gemiddeld.gestandaardiseerd.inkomen..1.000.euro.)
 head(welvaart)
-write.csv(welvaart, "data/Welvaart_van_huishoudens_kerncijfers_nieuw.csv", row.names = FALSE)
+write.csv(welvaart, "data2.0/Welvaart_van_huishoudens_kerncijfers_nieuw.csv", row.names = FALSE)
 ```
 
 
@@ -102,7 +102,7 @@ huizenvoorraad <- huizenvoorraad %>%
   rename(Nieuwbouw = Bouwen.en.wonen.Woningvoorraad.Nieuwbouw..aantal.) %>%
   select(Jaartal, Provincies, Woningvoorraad_1_januari, Nieuwbouw)
   
-  write.csv(huizenvoorraad, "data/Huizenprijzen_Huizenvoorraad_nieuw.csv", row.names = FALSE)
+  write.csv(huizenvoorraad, "data2.0/Huizenprijzen_Huizenvoorraad_nieuw.csv", row.names = FALSE)
 ```
 
 ```{r}
@@ -118,7 +118,7 @@ inkomen <- inkomen %>%
   rename(Gemiddeld_inkomen_1000.euro = V6) %>%
   rename(Mediaan_inkomen_1000.euro = V7) %>%
   select(Inkomensbronnen, Jaren, Kenmerken_van_huishoudens, Particuliere_huishoudens_x1000, Totaal_inkomen_mln.euro, Gemiddeld_inkomen_1000.euro, Mediaan_inkomen_1000.euro)
-write.csv(inkomen, "data/bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv", row.names = FALSE)
+write.csv(inkomen, "data2.0/bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv", row.names = FALSE)
 ```
 
 ```{r}
@@ -132,7 +132,7 @@ Bestaande_koopwoningen_verkoopprijzen_woningtype <- Bestaande_koopwoningen_verko
   rename( Gemiddelde_verkoopprijs_euro = Gemiddelde.verkoopprijs..euro.)
 Bestaande_koopwoningen_verkoopprijzen_woningtype <- Bestaande_koopwoningen_verkoopprijzen_woningtype %>%
   select(Jaartal, Aantal_verkochte_woningen, Gemiddelde_verkoopprijs_euro)
-  write.csv(Bestaande_koopwoningen_verkoopprijzen_woningtype, "data/Bestaande_koopwoningen_verkoopprijzen_woningtype_nieuw.csv", row.names = FALSE)
+  write.csv(Bestaande_koopwoningen_verkoopprijzen_woningtype, "data2.0/Bestaande_koopwoningen_verkoopprijzen_woningtype_nieuw.csv", row.names = FALSE)
 ```
 
 
@@ -149,7 +149,7 @@ bevolkingsgroei <- bevolkingsgroei %>%
   mutate(Jaar = 2005:2019)
 bevolkingsgroei <- bevolkingsgroei %>%
   relocate(Jaar)
-write.csv(bevolkingsgroei, "data/Bevolkingsgroei_nieuw.csv", row.names = FALSE)
+write.csv(bevolkingsgroei, "data2.0/Bevolkingsgroei_nieuw.csv", row.names = FALSE)
 ```
 
 In this case we see 28 variables, but we miss some information on what units they are in. We also don't know anything about the year/moment in which this data has been captured.
@@ -165,19 +165,9 @@ names(huizenprijzen)[names(huizenprijzen) == "Perioden"] <- "Jaren"
 names(huizenprijzen)[names(huizenprijzen) == "Type.woning"] <- "Woningtype"
 names(huizenprijzen)[names(huizenprijzen) == "Prijsindex.bestaande.koopwoningen.Prijsindex.verkoopprijzen..2020.100."] <- "Verkoopprijzen.bestaande.koopwoningen"
 names(huizenprijzen)[names(huizenprijzen) == "Prijsindex.bestaande.koopwoningen.Ontwikkeling..t.o.v..een.jaar.eerder...."] <- "Verkoopprijzen.tov.voorgaand.jaar"
-write.csv(huizenprijzen, "data/nieuw_Huizenprijzen_per_woningtype.csv" , row.names = FALSE)
+write.csv(huizenprijzen, "data2.0/nieuw_Huizenprijzen_per_woningtype.csv" , row.names = FALSE)
 ```
 
-
-```{r}
-#Here we start joining datasets.
-huizenprijzen <- read_csv("data/Huizenprijzen_per_woningtype_nieuw.csv")
-inkomen <- read_csv("data/bruto_en_besteedbaar_inkomen_leeftijdsgroep.csv")
-colnames(huizenprijzen)
-colnames(inkomen)
-grafiek <- inner_join(huizenprijzen, inkomen, by  c("jaren" = "V")
-head(grafiek)
-```
 
 These are things that are usually included in the metadata of the dataset. For your project, you need to provide us with the information from your metadata that we need to understand your dataset of choice.
 
@@ -240,23 +230,6 @@ Here you provide a description of why the plot above is relevant to your specifi
 
 ## 3.5 Visualize sub-population variation
 
-What is the poverty rate by state?
-
-```{r visualise_subpopulations}
-dataset$inmetro <- dataset$inmetro %>% as.factor()
-# Boxplot of poverty rate by state using the 'midwest' dataset
-ggplot(dataset, aes(x = inmetro, y = percadultpoverty)) +
-  geom_boxplot() +
-  labs(
-    title = "Distribution of Poverty Rates by Metropolitan status (Midwest counties)",
-    x = "Metropolitan Area",
-    y = "Poverty Rate of Adults (%)"
-  ) +
-  theme_minimal() +
-  theme(
-    legend.position = "right"
-  )
-```
 
 Here you provide a description of why the plot above is relevant to your specific social problem.
 
