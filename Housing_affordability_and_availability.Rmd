@@ -1,8 +1,17 @@
 ---
-title: "The change of affordability and availability in the housing market for young adults in the Netherlands from 2005 until 2025."
-author: "Björn Hildering 2887258, Tim Knegt 2882977, Willem van Beuningen 2787054, Robin Versnel, Seeger Tromp, Jaydane Levant 2851422"
-date: "`r Sys.Date()`"
-output: pdf_document
+title: "Qualifying a social problem - The change of affordability and availability in the housing market for young adults in the Netherlands from 2005 until 2025"
+subtitle: "Course: CPR01 - NL | Docent: Chantal Schouwenaar"
+author:
+  - "Björn Hildering (2887258)"
+  - "Tim Knegt (2882977)"
+  - "Willem van Beuningen (2787054)"
+  - "Robin Versnel(2862644)"
+  - "Seeger Tromp (2889983)"
+  - "Jaydane Levant (2851422)"
+date: "23-06-2026"
+output: 
+  pdf_document:
+    toc: true
 ---
 
 # Set-up your environment
@@ -38,7 +47,9 @@ author:
   - "Seeger Tromp (2889983)"
   - "Jaydane Levant (2851422)"
 date: "23-06-2026"
-output: pdf_document
+output: 
+  pdf_document:
+    toc: true
 ---
 
 # Part 1 - Identify a Social Problem
