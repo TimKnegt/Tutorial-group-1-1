@@ -1,6 +1,6 @@
 ---
-title: "The change in housing affordability and availability in the Netherlands for young adults"
-author: "Björn Hildering 2887258, Tim Knegt 2882977, Willem van Beuningen 2787054, Robin Versnel, Seeger Tromp, Jaydane Levant"
+title: "The change of affordability and availability in the housing market for young adults in the Netherlands from 2005 until 2025."
+author: "Björn Hildering 2887258, Tim Knegt 2882977, Willem van Beuningen 2787054, Robin Versnel, Seeger Tromp, Jaydane Levant 2851422"
 date: "`r Sys.Date()`"
 output: pdf_document
 ---
@@ -11,12 +11,17 @@ output: pdf_document
 install.packages("tidyverse")
 install.packages("yaml")
 install.packages("rmarkdown")
+install.packages("readr")
+install.packages("dplyr")
 ```
 
 ```{r packages}
 require(tidyverse)
 require(rmarkdown)
 require(yaml)
+require(readr)
+require(dplyr)
+
 ```
 
 # Title Page
@@ -46,8 +51,7 @@ Include the following:
 Preferably from a URL, but if not, make sure to download the data and store it in a shared location that you can load the data in from. Do not store the data in a folder you include in the Github repository!
 
 ```{r loading_data}
-data <- read.csv("data/Huizenprijzen_Huizenvoorraad.csv")
-head(data)
+
 ```
 
 midwest is an example dataset included in the tidyverse package
@@ -55,7 +59,86 @@ midwest is an example dataset included in the tidyverse package
 ## 2.2 Provide a short summary of the dataset(s)
 
 ```{r}
-head(dataset)
+
+#Here we modify the dataset Inflatie
+inflatie <- read.csv("data/Inflatie.csv")
+inflatie <- inflatie %>%
+  rename(Jaartal = Perioden) %>%
+  rename(Inflatie = Jaarmutatie.CPI....) %>%
+  select(Jaartal,Inflatie)
+write.csv(inflatie, "data/Inflatie_nieuw.csv", row.names = FALSE)
+```
+
+```{r}
+#Here we modify the dataset Welvaart_van_huishoudens__kerncijfers
+welvaart <- read.csv("data/Welvaart_van_huishoudens__kerncijfers.csv")
+welvaart <- welvaart %>%
+  rename(leeftijd_kostwinner = Kenmerken.van.huishoudens) %>%
+  rename(Jaartal = Perioden) %>%
+  rename(Gemiddeld_gestandaardiseerd_inkomen_x1000_euro = Gemiddeld.gestandaardiseerd.inkomen..1.000.euro.)
+head(welvaart)
+write.csv(welvaart, "data/Welvaart_van_huishoudens_kerncijfers_nieuw.csv", row.names = FALSE)
+```
+
+
+```{r}
+#Here we modify the dataset Huizenprijzen_Huizenvoorraad
+huizenvoorraad <-read.csv("data/Huizenprijzen_Huizenvoorraad.csv")
+huizenvoorraad <- huizenvoorraad %>%
+  rename(Jaartal = Perioden) %>%
+  rename(Provincies = Regio.s) %>%
+  rename(Woningvoorraad_1_januari = Bouwen.en.wonen.Woningvoorraad.Voorraad.op.1.januari..aantal.)%>%
+  rename(Nieuwbouw = Bouwen.en.wonen.Woningvoorraad.Nieuwbouw..aantal.) %>%
+  select(Jaartal, Provincies, Woningvoorraad_1_januari, Nieuwbouw)
+  
+  write.csv(huizenvoorraad, "data/Huizenprijzen_Huizenvoorraad_nieuw.csv", row.names = FALSE)
+```
+
+```{r}
+#Here we modify the dataset bruto_en_besteedbaar_inkomen_leeftijdsgroep
+inkomen <- read.csv("data/bruto_en_besteedbaar_inkomen_leeftijdsgroep.csv")
+inkomen <- inkomen %>%
+  slice(-1) %>%
+  rename(Inkomensbronnen = V1) %>%
+  rename(Jaren = V3) %>%
+  rename(Kenmerken_van_huishoudens = V2) %>%
+  rename(Particuliere_huishoudens_x1000 = V4) %>%
+  rename(Totaal_inkomen_mln.euro = V5) %>%
+  rename(Gemiddeld_inkomen_1000.euro = V6) %>%
+  rename(Mediaan_inkomen_1000.euro = V7) %>%
+  select(Inkomensbronnen, Jaren, Kenmerken_van_huishoudens, Particuliere_huishoudens_x1000, Totaal_inkomen_mln.euro, Gemiddeld_inkomen_1000.euro, Mediaan_inkomen_1000.euro)
+write.csv(inkomen, "data/bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv", row.names = FALSE)
+```
+
+```{r}
+#Here we modify the dataset Bestaand_koopwoningen verkoopprijzen
+Bestaande_koopwoningen_verkoopprijzen_woningtype <- read.csv("data/Bestaande_koopwoningen_verkoopprijzen_woningtype.csv")
+Bestaande_koopwoningen_verkoopprijzen_woningtype <- Bestaande_koopwoningen_verkoopprijzen_woningtype %>%
+  rename( Jaartal = Perioden)
+Bestaande_koopwoningen_verkoopprijzen_woningtype <- Bestaande_koopwoningen_verkoopprijzen_woningtype %>%
+  rename(Aantal_verkochte_woningen = Verkochte.bestaande.koopwoningen.Verkochte.woningen..aantal.)
+Bestaande_koopwoningen_verkoopprijzen_woningtype <- Bestaande_koopwoningen_verkoopprijzen_woningtype %>%
+  rename( Gemiddelde_verkoopprijs_euro = Gemiddelde.verkoopprijs..euro.)
+Bestaande_koopwoningen_verkoopprijzen_woningtype <- Bestaande_koopwoningen_verkoopprijzen_woningtype %>%
+  select(Jaartal, Aantal_verkochte_woningen, Gemiddelde_verkoopprijs_euro)
+  write.csv(Bestaande_koopwoningen_verkoopprijzen_woningtype, "data/Bestaande_koopwoningen_verkoopprijzen_woningtype_nieuw.csv", row.names = FALSE)
+```
+
+
+```{r}
+#Here we modify the dataset bevolkingsgroei to only keep the relevant information and use the right years.
+bevolkingsgroei <-read.csv("data/Bevolkingsgroei_opbouw_2005_2019.csv")
+bevolkingsgroei <- bevolkingsgroei %>%
+  rename( jong_volwassenen_20_tot_45_jaar = Bevolking.op.1.januari.Naar.leeftijd.20.tot.45.jaar..x.1.000.)
+
+bevolkingsgroei <- bevolkingsgroei%>%
+  transmute(jong_volwassenen_20_tot_45_jaar)
+
+bevolkingsgroei <- bevolkingsgroei %>%
+  mutate(Jaar = 2005:2019)
+bevolkingsgroei <- bevolkingsgroei %>%
+  relocate(Jaar)
+write.csv(bevolkingsgroei, "data/Bevolkingsgroei_nieuw.csv", row.names = FALSE)
 ```
 
 In this case we see 28 variables, but we miss some information on what units they are in. We also don't know anything about the year/moment in which this data has been captured.
@@ -63,6 +146,17 @@ In this case we see 28 variables, but we miss some information on what units the
 ``` r
 inline_code = TRUE
 ```
+
+```{r}
+#Here we modify the dataset Huizenprijzen_verschillende_woningtypes
+huizenprijzen <- read_csv("data/Huizenprijzen_verschillende_woningtypes.csv")
+names(huizenprijzen)[names(huizenprijzen) == "Perioden"] <- "Jaren"
+names(huizenprijzen)[names(huizenprijzen) == "Type.woning"] <- "Woningtype"
+names(huizenprijzen)[names(huizenprijzen) == "Prijsindex.bestaande.koopwoningen.Prijsindex.verkoopprijzen..2020.100."] <- "Verkoopprijzen.bestaande.koopwoningen"
+names(huizenprijzen)[names(huizenprijzen) == "Prijsindex.bestaande.koopwoningen.Ontwikkeling..t.o.v..een.jaar.eerder...."] <- "Verkoopprijzen.tov.voorgaand.jaar"
+write.csv(huizenprijzen, "data/nieuw_Huizenprijzen_per_woningtype.csv" , row.names = FALSE)
+```
+
 
 These are things that are usually included in the metadata of the dataset. For your project, you need to provide us with the information from your metadata that we need to understand your dataset of choice.
 
