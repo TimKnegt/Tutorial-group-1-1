@@ -13,6 +13,7 @@ install.packages("yaml")
 install.packages("rmarkdown")
 install.packages("readr")
 install.packages("dplyr")
+install.packages("ggplot2")
 ```
 
 ```{r packages}
@@ -21,6 +22,7 @@ require(rmarkdown)
 require(yaml)
 require(readr)
 require(dplyr)
+require(ggplot2)
 
 ```
 
