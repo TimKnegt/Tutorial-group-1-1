@@ -185,6 +185,19 @@ Think of things like:
 -   Do the variables contain health information or SES information?
 
 -   Have they been measured by interviewing individuals or is the data coming from administrative sources?
+---
+### Description and Data Collection
+The variables included in our project are **quantitative** in nature. They consist of continuous economic indicators—such as monetary values (income, house prices) and percentages (inflation)—as well as discrete metrics tracking physical counts (population size, housing stock). Categorical (nominal) variables such as `Provincies` and `Woningtype` are utilized to allow for spatial and structural segmentation.
+
+Unlike survey data which relies on self-reported interviews, these datasets are sourced entirely from **administrative registries** compiled by Statistics Netherlands (CBS). Specifically, the socio-economic and income data is derived from the Dutch Tax Authority (Belastingdienst), while the housing metrics are registered through the Municipal Base Registry for Housing (BAG) and the Dutch Land Registry (Kadaster). This administrative nature ensures high data coverage and eliminates traditional interview biases such as recall or non-response bias.
+
+### Stated limitations of this data
+While these administrative datasets are highly reliable, we face several limitations when merging and analyzing them to study young adults:
+
+* **Inconsistent Demographic Definitions:** The datasets categorize "young adults" differently. The income datasets slice data by the age of the primary wage earner (`leeftijd_kostwinner`), whereas the demographic dataset tracks individuals aged 20 to 45 (`jong_volwassenen_20_tot_45_jaar`). This structural mismatch limits our ability to perfectly isolate a single, uniform age bracket.
+* **Temporal Truncation:** The demographic tracking for population build-up (`Bevolkingsgroei_opbouw.csv`) is currently limited to the 2005–2019 period within our data folder. This creates a data gap for the final years of our 2005–2025 analysis window.
+* **Level of Aggregation:** Because the data is highly aggregated by the CBS to protect privacy, we can only join these files on the macro-level using the temporal dimension (`Jaartal`/`Jaren`) and the regional dimension (`Provincies`). We lack micro-data, meaning we cannot track individual household trajectories or specific cross-sections over time.
+---
 
 *For the sake of this example, I will continue with the assignment...*
 
