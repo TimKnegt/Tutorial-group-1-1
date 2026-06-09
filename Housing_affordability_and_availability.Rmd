@@ -14,6 +14,9 @@ install.packages("rmarkdown")
 install.packages("readr")
 install.packages("dplyr")
 install.packages("ggplot2")
+install.packages(c(
+  "geodata", "terra", 
+  "janitor", "scales", "patchwork"))
 ```
 
 ```{r packages}
@@ -23,6 +26,11 @@ require(yaml)
 require(readr)
 require(dplyr)
 require(ggplot2)
+library(geodata)
+library(terra)
+library(janitor)
+library(scales)
+library(patchwork)
 
 ```
 
@@ -59,6 +67,52 @@ Preferably from a URL, but if not, make sure to download the data and store it i
 midwest is an example dataset included in the tidyverse package
 
 ## 2.2 Provide a short summary of the dataset(s)
+
+# trendgrafieken per provincie Huizenprijzen/voorraad
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(scales)
+
+df <- read_csv("data/Huizenprijzen_Huizenvoorraad_nieuw.csv") |> 
+  clean_names()
+
+df_index <- df |> 
+  pivot_longer(
+    cols = c(woningvoorraad_1_januari, nieuwbouw),
+    names_to = "variabele",
+    values_to = "waarde"
+  ) |> 
+  group_by(provincies, variabele) |> 
+  arrange(jaartal, .by_group = TRUE) |> 
+  mutate(index = waarde / first(waarde) * 100) |> 
+  ungroup()
+
+ggplot(df_index, aes(x = jaartal, y = index, color = variabele)) +
+  geom_line(linewidth = 1) +
+  facet_wrap(~ provincies, ncol = 3, scales = "free_y") +
+  scale_x_continuous(
+    breaks = seq(2005, 2025, by = 5),
+    limits = c(2005, 2025)
+  ) +
+  labs(
+    title = "Ontwikkeling woningvoorraad en nieuwbouw per provincie",
+    subtitle = "Index: eerste beschikbare jaar = 100; waarden boven 100 betekenen groei, onder 100 afname",
+    x = "Jaartal",
+    y = "Index, eerste beschikbare jaar = 100",
+    color = "Variabele"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    strip.text = element_text(face = "bold"),
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+```
+
+
+
 
 ```{r}
 
@@ -161,6 +215,12 @@ write.csv(huizenprijzen, "data/nieuw_Huizenprijzen_per_woningtype.csv" , row.nam
 
 
 These are things that are usually included in the metadata of the dataset. For your project, you need to provide us with the information from your metadata that we need to understand your dataset of choice.
+
+```{r}
+
+```
+
+
 
 ## 2.3 Describe the type of variables included
 
