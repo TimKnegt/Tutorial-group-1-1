@@ -14,6 +14,9 @@ install.packages("rmarkdown")
 install.packages("readr")
 install.packages("dplyr")
 install.packages("ggplot2")
+install.packages(c(
+  "geodata", "terra", 
+  "janitor", "scales", "patchwork"))
 ```
 
 ```{r packages}
@@ -23,28 +26,34 @@ require(yaml)
 require(readr)
 require(dplyr)
 require(ggplot2)
+library(geodata)
+library(terra)
+library(janitor)
+library(scales)
+library(patchwork)
+
 ```
 
+# Title Page
 
----
-title: "Qualifying a social problem - The change of affordability and availability in the housing market for young adults in the Netherlands from 2005 until 2025"
-subtitle: "Course: CPR01 - NL | Docent: Chantal Schouwenaar"
-author:
-  - "Björn Hildering (2887258)"
-  - "Tim Knegt (2882977)"
-  - "Willem van Beuningen (2787054)"
-  - "Robin Versnel"
-  - "Seeger Tromp (2889983)"
-  - "Jaydane Levant (2851422)"
-date: "23-06-2026"
-output: pdf_document
----
+Include your names
+
+Include the tutorial group number
+
+Include your tutorial lecturer's name
 
 # Part 1 - Identify a Social Problem
+The Dutch housing market has changed significantly over the past two decades. For young adults, finding suitable housing has become increasingly difficult due to rising house prices, higher rents, and a continuing housing shortage (Nederlands Jeugdinstituut, n.d.). As a result, many young people struggle to enter the housing market.
+
+This research examines how housing affordability and availability for young adults in the Netherlands changed between 2005 and 2025. It focuses on trends in house prices, rental costs, incomes and housing shortages to understand the main developments during this period.
+
 
 Use APA referencing throughout your document. [Here's a link to some explanation.](https://www.mendeley.com/guides/apa-citation-guide/)
 
 ## 1.1 Describe the Social Problem
+The Dutch housing market has become increasingly inaccessible for young adults, making the move toward independent living far more difficult. This is socially relevant because stable and affordable housing is a foundation for financial independence, mental well‑being, and equal life opportunities. When young people cannot secure a home, they delay major life steps such as studying, working full‑time, or forming households—effects that ripple through society. The OECD notes that the Netherlands is among the countries where young adults face the greatest barriers to affordable housing due to rising prices and persistent shortages (OECD, 2023).
+
+A combination of sharply increasing house prices, higher rents, and limited supply has created a structural imbalance between demand and availability. These pressures fall disproportionately on first‑time buyers and young renters, widening generational inequality: older households benefit from accumulated housing wealth, while younger cohorts struggle to enter the market at all.
 
 Include the following:
 
@@ -65,6 +74,52 @@ Preferably from a URL, but if not, make sure to download the data and store it i
 midwest is an example dataset included in the tidyverse package
 
 ## 2.2 Provide a short summary of the dataset(s)
+
+# trendgrafieken per provincie Huizenprijzen/voorraad
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(scales)
+
+df <- read_csv("data/Huizenprijzen_Huizenvoorraad_nieuw.csv") |> 
+  clean_names()
+
+df_index <- df |> 
+  pivot_longer(
+    cols = c(woningvoorraad_1_januari, nieuwbouw),
+    names_to = "variabele",
+    values_to = "waarde"
+  ) |> 
+  group_by(provincies, variabele) |> 
+  arrange(jaartal, .by_group = TRUE) |> 
+  mutate(index = waarde / first(waarde) * 100) |> 
+  ungroup()
+
+ggplot(df_index, aes(x = jaartal, y = index, color = variabele)) +
+  geom_line(linewidth = 1) +
+  facet_wrap(~ provincies, ncol = 3, scales = "free_y") +
+  scale_x_continuous(
+    breaks = seq(2005, 2025, by = 5),
+    limits = c(2005, 2025)
+  ) +
+  labs(
+    title = "Ontwikkeling woningvoorraad en nieuwbouw per provincie",
+    subtitle = "Index: eerste beschikbare jaar = 100; waarden boven 100 betekenen groei, onder 100 afname",
+    x = "Jaartal",
+    y = "Index, eerste beschikbare jaar = 100",
+    color = "Variabele"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    strip.text = element_text(face = "bold"),
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+```
+
+
+
 
 ```{r}
 
@@ -166,17 +221,13 @@ write.csv(huizenprijzen, "data/nieuw_Huizenprijzen_per_woningtype.csv" , row.nam
 ```
 
 
+These are things that are usually included in the metadata of the dataset. For your project, you need to provide us with the information from your metadata that we need to understand your dataset of choice.
+
 ```{r}
-#Here we start joining datasets.
-huizenprijzen <- read_csv("data/Huizenprijzen_per_woningtype_nieuw.csv")
-inkomen <- read_csv("data/bruto_en_besteedbaar_inkomen_leeftijdsgroep.csv")
-colnames(huizenprijzen)
-colnames(inkomen)
-grafiek <- inner_join(huizenprijzen, inkomen, by  c("jaren" = "V")
-head(grafiek)
+
 ```
 
-These are things that are usually included in the metadata of the dataset. For your project, you need to provide us with the information from your metadata that we need to understand your dataset of choice.
+
 
 ## 2.3 Describe the type of variables included
 
@@ -195,6 +246,7 @@ Think of things like:
 Say we want to include only larger distances (above 2) in our dataset, we can filter for this.
 
 ```{r data_cleaning}
+ 
 #Start joining dataset inflatie_nieuw and Welvaart_van_huishoudens_kerncijfers_nieuw
 welvaart <- read_csv("data 2.0/Welvaart_van_huishoudens_kerncijfers_nieuw.csv")
 welvaart <- welvaart %>%
