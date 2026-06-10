@@ -191,15 +191,12 @@ Bestaande_koopwoningen_verkoopprijzen_woningtype <- Bestaande_koopwoningen_verko
 #Here we modify the dataset bevolkingsgroei to only keep the relevant information and use the right years.
 bevolkingsgroei <-read.csv("data/Bevolkingsgroei_opbouw_2005_2019.csv")
 bevolkingsgroei <- bevolkingsgroei %>%
-  rename( jong_volwassenen_20_tot_45_jaar = Bevolking.op.1.januari.Naar.leeftijd.20.tot.45.jaar..x.1.000.)
+  rename( jong_volwassenen_20_tot_45_jaar = Bevolking.op.1.januari.Naar.leeftijd.20.tot.45.jaar..x.1.000.) %>%
+  transmute(jong_volwassenen_20_tot_45_jaar) %>%
+  mutate(Jaar = 2005:2019) %>%
+  relocate(Jaar) %>%
+  rename(Jaartal = Jaar)
 
-bevolkingsgroei <- bevolkingsgroei%>%
-  transmute(jong_volwassenen_20_tot_45_jaar)
-
-bevolkingsgroei <- bevolkingsgroei %>%
-  mutate(Jaar = 2005:2019)
-bevolkingsgroei <- bevolkingsgroei %>%
-  relocate(Jaar)
 write.csv(bevolkingsgroei, "data 2.0/Bevolkingsgroei_nieuw.csv", row.names = FALSE)
 ```
 
@@ -216,7 +213,88 @@ tabel_per_jaar <- nieuwbouw %>%
 write.csv(tabel_per_jaar,"data 2.0/Huizenvoorraad_nieuw.csv")
 ```
 
+```{r}
+#Here we merge the datasets
+bevolkingsgroei_nieuwbouw <- left_join(bevolkingsgroei, tabel_per_jaar, by = "Jaartal")
+write.csv(bevolkingsgroei_nieuwbouw, "data 2.0/bevolkingsgroei_nieuwbouw")
 
+```
+
+```{r}
+#Here we create a graph to compare the amount of new houses built and the population growth of young adults.
+
+library(ggplot2)
+
+# schaalfactor bepalen
+scale_factor <- max(bevolkingsgroei_nieuwbouw$jong_volwassenen_20_tot_45_jaar, na.rm = TRUE) /
+                max(bevolkingsgroei_nieuwbouw$Nieuwbouw, na.rm = TRUE)
+
+ggplot(bevolkingsgroei_nieuwbouw, aes(x = Jaartal)) +
+
+  # Left axis(population growth)
+  geom_line(
+    aes(y = jong_volwassenen_20_tot_45_jaar,
+        color = "Jong volwassenen (20-45 jaar)"),
+    linewidth = 1.3
+  ) +
+  geom_point(
+    aes(y = jong_volwassenen_20_tot_45_jaar,
+        color = "Jong volwassenen (20-45 jaar)"),
+    size = 2
+  ) +
+  # right axis(newly built homes)
+  geom_line(
+    aes(y = Nieuwbouw * scale_factor,
+        color = "Nieuwbouw"),
+    linewidth = 1.3,
+    linetype = "dashed"
+  ) +
+  geom_point(
+    aes(y = Nieuwbouw * scale_factor,
+        color = "Nieuwbouw"),
+    size = 2
+  ) +
+  scale_y_continuous(
+    name = "Young adults (20-45 years old)",
+    sec.axis = sec_axis(
+      ~ . / scale_factor,
+      name = "New houses built per year"
+    )
+  ) +
+
+  scale_x_continuous(
+    breaks = seq(min(bevolkingsgroei_nieuwbouw$Jaartal),
+                 max(bevolkingsgroei_nieuwbouw$Jaartal),
+                 by = 1)
+  ) +
+
+  scale_color_manual(
+    values = c(
+      "Jong volwassenen (20-45 jaar)" = "blue",
+      "Nieuwbouw" = "red"
+    )
+  ) +
+
+  labs(
+    title = "Growth of young adult population and the building of new houses",
+    subtitle = "Yearly deviations",
+    x = "Year",
+    color = NULL
+  ) +
+
+  theme_minimal(base_size = 14) +
+
+  theme(
+    plot.title = element_text(face = "bold", size = 18),
+    plot.subtitle = element_text(size = 12),
+    axis.text.x = element_text(size = 7),
+    legend.position = "top",
+    panel.grid.minor = element_blank()
+  )
+         
+         
+         
+```
 
 ``` r
 inline_code = TRUE
