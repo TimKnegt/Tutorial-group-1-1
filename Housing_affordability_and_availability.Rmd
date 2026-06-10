@@ -269,9 +269,15 @@ brutoinkomen <- read_csv("data 2.0/bruto_en_besteedbaar_inkomen_leeftijdsgroep_n
 brutoinkomen <- brutoinkomen %>%
   rename("Jaartal" = "Jaren")%>%
   mutate(Jaartal = as.numeric(Jaartal))
-result <- left_join(brutoinkomen, samenvoeging, by = "Jaartal")
-write.csv(result, "data 2.0/Samenvoeging2.csv" , row.names = FALSE)
+samenvoeging2 <- left_join(brutoinkomen, samenvoeging, by = "Jaartal")
+write.csv(samenvoeging2, "data 2.0/Samenvoeging2.csv" , row.names = FALSE)
+
+samenvoeging2$Jaartal[c(14,28)]<- 2024
+samenvoeging2$Inflatie[c(14,28)]<- 3.3
+
 ```
+
+
 
 Please use a separate 'R block' of code for each type of cleaning. So, e.g. one for missing values, a new one for removing unnecessary variables etc.
 
