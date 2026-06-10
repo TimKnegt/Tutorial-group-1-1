@@ -274,7 +274,7 @@ write.csv(samenvoeging2, "data 2.0/Samenvoeging2.csv" , row.names = FALSE)
 
 samenvoeging2$Jaartal[c(14,28)]<- 2024
 samenvoeging2$Inflatie[c(14,28)]<- 3.3
-
+samenvoeging2$leeftijd_kostwinner <- NULL
 ```
 
 
