@@ -1,6 +1,6 @@
 ---
 title: "The change of affordability and availability in the housing market for young adults in the Netherlands from 2005 until 2025."
-author: "Björn Hildering 2887258, Tim Knegt 2882977, Willem van Beuningen 2787054, Robin Versnel, Seeger Tromp, Jaydane Levant 2851422"
+author: "Björn Hildering 2887258, Tim Knegt 2882977, Willem van Beuningen 2787054, Robin Versnel 2862644, Seeger Tromp, Jaydane Levant 2851422"
 date: "`r Sys.Date()`"
 output: pdf_document
 ---
