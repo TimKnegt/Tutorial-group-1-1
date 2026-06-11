@@ -155,6 +155,7 @@ huizenvoorraad <- huizenvoorraad %>%
   
   write.csv(huizenvoorraad, "data 2.0/Huizenprijzen_Huizenvoorraad_nieuw.csv", row.names = FALSE)
 ```
+In the dataset bruto_en_besteedbaar_inkomen_leeftijdsgroep, the rows were split into BRUTO INKOMEN and BESTEEDBAAR INKOMEN. However, this was very difficult to analyse and merge later on, so we found it necessary to ask Gemini (chatbot) for assistance. As a result, we created the bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw. 
 
 ```{r}
 #Here we modify the dataset bruto_en_besteedbaar_inkomen_leeftijdsgroep
@@ -333,26 +334,17 @@ Say we want to include only larger distances (above 2) in our dataset, we can fi
  
 #Start joining dataset inflatie_nieuw and Welvaart_van_huishoudens_kerncijfers_nieuw
 welvaart <- read_csv("data 2.0/Welvaart_van_huishoudens_kerncijfers_nieuw.csv")
-welvaart <- welvaart %>%
-  mutate(Jaartal = as.numeric(Jaartal))
 inflatie <- read_csv("data 2.0/Inflatie_nieuw.csv")
 result <- left_join(welvaart, inflatie, by = "Jaartal")
-write.csv(result,"data 2.0/Samenvoeging1.csv" , row.names = FALSE)
+write.csv2(result,"data 2.0/Samenvoeging1.csv" , row.names = FALSE)
 ```
 
 ```{r}
 #Start joining dataset Samenvoeging1 and bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv
 samenvoeging <- read_csv("data 2.0/Samenvoeging1.csv")
 brutoinkomen <- read_csv("data 2.0/bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv")
-brutoinkomen <- brutoinkomen %>%
-  rename("Jaartal" = "Jaren")%>%
-  mutate(Jaartal = as.numeric(Jaartal))
 samenvoeging2 <- left_join(brutoinkomen, samenvoeging, by = "Jaartal")
 write.csv(samenvoeging2, "data 2.0/Samenvoeging2.csv" , row.names = FALSE)
-
-samenvoeging2$Jaartal[c(14,28)]<- 2024
-samenvoeging2$Inflatie[c(14,28)]<- 3.3
-samenvoeging2$leeftijd_kostwinner <- NULL
 ```
 
 
