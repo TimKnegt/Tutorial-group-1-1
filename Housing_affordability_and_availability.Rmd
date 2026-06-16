@@ -81,42 +81,61 @@ library(tidyverse)
 library(janitor)
 library(scales)
 
-df <- read_csv("Huizenprijzen_Huizenvoorraad_nieuw.csv")
+# data inladen
+df <- read_csv("data 2.0/Huizenprijzen_Huizenvoorraad_nieuw.csv") |> 
+  clean_names() |> 
+  mutate(provincie = str_remove(provincies, " \\(PV\\)"))
 
-df_index <- df |> 
-  pivot_longer(
-    cols = c(woningvoorraad_1_januari, nieuwbouw),
-    names_to = "variabele",
-    values_to = "waarde"
-  ) |> 
-  group_by(provincies, variabele) |> 
-  arrange(jaartal, .by_group = TRUE) |> 
-  mutate(index = waarde / first(waarde) * 100) |> 
+# woningvoorraad indexeren naar 2005 = 100 per provincie
+df_voorraad <- df |> 
+  group_by(provincie) |> 
+  arrange(jaartal) |> 
+  mutate(index = woningvoorraad_1_januari / first(woningvoorraad_1_januari) * 100) |> 
   ungroup()
 
-ggplot(df_index, aes(x = jaartal, y = index, color = variabele)) +
-  geom_line(linewidth = 1) +
-  facet_wrap(~ provincies, ncol = 3, scales = "free_y") +
-  scale_x_continuous(
-    breaks = seq(2005, 2025, by = 5),
-    limits = c(2005, 2025)
-  ) +
-  labs(
-    title = "Ontwikkeling woningvoorraad en nieuwbouw per provincie",
-    subtitle = "Index: eerste beschikbare jaar = 100; waarden boven 100 betekenen groei, onder 100 afname",
-    x = "Jaartal",
-    y = "Index, eerste beschikbare jaar = 100",
-    color = "Variabele"
-  ) +
-  theme_minimal() +
-  theme(
-    legend.position = "bottom",
-    strip.text = element_text(face = "bold"),
-    axis.text.x = element_text(angle = 45, hjust = 1)
-  )
+# plot 1: groei woningvoorraad per provincie
+ggplot(df_voorraad, aes(jaartal, index, color = provincie)) +
+  geom_line(linewidth = 0.9) +
+  scale_x_continuous(breaks = seq(2005, 2025, 5)) +
+  labs(title = "Groei woningvoorraad per provincie (2005 = 100)",
+       x = "Jaartal", y = "Index (2005 = 100)", color = "Provincie") +
+  theme_minimal()
+
+# nieuwbouw optellen per jaar (2025 mist, dus eruit)
+df_nat <- df |> 
+  filter(jaartal < 2025) |> 
+  group_by(jaartal) |> 
+  summarise(nieuwbouw = sum(nieuwbouw, na.rm = TRUE))
+
+# plot 2: nieuwbouw per jaar t.o.v. het doel van 100.000
+ggplot(df_nat, aes(jaartal, nieuwbouw)) +
+  geom_hline(yintercept = 100000, linetype = "dashed") +   # overheidsdoel
+  geom_line(linewidth = 1, color = "steelblue") +
+  geom_point() +
+  scale_x_continuous(breaks = seq(2005, 2024, 3)) +
+  scale_y_continuous(limits = c(0, 110000), labels = comma) +
+  labs(title = "Nieuwbouw per jaar blijft onder het bouwdoel",
+       x = "Jaartal", y = "Aantal nieuwbouwwoningen") +
+  theme_minimal()
+
+# bouwintensiteit: nieuwbouw per 1000 bestaande woningen
+df_intensiteit <- df |> 
+  filter(jaartal < 2025) |> 
+  mutate(per_1000 = nieuwbouw / woningvoorraad_1_januari * 1000)
+
+# plot 3: bouwintensiteit per provincie
+ggplot(df_intensiteit, aes(jaartal, per_1000)) +
+  geom_line(color = "darkorange") +
+  facet_wrap(~ provincie) +
+  scale_x_continuous(breaks = seq(2005, 2024, 5)) +
+  labs(title = "Bouwintensiteit per provincie",
+       x = "Jaartal", y = "Nieuwbouw per 1000 woningen") +
+  theme_minimal()
+
 ```
-
-
+#explenation "Analysing housing supply and new construction"
+we put the data into three charts, because housing stock and new construction are actually two different things. The stock is the total number of homes that exist, and new construction is what gets added each year. Putting those two together in one chart with the same index would be a bit misleading, because the stock rises slowly while new construction jumps up and down a lot from year to year.
+In the first chart we set the stock per province to 2005 = 100. That way you can compare the provinces fairly, even though some are much bigger than others. In the second chart I added up new construction nationally per year and put a dashed line at 100,000, because that's the number the government wants to build each year. One thing that's important though: my figures are only about actual new construction, while that government target also counts things like offices being turned into homes. So the line is more of a lower limit than an exact comparison. The third chart shows building intensity, so new construction per 1,000 existing homes. That takes the size of a province into account, which lets you compare the building pace more fairly. I left 2025 out everywhere for new construction, because that value isn't in the dataset.
 
 
 ```{r}
