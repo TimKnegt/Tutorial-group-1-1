@@ -81,8 +81,7 @@ library(tidyverse)
 library(janitor)
 library(scales)
 
-df <- read_csv("data/Huizenprijzen_Huizenvoorraad_nieuw.csv") |> 
-  clean_names()
+df <- read_csv("Huizenprijzen_Huizenvoorraad_nieuw.csv")
 
 df_index <- df |> 
   pivot_longer(
