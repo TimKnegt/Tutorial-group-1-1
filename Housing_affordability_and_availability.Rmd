@@ -159,38 +159,6 @@ write.csv(welvaart, "data 2.0/Welvaart_van_huishoudens_kerncijfers_nieuw.csv", r
 ```
 
 
-```{r}
-#Here we modify the dataset Huizenprijzen_Huizenvoorraad
-huizenvoorraad <-read.csv("data/Huizenprijzen_Huizenvoorraad.csv")
-huizenvoorraad <- huizenvoorraad %>%
-  rename(Jaartal = Perioden) %>%
-  rename(Provincies = Regio.s) %>%
-  rename(Woningvoorraad_1_januari = Bouwen.en.wonen.Woningvoorraad.Voorraad.op.1.januari..aantal.)%>%
-  rename(Nieuwbouw = Bouwen.en.wonen.Woningvoorraad.Nieuwbouw..aantal.) %>%
-  select(Jaartal, Provincies, Woningvoorraad_1_januari, Nieuwbouw)
-  
-tabel_per_jaar <- huizenvoorraad %>%
-  group_by(Jaartal) %>%
-  summarise(
-    Woningvoorraad_1_januari = sum(Woningvoorraad_1_januari, na.rm = TRUE),
-    huizenvoorraad = sum(Nieuwbouw, na.rm = TRUE)
-  )
-  write.csv(tabel_per_jaar, "data 2.0/Huizenvoorraad_nieuw.csv", row.names = FALSE)
-```
-
-```{r}
-#Here we order the dataset to remove that it is grouped per function.
-#nieuwbouw <- read.csv("data 2.0/Huizenprijzen_Huizenvoorraad_nieuw.csv")
-
-#tabel_per_jaar <- nieuwbouw %>%
- # group_by(Jaartal) %>%
- # summarise(
-  #  Woningvoorraad_1_januari = sum(Woningvoorraad_1_januari, na.rm = TRUE),
-  #  Nieuwbouw = sum(Nieuwbouw, na.rm = TRUE)
-#  )
-#write.csv(tabel_per_jaar,"data 2.0/Huizenvoorraad_nieuw.csv")
-```
-
 
 In the dataset bruto_en_besteedbaar_inkomen_leeftijdsgroep, the rows were split into BRUTO INKOMEN and BESTEEDBAAR INKOMEN. However, this was very difficult to analyse and merge later on, so we found it necessary to ask Gemini (chatbot) for assistance. As a result, we created the bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw. 
 
@@ -240,14 +208,36 @@ bevolkingsgroei <- bevolkingsgroei %>%
 write.csv(bevolkingsgroei, "data 2.0/Bevolkingsgroei_nieuw.csv", row.names = FALSE)
 ```
 
+The next part is dedicated to gather information about the number of new houses being built in the Netherlands. In the first part of code we again change collumn names and select the useful comments.
 
+There is however a hurdle in this dataset that we have to overcome. That is that the number of new houses built is grouped per province, while we would like to look at the number of the entire Netherlands. To achieve this, we used the goup_by() and summarise() functions.
+```{r}
+#Here we modify the dataset Huizenprijzen_Huizenvoorraad
+huizenvoorraad <-read.csv("data/Huizenprijzen_Huizenvoorraad.csv")
+huizenvoorraad <- huizenvoorraad %>%
+  rename(Jaartal = Perioden) %>%
+  rename(Provincies = Regio.s) %>%
+  rename(Woningvoorraad_1_januari = Bouwen.en.wonen.Woningvoorraad.Voorraad.op.1.januari..aantal.)%>%
+  rename(Nieuwbouw = Bouwen.en.wonen.Woningvoorraad.Nieuwbouw..aantal.) %>%
+  select(Jaartal, Provincies, Woningvoorraad_1_januari, Nieuwbouw)
+  
+tabel_per_jaar <- huizenvoorraad %>%
+  group_by(Jaartal) %>%
+  summarise(
+    Woningvoorraad_1_januari = sum(Woningvoorraad_1_januari, na.rm = TRUE),
+    huizenvoorraad = sum(Nieuwbouw, na.rm = TRUE)
+  )
+  write.csv(tabel_per_jaar, "data 2.0/Huizenvoorraad_nieuw.csv", row.names = FALSE)
+```
 
+Now that we have two clear datasets we still need to merge them to be able to plot them into the same graph. We decided to join the two datasets on using years, since we want to look at the change over time and the trend that is going on. We used the left join to join the newly built housing dataset onto the population growth dataset. We did this because the first named spands across the least amount of years. Using the left join we ensure that we don't get Na's where we do not want them.
 ```{r}
 #Here we merge the datasets
 bevolkingsgroei_nieuwbouw <- left_join(bevolkingsgroei, tabel_per_jaar, by = "Jaartal")
 write.csv(bevolkingsgroei_nieuwbouw, "data 2.0/bevolkingsgroei_nieuwbouw")
 
 ```
+
 
 ```{r}
 #Here we create a graph to compare the amount of new houses built and the population growth of young adults.
