@@ -502,5 +502,6 @@ Provide the link to your PUBLIC repository here: ...
 
 ## 5.2 Reference list
 https://www.dnb.nl/actuele-economische-vraagstukken/woningmarkt/onze-hoge-hypotheekschulden-risico-s-en-oplossingen/   
+https://www.homefinance.nl/hypotheek/informatie/lti-hypotheek/
 
 Use APA referencing throughout your document.
