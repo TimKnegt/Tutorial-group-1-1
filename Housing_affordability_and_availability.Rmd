@@ -131,7 +131,7 @@ ggplot(df_intensiteit, aes(jaartal, per_1000)) +
   theme_minimal()
 
 ```
-#explenation "Analysing housing supply and new construction"
+#explanation "Analysing housing supply and new construction"
 we put the data into three charts, because housing stock and new construction are actually two different things. The stock is the total number of homes that exist, and new construction is what gets added each year. Putting those two together in one chart with the same index would be a bit misleading, because the stock rises slowly while new construction jumps up and down a lot from year to year.
 In the first chart we set the stock per province to 2005 = 100. That way you can compare the provinces fairly, even though some are much bigger than others. In the second chart I added up new construction nationally per year and put a dashed line at 100,000, because that's the number the government wants to build each year. One thing that's important though: my figures are only about actual new construction, while that government target also counts things like offices being turned into homes. So the line is more of a lower limit than an exact comparison. The third chart shows building intensity, so new construction per 1,000 existing homes. That takes the size of a province into account, which lets you compare the building pace more fairly. I left 2025 out everywhere for new construction, because that value isn't in the dataset.
 
@@ -428,10 +428,19 @@ write.csv2(result,"data 2.0/Samenvoeging1.csv" , row.names = FALSE)
 
 ```{r}
 #Start joining dataset Samenvoeging1 and bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv
-samenvoeging <- read_csv("data 2.0/Samenvoeging1.csv")
+samenvoeging <- read_csv2("data 2.0/Samenvoeging1.csv")
 brutoinkomen <- read_csv("data 2.0/bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv")
 samenvoeging2 <- left_join(brutoinkomen, samenvoeging, by = "Jaartal")
 write.csv(samenvoeging2, "data 2.0/Samenvoeging2.csv" , row.names = FALSE)
+head(samenvoeging2)
+```
+
+```{r}
+#Deleting a column that was mentioned twice
+samenvoeging2 <- read.csv("data 2.0/Samenvoeging2.csv")
+samenvoeging2 <- samenvoeging2 %>%
+  select (-leeftijd_kostwinner)
+write.csv(samenvoeging2, "data 2.0/Final_dataset.csv", row.names = FALSE)
 ```
 
 
