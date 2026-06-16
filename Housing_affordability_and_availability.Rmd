@@ -95,8 +95,8 @@ df_voorraad <- df |>
 ggplot(df_voorraad, aes(jaartal, index, color = provincie)) +
   geom_line(linewidth = 0.9) +
   scale_x_continuous(breaks = seq(2005, 2025, 5)) +
-  labs(title = "Groei woningvoorraad per provincie (2005 = 100)",
-       x = "Jaartal", y = "Index (2005 = 100)", color = "Provincie") +
+  labs(title = "Housing stock grwoth per province (2005 = 100)",
+       x = "Year", y = "Index (2005 = 100)", color = "Province") +
   theme_minimal()
 
 # nieuwbouw optellen per jaar (2025 mist, dus eruit)
@@ -112,8 +112,8 @@ ggplot(df_nat, aes(jaartal, nieuwbouw)) +
   geom_point() +
   scale_x_continuous(breaks = seq(2005, 2024, 3)) +
   scale_y_continuous(limits = c(0, 110000), labels = comma) +
-  labs(title = "Nieuwbouw per jaar blijft onder het bouwdoel",
-       x = "Jaartal", y = "Aantal nieuwbouwwoningen") +
+  labs(title = "New Housing contruction per year remains below the contruction target",
+       x = "Year", y = "Number of new housing units") +
   theme_minimal()
 
 # bouwintensiteit: nieuwbouw per 1000 bestaande woningen
@@ -126,8 +126,8 @@ ggplot(df_intensiteit, aes(jaartal, per_1000)) +
   geom_line(color = "darkorange") +
   facet_wrap(~ provincie) +
   scale_x_continuous(breaks = seq(2005, 2024, 5)) +
-  labs(title = "Bouwintensiteit per provincie",
-       x = "Jaartal", y = "Nieuwbouw per 1000 woningen") +
+  labs(title = "Construction intensity per province",
+       x = "Year", y = "New homes per 1000 units") +
   theme_minimal()
 
 ```
