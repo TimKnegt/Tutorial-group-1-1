@@ -95,8 +95,8 @@ df_voorraad <- df |>
 ggplot(df_voorraad, aes(jaartal, index, color = provincie)) +
   geom_line(linewidth = 0.9) +
   scale_x_continuous(breaks = seq(2005, 2025, 5)) +
-  labs(title = "Groei woningvoorraad per provincie (2005 = 100)",
-       x = "Jaartal", y = "Index (2005 = 100)", color = "Provincie") +
+  labs(title = "Growth in housing stock by province (2005 = 100)",
+       x = "Year", y = "Index (2005 = 100)", color = "Province") +
   theme_minimal()
 
 # nieuwbouw optellen per jaar (2025 mist, dus eruit)
@@ -112,8 +112,8 @@ ggplot(df_nat, aes(jaartal, nieuwbouw)) +
   geom_point() +
   scale_x_continuous(breaks = seq(2005, 2024, 3)) +
   scale_y_continuous(limits = c(0, 110000), labels = comma) +
-  labs(title = "Nieuwbouw per jaar blijft onder het bouwdoel",
-       x = "Jaartal", y = "Aantal nieuwbouwwoningen") +
+  labs(title = "New housing construction remains below target",
+       x = "Year", y = "Number of new-build homes") +
   theme_minimal()
 
 # bouwintensiteit: nieuwbouw per 1000 bestaande woningen
@@ -126,8 +126,8 @@ ggplot(df_intensiteit, aes(jaartal, per_1000)) +
   geom_line(color = "darkorange") +
   facet_wrap(~ provincie) +
   scale_x_continuous(breaks = seq(2005, 2024, 5)) +
-  labs(title = "Bouwintensiteit per provincie",
-       x = "Jaartal", y = "Nieuwbouw per 1000 woningen") +
+  labs(title = "Construction intensity by province",
+       x = "", y = "New-build homes per 1,000") +
   theme_minimal()
 
 ```
@@ -184,6 +184,11 @@ ggplot(plotdata, aes(long, lat, group = group, fill = groei_pct)) +
        fill = "Growth (%)") +
   theme_void()
 ```
+
+
+
+
+
 #Explanation
 To show where in the country the growth happened, I mapped the total growth of the housing stock per province between 2005 and 2025. For each province I worked out the percentage change in the stock and used that to colour the map. The province borders come from a public CBS/cartomap file that I read in as a GeoJSON, so I didn't need any extra mapping software. One small caveat: the province labels sit at the average of each province's border points, which is only a rough centre, so for oddly shaped provinces the label can land slightly off. The colours and the actual figures aren't affected by that.
 #Conclusion
