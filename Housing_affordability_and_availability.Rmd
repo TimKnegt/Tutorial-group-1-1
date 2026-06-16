@@ -449,7 +449,9 @@ Please use a separate 'R block' of code for each type of cleaning. So, e.g. one 
 
 ## 3.2 Generate necessary variables
 
-Variable 1
+The first, necessary variable added is the maximal nominal mortgage loan that young adults can loan at the bank. The maximal nominal mortgage loan is based on the LTI and the median gross income. The LTI (Loan-to-Income) is the ratio between the gross income and the mortgage loan. This ratio decides the maximum amount that can be borrowed, which usually is around 4.5 times the gross income in the Netherlands (Homefinance Hypotheken, n.d.). The choice to use the median gross income over the average gross income is supported by the fact that the mean usually is distorted by high extremes, whilst the median gives a representative reflection of the "typical" young adult. 
+
+The Netherlands has one of the highest mortgage debts of Europe, which states that the Dutch housing market is really dependent on credits (DNB, n.d.). Because the Dutch housing market for buyers is fundamentally credit-driven and reliant on the LTI, variables solely addressing income are not enough to model the maximum purchasing capacity of young adults. However, this nominal borrowing ceiling is the variable that can demonstrate the maximum buying capacity of young adults. Moreover, this variable can be rightfully compared to the housing prices. All in all, the maximal nominal mortgage loan more or less serves as the baseline for the study regarding housing affordability. 
 
 ```{r gen_var1}
 
@@ -501,5 +503,6 @@ Here you provide a description of why the plot above is relevant to your specifi
 Provide the link to your PUBLIC repository here: ...
 
 ## 5.2 Reference list
+https://www.dnb.nl/actuele-economische-vraagstukken/woningmarkt/onze-hoge-hypotheekschulden-risico-s-en-oplossingen/   
 
 Use APA referencing throughout your document.
