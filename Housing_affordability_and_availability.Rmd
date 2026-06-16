@@ -79,19 +79,16 @@ Include the following:
 ```{r}
 
 
-# data inladen
 df <- read_csv("data 2.0/Huizenprijzen_Huizenvoorraad_nieuw.csv") |> 
   clean_names() |> 
   mutate(provincie = str_remove(provincies, " \\(PV\\)"))
 
-# woningvoorraad indexeren naar 2005 = 100 per provincie
 df_voorraad <- df |> 
   group_by(provincie) |> 
   arrange(jaartal) |> 
   mutate(index = woningvoorraad_1_januari / first(woningvoorraad_1_januari) * 100) |> 
   ungroup()
 
-# plot 1: groei woningvoorraad per provincie
 ggplot(df_voorraad, aes(jaartal, index, color = provincie)) +
   geom_line(linewidth = 0.9) +
   scale_x_continuous(breaks = seq(2005, 2025, 5)) +
@@ -99,13 +96,11 @@ ggplot(df_voorraad, aes(jaartal, index, color = provincie)) +
        x = "Year", y = "Index (2005 = 100)", color = "Province") +
   theme_minimal()
 
-# nieuwbouw optellen per jaar (2025 mist, dus eruit)
 df_nat <- df |> 
   filter(jaartal < 2025) |> 
   group_by(jaartal) |> 
   summarise(nieuwbouw = sum(nieuwbouw, na.rm = TRUE))
 
-# plot 2: nieuwbouw per jaar t.o.v. het doel van 100.000
 ggplot(df_nat, aes(jaartal, nieuwbouw)) +
   geom_hline(yintercept = 100000, linetype = "dashed") +   # overheidsdoel
   geom_line(linewidth = 1, color = "steelblue") +
@@ -116,12 +111,10 @@ ggplot(df_nat, aes(jaartal, nieuwbouw)) +
        x = "Year", y = "Number of new-build homes") +
   theme_minimal()
 
-# bouwintensiteit: nieuwbouw per 1000 bestaande woningen
 df_intensiteit <- df |> 
   filter(jaartal < 2025) |> 
   mutate(per_1000 = nieuwbouw / woningvoorraad_1_januari * 1000)
 
-# plot 3: bouwintensiteit per provincie
 ggplot(df_intensiteit, aes(jaartal, per_1000)) +
   geom_line(color = "darkorange") +
   facet_wrap(~ provincie) +
@@ -140,17 +133,14 @@ Over time the housing stock grew steadily in every province, but new constructio
 ```{r}
 library(jsonlite)
 
-# voorraadgroei per provincie (2005 -> laatste jaar)
 groei <- df |> 
   group_by(provincie) |> 
   arrange(jaartal) |> 
   summarise(groei_pct = (last(woningvoorraad_1_januari) / first(woningvoorraad_1_januari) - 1) * 100)
 
-# provinciegrenzen als GeoJSON inlezen (geen sf nodig)
 geo <- fromJSON("https://cartomap.github.io/nl/wgs84/provincie_2023.geojson",
                 simplifyVector = FALSE)
 
-# GeoJSON platslaan naar een long data frame met long/lat per polygoon
 rows <- list(); g <- 0
 for (f in geo$features) {
   naam   <- f$properties$statnaam
@@ -164,10 +154,9 @@ for (f in geo$features) {
 }
 prov_df <- do.call(rbind, rows)
 
-# grenzen koppelen aan de groeicijfers (merge op naam; spelling klopt 1-op-1)
+# grenzen koppelen aan de groeicijfers
 plotdata <- prov_df |> left_join(groei, by = "provincie")
 
-# ruwe labelposities (gemiddelde van de hoekpunten per provincie)
 labels <- plotdata |> 
   group_by(provincie) |> 
   summarise(long = mean(long), lat = mean(lat), .groups = "drop")
