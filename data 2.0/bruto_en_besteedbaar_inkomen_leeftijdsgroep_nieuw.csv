@@ -1,29 +1,15 @@
-"Inkomensbronnen","Jaren","Kenmerken_van_huishoudens","Particuliere_huishoudens_x1000","Totaal_inkomen_mln.euro","Gemiddeld_inkomen_1000.euro","Mediaan_inkomen_1000.euro"
-"9 BRUTO-INKOMEN","2011","Hoofdkostwinner: 25 tot 45 jaar","2463,4","160185","65","57,5"
-"9 BRUTO-INKOMEN","2012","Hoofdkostwinner: 25 tot 45 jaar","2444,9","159823","65,4","57,5"
-"9 BRUTO-INKOMEN","2013","Hoofdkostwinner: 25 tot 45 jaar","2422,5","159240","65,7","57,6"
-"9 BRUTO-INKOMEN","2014","Hoofdkostwinner: 25 tot 45 jaar","2393,5","161606","67,5","58,3"
-"9 BRUTO-INKOMEN","2015","Hoofdkostwinner: 25 tot 45 jaar","2366,6","157879","66,7","58,2"
-"9 BRUTO-INKOMEN","2016","Hoofdkostwinner: 25 tot 45 jaar","2348,3","160886","68,5","59,6"
-"9 BRUTO-INKOMEN","2017","Hoofdkostwinner: 25 tot 45 jaar","2345,7","165693","70,6","61,4"
-"9 BRUTO-INKOMEN","2018","Hoofdkostwinner: 25 tot 45 jaar","2355","172346","73,2","63,8"
-"9 BRUTO-INKOMEN","2019","Hoofdkostwinner: 25 tot 45 jaar","2376,3","183058","77","66,7"
-"9 BRUTO-INKOMEN","2020","Hoofdkostwinner: 25 tot 45 jaar","2406,9","190910","79,3","69,4"
-"9 BRUTO-INKOMEN","2021","Hoofdkostwinner: 25 tot 45 jaar","2424,8","200800","82,8","72,1"
-"9 BRUTO-INKOMEN","2022","Hoofdkostwinner: 25 tot 45 jaar","2464,6","219975","89,3","77,9"
-"9 BRUTO-INKOMEN","2023","Hoofdkostwinner: 25 tot 45 jaar","2529,1","243142","96,1","82,5"
-"9 BRUTO-INKOMEN","2024*","Hoofdkostwinner: 25 tot 45 jaar","2563,4","258931","101","87,1"
-"14 BESTEEDBAAR INKOMEN","2011","Hoofdkostwinner: 25 tot 45 jaar","2463,4","91821","37,3","34,3"
-"14 BESTEEDBAAR INKOMEN","2012","Hoofdkostwinner: 25 tot 45 jaar","2444,9","90758","37,1","34"
-"14 BESTEEDBAAR INKOMEN","2013","Hoofdkostwinner: 25 tot 45 jaar","2422,5","90557","37,4","34"
-"14 BESTEEDBAAR INKOMEN","2014","Hoofdkostwinner: 25 tot 45 jaar","2393,5","93209","38,9","34,8"
-"14 BESTEEDBAAR INKOMEN","2015","Hoofdkostwinner: 25 tot 45 jaar","2366,6","92661","39,2","35,2"
-"14 BESTEEDBAAR INKOMEN","2016","Hoofdkostwinner: 25 tot 45 jaar","2348,3","96095","40,9","36,6"
-"14 BESTEEDBAAR INKOMEN","2017","Hoofdkostwinner: 25 tot 45 jaar","2345,7","98295","41,9","37,4"
-"14 BESTEEDBAAR INKOMEN","2018","Hoofdkostwinner: 25 tot 45 jaar","2355","101810","43,2","38,7"
-"14 BESTEEDBAAR INKOMEN","2019","Hoofdkostwinner: 25 tot 45 jaar","2376,3","108434","45,6","40,4"
-"14 BESTEEDBAAR INKOMEN","2020","Hoofdkostwinner: 25 tot 45 jaar","2406,9","113502","47,2","42,2"
-"14 BESTEEDBAAR INKOMEN","2021","Hoofdkostwinner: 25 tot 45 jaar","2424,8","120257","49,6","44,5"
-"14 BESTEEDBAAR INKOMEN","2022","Hoofdkostwinner: 25 tot 45 jaar","2464,6","129734","52,6","47,3"
-"14 BESTEEDBAAR INKOMEN","2023","Hoofdkostwinner: 25 tot 45 jaar","2529,1","144423","57,1","50,6"
-"14 BESTEEDBAAR INKOMEN","2024*","Hoofdkostwinner: 25 tot 45 jaar","2563,4","153824","60","53,6"
+"Jaartal","Kenmerken_van_huishoudens","Particuliere_huishoudens_x1000","Totaal_bruto_inkomen_mln.euro","Gemiddeld_bruto_inkomen_1000.euro","Mediaan_bruto_inkomen_1000.euro","Totaal_besteedbaar_inkomen_mln.euro","Gemiddeld_besteedbaar_inkomen_1000.euro","Mediaan_besteedbaar_inkomen_1000.euro"
+2011,"Hoofdkostwinner: 25 tot 45 jaar",2463.4,160185,65.0,57.5,91821,37.3,34.3
+2012,"Hoofdkostwinner: 25 tot 45 jaar",2444.9,159823,65.4,57.5,90758,37.1,34.0
+2013,"Hoofdkostwinner: 25 tot 45 jaar",2422.5,159240,65.7,57.6,90557,37.4,34.0
+2014,"Hoofdkostwinner: 25 tot 45 jaar",2393.5,161606,67.5,58.3,93209,38.9,34.8
+2015,"Hoofdkostwinner: 25 tot 45 jaar",2366.6,157879,66.7,58.2,92661,39.2,35.2
+2016,"Hoofdkostwinner: 25 tot 45 jaar",2348.3,160886,68.5,59.6,96095,40.9,36.6
+2017,"Hoofdkostwinner: 25 tot 45 jaar",2345.7,165693,70.6,61.4,98295,41.9,37.4
+2018,"Hoofdkostwinner: 25 tot 45 jaar",2355.0,172346,73.2,63.8,101810,43.2,38.7
+2019,"Hoofdkostwinner: 25 tot 45 jaar",2376.3,183058,77.0,66.7,108434,45.6,40.4
+2020,"Hoofdkostwinner: 25 tot 45 jaar",2406.9,190910,79.3,69.4,113502,47.2,42.2
+2021,"Hoofdkostwinner: 25 tot 45 jaar",2424.8,200800,82.8,72.1,120257,49.6,44.5
+2022,"Hoofdkostwinner: 25 tot 45 jaar",2464.6,219975,89.3,77.9,129734,52.6,47.3
+2023,"Hoofdkostwinner: 25 tot 45 jaar",2529.1,243142,96.1,82.5,144423,57.1,50.6
+2024,"Hoofdkostwinner: 25 tot 45 jaar",2563.4,258931,101.0,87.1,153824,60.0,53.6

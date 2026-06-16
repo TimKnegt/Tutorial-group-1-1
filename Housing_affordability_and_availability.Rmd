@@ -1,6 +1,6 @@
 ---
 title: "The change of affordability and availability in the housing market for young adults in the Netherlands from 2005 until 2025."
-author: "Björn Hildering 2887258, Tim Knegt 2882977, Willem van Beuningen 2787054, Robin Versnel, Seeger Tromp, Jaydane Levant 2851422"
+author: "Björn Hildering 2887258, Tim Knegt 2882977, Willem van Beuningen 2787054, Robin Versnel 2862644, Seeger Tromp, Jaydane Levant 2851422"
 date: "`r Sys.Date()`"
 output: pdf_document
 ---
@@ -14,6 +14,9 @@ install.packages("rmarkdown")
 install.packages("readr")
 install.packages("dplyr")
 install.packages("ggplot2")
+install.packages(c(
+  "geodata", "terra", 
+  "janitor", "scales", "patchwork"))
 ```
 
 ```{r packages}
@@ -23,31 +26,34 @@ require(yaml)
 require(readr)
 require(dplyr)
 require(ggplot2)
+library(geodata)
+library(terra)
+library(janitor)
+library(scales)
+library(patchwork)
+
 ```
 
+# Title Page
 
----
-title: "Qualifying a social problem - The change of affordability and availability in the housing market for young adults in the Netherlands from 2005 until 2025"
-subtitle: "Course: CPR01 - NL | Docent: Chantal Schouwenaar"
-author:
-  - "Björn Hildering (2887258)"
-  - "Tim Knegt (2882977)"
-  - "Willem van Beuningen (2787054)"
-  - "Robin Versnel"
-  - "Seeger Tromp (2889983)"
-  - "Jaydane Levant (2851422)"
-date: "23-06-2026"
-output: pdf_document
----
+Include your names
+
+Include the tutorial group number
+
+Include your tutorial lecturer's name
 
 # Part 1 - Identify a Social Problem
 The Dutch housing market has changed significantly over the past two decades. For young adults, finding suitable housing has become increasingly difficult due to rising house prices, higher rents, and a continuing housing shortage (Nederlands Jeugdinstituut, n.d.). As a result, many young people struggle to enter the housing market.
 
 This research examines how housing affordability and availability for young adults in the Netherlands changed between 2005 and 2025. It focuses on trends in house prices, rental costs, incomes and housing shortages to understand the main developments during this period.
 
+
 Use APA referencing throughout your document. [Here's a link to some explanation.](https://www.mendeley.com/guides/apa-citation-guide/)
 
 ## 1.1 Describe the Social Problem
+The Dutch housing market has become increasingly inaccessible for young adults, making the move toward independent living far more difficult. This is socially relevant because stable and affordable housing is a foundation for financial independence, mental well‑being, and equal life opportunities. When young people cannot secure a home, they delay major life steps such as studying, working full‑time, or forming households—effects that ripple through society. The OECD notes that the Netherlands is among the countries where young adults face the greatest barriers to affordable housing due to rising prices and persistent shortages (OECD, 2023).
+
+A combination of sharply increasing house prices, higher rents, and limited supply has created a structural imbalance between demand and availability. These pressures fall disproportionately on first‑time buyers and young renters, widening generational inequality: older households benefit from accumulated housing wealth, while younger cohorts struggle to enter the market at all.
 
 Include the following:
 
@@ -65,9 +71,54 @@ Preferably from a URL, but if not, make sure to download the data and store it i
 
 ```
 
-midwest is an example dataset included in the tidyverse package
 
 ## 2.2 Provide a short summary of the dataset(s)
+
+# trendgrafieken per provincie Huizenprijzen/voorraad
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(scales)
+
+df <- read_csv("data/Huizenprijzen_Huizenvoorraad_nieuw.csv") |> 
+  clean_names()
+
+df_index <- df |> 
+  pivot_longer(
+    cols = c(woningvoorraad_1_januari, nieuwbouw),
+    names_to = "variabele",
+    values_to = "waarde"
+  ) |> 
+  group_by(provincies, variabele) |> 
+  arrange(jaartal, .by_group = TRUE) |> 
+  mutate(index = waarde / first(waarde) * 100) |> 
+  ungroup()
+
+ggplot(df_index, aes(x = jaartal, y = index, color = variabele)) +
+  geom_line(linewidth = 1) +
+  facet_wrap(~ provincies, ncol = 3, scales = "free_y") +
+  scale_x_continuous(
+    breaks = seq(2005, 2025, by = 5),
+    limits = c(2005, 2025)
+  ) +
+  labs(
+    title = "Ontwikkeling woningvoorraad en nieuwbouw per provincie",
+    subtitle = "Index: eerste beschikbare jaar = 100; waarden boven 100 betekenen groei, onder 100 afname",
+    x = "Jaartal",
+    y = "Index, eerste beschikbare jaar = 100",
+    color = "Variabele"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    strip.text = element_text(face = "bold"),
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+```
+
+
+
 
 ```{r}
 
@@ -77,7 +128,7 @@ inflatie <- inflatie %>%
   rename(Jaartal = Perioden) %>%
   rename(Inflatie = Jaarmutatie.CPI....) %>%
   select(Jaartal,Inflatie)
-write.csv(inflatie, "data/Inflatie_nieuw.csv", row.names = FALSE)
+write.csv(inflatie, "data 2.0/Inflatie_nieuw.csv", row.names = FALSE)
 ```
 
 ```{r}
@@ -88,7 +139,7 @@ welvaart <- welvaart %>%
   rename(Jaartal = Perioden) %>%
   rename(Gemiddeld_gestandaardiseerd_inkomen_x1000_euro = Gemiddeld.gestandaardiseerd.inkomen..1.000.euro.)
 head(welvaart)
-write.csv(welvaart, "data/Welvaart_van_huishoudens_kerncijfers_nieuw.csv", row.names = FALSE)
+write.csv(welvaart, "data 2.0/Welvaart_van_huishoudens_kerncijfers_nieuw.csv", row.names = FALSE)
 ```
 
 
@@ -102,8 +153,9 @@ huizenvoorraad <- huizenvoorraad %>%
   rename(Nieuwbouw = Bouwen.en.wonen.Woningvoorraad.Nieuwbouw..aantal.) %>%
   select(Jaartal, Provincies, Woningvoorraad_1_januari, Nieuwbouw)
   
-  write.csv(huizenvoorraad, "data/Huizenprijzen_Huizenvoorraad_nieuw.csv", row.names = FALSE)
+  write.csv(huizenvoorraad, "data 2.0/Huizenprijzen_Huizenvoorraad_nieuw.csv", row.names = FALSE)
 ```
+In the dataset bruto_en_besteedbaar_inkomen_leeftijdsgroep, the rows were split into BRUTO INKOMEN and BESTEEDBAAR INKOMEN. However, this was very difficult to analyse and merge later on, so we found it necessary to ask Gemini (chatbot) for assistance. As a result, we created the bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw. 
 
 ```{r}
 #Here we modify the dataset bruto_en_besteedbaar_inkomen_leeftijdsgroep
@@ -118,7 +170,7 @@ inkomen <- inkomen %>%
   rename(Gemiddeld_inkomen_1000.euro = V6) %>%
   rename(Mediaan_inkomen_1000.euro = V7) %>%
   select(Inkomensbronnen, Jaren, Kenmerken_van_huishoudens, Particuliere_huishoudens_x1000, Totaal_inkomen_mln.euro, Gemiddeld_inkomen_1000.euro, Mediaan_inkomen_1000.euro)
-write.csv(inkomen, "data/bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv", row.names = FALSE)
+write.csv(inkomen, "data 2.0/bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv", row.names = FALSE)
 ```
 
 ```{r}
@@ -132,7 +184,7 @@ Bestaande_koopwoningen_verkoopprijzen_woningtype <- Bestaande_koopwoningen_verko
   rename( Gemiddelde_verkoopprijs_euro = Gemiddelde.verkoopprijs..euro.)
 Bestaande_koopwoningen_verkoopprijzen_woningtype <- Bestaande_koopwoningen_verkoopprijzen_woningtype %>%
   select(Jaartal, Aantal_verkochte_woningen, Gemiddelde_verkoopprijs_euro)
-  write.csv(Bestaande_koopwoningen_verkoopprijzen_woningtype, "data/Bestaande_koopwoningen_verkoopprijzen_woningtype_nieuw.csv", row.names = FALSE)
+  write.csv(Bestaande_koopwoningen_verkoopprijzen_woningtype, "data 2.0/Bestaande_koopwoningen_verkoopprijzen_woningtype_nieuw.csv", row.names = FALSE)
 ```
 
 
@@ -140,19 +192,116 @@ Bestaande_koopwoningen_verkoopprijzen_woningtype <- Bestaande_koopwoningen_verko
 #Here we modify the dataset bevolkingsgroei to only keep the relevant information and use the right years.
 bevolkingsgroei <-read.csv("data/Bevolkingsgroei_opbouw_2005_2019.csv")
 bevolkingsgroei <- bevolkingsgroei %>%
-  rename( jong_volwassenen_20_tot_45_jaar = Bevolking.op.1.januari.Naar.leeftijd.20.tot.45.jaar..x.1.000.)
+  rename( jong_volwassenen_20_tot_45_jaar = Bevolking.op.1.januari.Naar.leeftijd.20.tot.45.jaar..x.1.000.) %>%
+  transmute(jong_volwassenen_20_tot_45_jaar) %>%
+  mutate(Jaar = 2005:2019) %>%
+  relocate(Jaar) %>%
+  rename(Jaartal = Jaar)
 
-bevolkingsgroei <- bevolkingsgroei%>%
-  transmute(jong_volwassenen_20_tot_45_jaar)
-
-bevolkingsgroei <- bevolkingsgroei %>%
-  mutate(Jaar = 2005:2019)
-bevolkingsgroei <- bevolkingsgroei %>%
-  relocate(Jaar)
-write.csv(bevolkingsgroei, "data/Bevolkingsgroei_nieuw.csv", row.names = FALSE)
+write.csv(bevolkingsgroei, "data 2.0/Bevolkingsgroei_nieuw.csv", row.names = FALSE)
 ```
 
-In this case we see 28 variables, but we miss some information on what units they are in. We also don't know anything about the year/moment in which this data has been captured.
+```{r}
+#Here we order the dataset to remove that it is grouped per function.
+nieuwbouw <- read.csv("data 2.0/Huizenprijzen_Huizenvoorraad_nieuw.csv")
+
+tabel_per_jaar <- nieuwbouw %>%
+  group_by(Jaartal) %>%
+  summarise(
+    Woningvoorraad_1_januari = sum(Woningvoorraad_1_januari, na.rm = TRUE),
+    Nieuwbouw = sum(Nieuwbouw, na.rm = TRUE)
+  )
+write.csv(tabel_per_jaar,"data 2.0/Huizenvoorraad_nieuw.csv")
+```
+
+```{r}
+#Here we merge the datasets
+bevolkingsgroei_nieuwbouw <- left_join(bevolkingsgroei, tabel_per_jaar, by = "Jaartal")
+write.csv(bevolkingsgroei_nieuwbouw, "data 2.0/bevolkingsgroei_nieuwbouw")
+
+```
+
+```{r}
+#Here we create a graph to compare the amount of new houses built and the population growth of young adults.
+
+bevolkingsgroei_nieuwbouw <- read.csv("data 2.0/bevolkingsgroei_nieuwbouw")
+# d
+scale_factor <- max(bevolkingsgroei_nieuwbouw$jong_volwassenen_20_tot_45_jaar, na.rm = TRUE) /
+                max(bevolkingsgroei_nieuwbouw$Nieuwbouw, na.rm = TRUE)
+
+ggplot(bevolkingsgroei_nieuwbouw, aes(x = Jaartal)) +
+
+  # Left axis(population growth)
+  geom_line(
+    aes(y = jong_volwassenen_20_tot_45_jaar,
+        color = "Young adults (20-45 years old)"),
+    linewidth = 1.3
+  ) +
+  geom_point(
+    aes(y = jong_volwassenen_20_tot_45_jaar,
+        color = "Young adults (20-45 years old)"),
+    size = 2
+  ) +
+  # right axis(newly built homes)
+  geom_line(
+    aes(y = Nieuwbouw * scale_factor,
+        color = "New houses built per year"),
+    linewidth = 1.3,
+    linetype = "dashed"
+  ) +
+  geom_point(
+    aes(y = Nieuwbouw * scale_factor,
+        color = "New houses built per year"),
+    size = 2
+  ) +
+  scale_y_continuous(
+    #left axis
+    name = "Young adults (20-45 years old)",
+    limits = c(3000, 6000),
+    labels = label_number(big.mark = ".", decimal.mark = ","),
+    breaks = c(3000, 4000, 5000, 6000),
+    
+    #right axis
+    sec.axis = sec_axis(
+      ~ . / scale_factor,
+      name = "New houses built per year",
+      breaks = c(40000, 50000, 60000, 70000, 80000),
+      labels = label_number(big.mark = ".", decimal.mark = ",")
+    )
+  ) +
+
+  scale_x_continuous(
+    breaks = seq(min(bevolkingsgroei_nieuwbouw$Jaartal),
+                 max(bevolkingsgroei_nieuwbouw$Jaartal),
+                 by = 1)
+  ) +
+
+  scale_color_manual(
+    values = c(
+      "Young adults (20-45 years old)" = "blue",
+      "New houses built per year" = "red"
+    )
+  ) +
+
+  labs(
+    title = "Growth of young adult population and the building of new houses",
+    subtitle = "Yearly deviations",
+    x = "Year",
+    color = NULL
+  ) +
+
+  theme_minimal(base_size = 14) +
+
+  theme(
+    plot.title = element_text(face = "bold", size = 18),
+    plot.subtitle = element_text(size = 12),
+    axis.text.x = element_text(size = 10),
+    legend.position = "top"
+  )
+         
+         
+         
+```
 
 ``` r
 inline_code = TRUE
@@ -165,21 +314,11 @@ names(huizenprijzen)[names(huizenprijzen) == "Perioden"] <- "Jaren"
 names(huizenprijzen)[names(huizenprijzen) == "Type.woning"] <- "Woningtype"
 names(huizenprijzen)[names(huizenprijzen) == "Prijsindex.bestaande.koopwoningen.Prijsindex.verkoopprijzen..2020.100."] <- "Verkoopprijzen.bestaande.koopwoningen"
 names(huizenprijzen)[names(huizenprijzen) == "Prijsindex.bestaande.koopwoningen.Ontwikkeling..t.o.v..een.jaar.eerder...."] <- "Verkoopprijzen.tov.voorgaand.jaar"
-write.csv(huizenprijzen, "data/nieuw_Huizenprijzen_per_woningtype.csv" , row.names = FALSE)
+write.csv(huizenprijzen, "data 2.0/nieuw_Huizenprijzen_per_woningtype.csv" , row.names = FALSE)
 ```
 
 
-```{r}
-#Here we start joining datasets.
-huizenprijzen <- read_csv("data/Huizenprijzen_per_woningtype_nieuw.csv")
-inkomen <- read_csv("data/bruto_en_besteedbaar_inkomen_leeftijdsgroep.csv")
-colnames(huizenprijzen)
-colnames(inkomen)
-grafiek <- inner_join(huizenprijzen, inkomen, by  c("jaren" = "V")
-head(grafiek)
-```
 
-These are things that are usually included in the metadata of the dataset. For your project, you need to provide us with the information from your metadata that we need to understand your dataset of choice.
 
 ## 2.3 Describe the type of variables included
 
@@ -211,15 +350,23 @@ While these administrative datasets are highly reliable, we face several limitat
 Say we want to include only larger distances (above 2) in our dataset, we can filter for this.
 
 ```{r data_cleaning}
+ 
 #Start joining dataset inflatie_nieuw and Welvaart_van_huishoudens_kerncijfers_nieuw
-welvaart <- read_csv("data/Welvaart_van_huishoudens_kerncijfers_nieuw.csv")
-welvaart <- welvaart %>%
-  mutate(Jaartal = as.numeric(Jaartal))
-inflatie <- read_csv("data/Inflatie_nieuw.csv")
+welvaart <- read_csv("data 2.0/Welvaart_van_huishoudens_kerncijfers_nieuw.csv")
+inflatie <- read_csv("data 2.0/Inflatie_nieuw.csv")
 result <- left_join(welvaart, inflatie, by = "Jaartal")
-head(result)
-
+write.csv2(result,"data 2.0/Samenvoeging1.csv" , row.names = FALSE)
 ```
+
+```{r}
+#Start joining dataset Samenvoeging1 and bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv
+samenvoeging <- read_csv("data 2.0/Samenvoeging1.csv")
+brutoinkomen <- read_csv("data 2.0/bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv")
+samenvoeging2 <- left_join(brutoinkomen, samenvoeging, by = "Jaartal")
+write.csv(samenvoeging2, "data 2.0/Samenvoeging2.csv" , row.names = FALSE)
+```
+
+
 
 Please use a separate 'R block' of code for each type of cleaning. So, e.g. one for missing values, a new one for removing unnecessary variables etc.
 
@@ -253,23 +400,6 @@ Here you provide a description of why the plot above is relevant to your specifi
 
 ## 3.5 Visualize sub-population variation
 
-What is the poverty rate by state?
-
-```{r visualise_subpopulations}
-dataset$inmetro <- dataset$inmetro %>% as.factor()
-# Boxplot of poverty rate by state using the 'midwest' dataset
-ggplot(dataset, aes(x = inmetro, y = percadultpoverty)) +
-  geom_boxplot() +
-  labs(
-    title = "Distribution of Poverty Rates by Metropolitan status (Midwest counties)",
-    x = "Metropolitan Area",
-    y = "Poverty Rate of Adults (%)"
-  ) +
-  theme_minimal() +
-  theme(
-    legend.position = "right"
-  )
-```
 
 Here you provide a description of why the plot above is relevant to your specific social problem.
 
