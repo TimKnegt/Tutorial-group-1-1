@@ -244,7 +244,7 @@ Bestaande_koopwoningen_verkoopprijzen_woningtype <- Bestaande_koopwoningen_verko
 
 The next thing we are curious about is how the growth of the population of young adults in the Netherlands relate to the growth of housing. By comparing this two variables over time we hope to gain insight into why there is such a shortage of housing.
 
-To get started we will change the dataset containing the information about population growth and rename the collums using the rename() function, so it is easier to comprehend. After that we only select the usefull information via transmute(). And lastly we put the variable for time in the first collum to improve the look of the table.
+To get started we will change the dataset containing the information about population growth and rename the columns using the rename() function, so it is easier to comprehend. After that we only select the useful information via transmute(). And lastly we put the variable for time in the first columns to improve the look of the table.
 ```{r}
 #Here we modify the dataset bevolkingsgroei to only keep the relevant information and use the right years.
 bevolkingsgroei <-read.csv("data/Bevolkingsgroei_opbouw_2005_2019.csv")
