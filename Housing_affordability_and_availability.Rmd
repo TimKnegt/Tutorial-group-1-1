@@ -48,7 +48,7 @@ The Dutch housing market has changed significantly over the past two decades. Fo
 This research examines how housing affordability and availability for young adults in the Netherlands changed between 2005 and 2025. It focuses on trends in house prices, rental costs, incomes and housing shortages to understand the main developments during this period.
 
 
-Use APA referencing throughout your document. [Here's a link to some explanation.](https://www.mendeley.com/guides/apa-citation-guide/)
+
 
 ## 1.1 Describe the Social Problem
 The Dutch housing market has become increasingly inaccessible for young adults, making the move toward independent living far more difficult. This is socially relevant because stable and affordable housing is a foundation for financial independence, mental well‑being, and equal life opportunities. When young people cannot secure a home, they delay major life steps such as studying, working full‑time, or forming households—effects that ripple through society. The OECD notes that the Netherlands is among the countries where young adults face the greatest barriers to affordable housing due to rising prices and persistent shortages (OECD, 2023).
@@ -65,7 +65,7 @@ Include the following:
 
 ## 2.1 Load in the data
 
-Preferably from a URL, but if not, make sure to download the data and store it in a shared location that you can load the data in from. Do not store the data in a folder you include in the Github repository!
+
 
 ```{r loading_data}
 
@@ -77,9 +77,7 @@ Preferably from a URL, but if not, make sure to download the data and store it i
 # trendgrafieken per provincie Huizenprijzen/voorraad
 
 ```{r}
-library(tidyverse)
-library(janitor)
-library(scales)
+
 
 # data inladen
 df <- read_csv("data 2.0/Huizenprijzen_Huizenvoorraad_nieuw.csv") |> 
@@ -171,8 +169,29 @@ huizenvoorraad <- huizenvoorraad %>%
   rename(Nieuwbouw = Bouwen.en.wonen.Woningvoorraad.Nieuwbouw..aantal.) %>%
   select(Jaartal, Provincies, Woningvoorraad_1_januari, Nieuwbouw)
   
-  write.csv(huizenvoorraad, "data 2.0/Huizenprijzen_Huizenvoorraad_nieuw.csv", row.names = FALSE)
+tabel_per_jaar <- huizenvoorraad %>%
+  group_by(Jaartal) %>%
+  summarise(
+    Woningvoorraad_1_januari = sum(Woningvoorraad_1_januari, na.rm = TRUE),
+    huizenvoorraad = sum(Nieuwbouw, na.rm = TRUE)
+  )
+  write.csv(tabel_per_jaar, "data 2.0/Huizenvoorraad_nieuw.csv", row.names = FALSE)
 ```
+
+```{r}
+#Here we order the dataset to remove that it is grouped per function.
+#nieuwbouw <- read.csv("data 2.0/Huizenprijzen_Huizenvoorraad_nieuw.csv")
+
+#tabel_per_jaar <- nieuwbouw %>%
+ # group_by(Jaartal) %>%
+ # summarise(
+  #  Woningvoorraad_1_januari = sum(Woningvoorraad_1_januari, na.rm = TRUE),
+  #  Nieuwbouw = sum(Nieuwbouw, na.rm = TRUE)
+#  )
+#write.csv(tabel_per_jaar,"data 2.0/Huizenvoorraad_nieuw.csv")
+```
+
+
 In the dataset bruto_en_besteedbaar_inkomen_leeftijdsgroep, the rows were split into BRUTO INKOMEN and BESTEEDBAAR INKOMEN. However, this was very difficult to analyse and merge later on, so we found it necessary to ask Gemini (chatbot) for assistance. As a result, we created the bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw. 
 
 ```{r}
@@ -205,7 +224,9 @@ Bestaande_koopwoningen_verkoopprijzen_woningtype <- Bestaande_koopwoningen_verko
   write.csv(Bestaande_koopwoningen_verkoopprijzen_woningtype, "data 2.0/Bestaande_koopwoningen_verkoopprijzen_woningtype_nieuw.csv", row.names = FALSE)
 ```
 
+The next thing we are curious about is how the growth of the population of young adults in the Netherlands relate to the growth of housing. By comparing this two variables over time we hope to gain insight into why there is such a shortage of housing.
 
+To get started we will change the dataset containing the information about population growth and rename the collums using the rename() function, so it is easier to comprehend. After that we only select the usefull information via transmute(). And lastly we put the variable for time in the first collum to improve the look of the table.
 ```{r}
 #Here we modify the dataset bevolkingsgroei to only keep the relevant information and use the right years.
 bevolkingsgroei <-read.csv("data/Bevolkingsgroei_opbouw_2005_2019.csv")
@@ -219,18 +240,7 @@ bevolkingsgroei <- bevolkingsgroei %>%
 write.csv(bevolkingsgroei, "data 2.0/Bevolkingsgroei_nieuw.csv", row.names = FALSE)
 ```
 
-```{r}
-#Here we order the dataset to remove that it is grouped per function.
-nieuwbouw <- read.csv("data 2.0/Huizenprijzen_Huizenvoorraad_nieuw.csv")
 
-tabel_per_jaar <- nieuwbouw %>%
-  group_by(Jaartal) %>%
-  summarise(
-    Woningvoorraad_1_januari = sum(Woningvoorraad_1_januari, na.rm = TRUE),
-    Nieuwbouw = sum(Nieuwbouw, na.rm = TRUE)
-  )
-write.csv(tabel_per_jaar,"data 2.0/Huizenvoorraad_nieuw.csv")
-```
 
 ```{r}
 #Here we merge the datasets
