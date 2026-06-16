@@ -135,6 +135,56 @@ ggplot(df_intensiteit, aes(jaartal, per_1000)) +
 we put the data into three charts, because housing stock and new construction are actually two different things. The stock is the total number of homes that exist, and new construction is what gets added each year. Putting those two together in one chart with the same index would be a bit misleading, because the stock rises slowly while new construction jumps up and down a lot from year to year.
 In the first chart we set the stock per province to 2005 = 100. That way you can compare the provinces fairly, even though some are much bigger than others. In the second chart I added up new construction nationally per year and put a dashed line at 100,000, because that's the number the government wants to build each year. One thing that's important though: my figures are only about actual new construction, while that government target also counts things like offices being turned into homes. So the line is more of a lower limit than an exact comparison. The third chart shows building intensity, so new construction per 1,000 existing homes. That takes the size of a province into account, which lets you compare the building pace more fairly. I left 2025 out everywhere for new construction, because that value isn't in the dataset.
 
+```{r}
+library(jsonlite)
+
+# voorraadgroei per provincie (2005 -> laatste jaar)
+groei <- df |> 
+  group_by(provincie) |> 
+  arrange(jaartal) |> 
+  summarise(groei_pct = (last(woningvoorraad_1_januari) / first(woningvoorraad_1_januari) - 1) * 100)
+
+# provinciegrenzen als GeoJSON inlezen (geen sf nodig)
+geo <- fromJSON("https://cartomap.github.io/nl/wgs84/provincie_2023.geojson",
+                simplifyVector = FALSE)
+
+# GeoJSON platslaan naar een long data frame met long/lat per polygoon
+rows <- list(); g <- 0
+for (f in geo$features) {
+  naam   <- f$properties$statnaam
+  coords <- f$geometry$coordinates
+  polys  <- if (f$geometry$type == "Polygon") list(coords) else coords  # alles -> lijst van polygonen
+  for (poly in polys) for (ring in poly) {
+    g <- g + 1
+    m <- matrix(unlist(ring), ncol = 2, byrow = TRUE)   # ring -> matrix van [lon, lat]
+    rows[[length(rows) + 1]] <- data.frame(provincie = naam, long = m[,1], lat = m[,2], group = g)
+  }
+}
+prov_df <- do.call(rbind, rows)
+
+# grenzen koppelen aan de groeicijfers (merge op naam; spelling klopt 1-op-1)
+plotdata <- prov_df |> left_join(groei, by = "provincie")
+
+# ruwe labelposities (gemiddelde van de hoekpunten per provincie)
+labels <- plotdata |> 
+  group_by(provincie) |> 
+  summarise(long = mean(long), lat = mean(lat), .groups = "drop")
+
+# choropleth tekenen
+ggplot(plotdata, aes(long, lat, group = group, fill = groei_pct)) +
+  geom_polygon(color = "white", linewidth = 0.2) +
+  geom_text(data = labels, aes(long, lat, label = provincie),
+            inherit.aes = FALSE, size = 2.3, color = "grey20") +
+  coord_quickmap() +                                  # juiste verhouding zonder sf
+  scale_fill_viridis_c(option = "C") +
+  labs(title = "Housing stock growth per province (2005–2025)",
+       caption = "Source: own analysis; province boundaries via CBS/cartomap",
+       fill = "Growth (%)") +
+  theme_void()
+```
+#interpetation
+The map shows a clear centre–periphery gradient. Growth is highest in the centrally located provinces Flevoland (+34%) and Utrecht (+30%) and lowest in the peripheral ones, with Limburg in the far southeast (+13%) and the coastal provinces Zeeland and Fryslân (around +15%) at the bottom. In other words, the housing stock expanded fastest exactly where demand from students and young workers is highest, so the added supply did little to ease pressure in the most strained regions.
+
 
 ```{r}
 
