@@ -8,17 +8,19 @@ output: pdf_document
 # Set-up your environment
 
 ```{r package_install, include=FALSE}
-install.packages("tidyverse")
-install.packages("yaml")
-install.packages("rmarkdown")
-install.packages("readr")
-install.packages("dplyr")
-install.packages("ggplot2")
-install.packages(c(
-  "geodata", "terra", 
-  "janitor", "scales", "patchwork"))
-install.packages("tinytex")
-tinytex::install_tinytex()
+# install.packages("tidyverse")
+# install.packages("yaml")
+# install.packages("rmarkdown")
+# install.packages("readr")
+# install.packages("dplyr")
+# install.packages("ggplot2")
+# install.packages(c(
+#   "geodata", "terra", 
+#   "janitor", "scales", "patchwork"))
+# install.packages("tinytex")
+
+
+
 ```
 
 ```{r packages}
@@ -33,6 +35,7 @@ library(terra)
 library(janitor)
 library(scales)
 library(patchwork)
+library(tinytex)
 
 ```
 
@@ -212,21 +215,6 @@ write.csv(welvaart, "data 2.0/Welvaart_van_huishoudens_kerncijfers_nieuw.csv", r
 
 In the dataset bruto_en_besteedbaar_inkomen_leeftijdsgroep, the rows were split into BRUTO INKOMEN and BESTEEDBAAR INKOMEN. However, this was very difficult to analyse and merge later on, so we found it necessary to ask Gemini (chatbot) for assistance. As a result, we created the bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw. 
 
-```{r}
-#Here we modify the dataset bruto_en_besteedbaar_inkomen_leeftijdsgroep
-inkomen <- read.csv("data/bruto_en_besteedbaar_inkomen_leeftijdsgroep.csv")
-inkomen <- inkomen %>%
-  slice(-1) %>%
-  rename(Inkomensbronnen = V1) %>%
-  rename(Jaren = V3) %>%
-  rename(Kenmerken_van_huishoudens = V2) %>%
-  rename(Particuliere_huishoudens_x1000 = V4) %>%
-  rename(Totaal_inkomen_mln.euro = V5) %>%
-  rename(Gemiddeld_inkomen_1000.euro = V6) %>%
-  rename(Mediaan_inkomen_1000.euro = V7) %>%
-  select(Inkomensbronnen, Jaren, Kenmerken_van_huishoudens, Particuliere_huishoudens_x1000, Totaal_inkomen_mln.euro, Gemiddeld_inkomen_1000.euro, Mediaan_inkomen_1000.euro)
-write.csv(inkomen, "data 2.0/bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv", row.names = FALSE)
-```
 
 ```{r}
 #Here we modify the dataset Bestaand_koopwoningen verkoopprijzen
@@ -295,7 +283,7 @@ write.csv(bevolkingsgroei_nieuwbouw, "data 2.0/bevolkingsgroei_nieuwbouw")
 bevolkingsgroei_nieuwbouw <- read.csv("data 2.0/bevolkingsgroei_nieuwbouw")
 # d
 scale_factor <- max(bevolkingsgroei_nieuwbouw$jong_volwassenen_20_tot_45_jaar, na.rm = TRUE) /
-                max(bevolkingsgroei_nieuwbouw$Nieuwbouw, na.rm = TRUE)
+                max(bevolkingsgroei_nieuwbouw$huizenvoorraad, na.rm = TRUE)
 
 ggplot(bevolkingsgroei_nieuwbouw, aes(x = Jaartal)) +
 
@@ -312,13 +300,13 @@ ggplot(bevolkingsgroei_nieuwbouw, aes(x = Jaartal)) +
   ) +
   # right axis(newly built homes)
   geom_line(
-    aes(y = Nieuwbouw * scale_factor,
+    aes(y = huizenvoorraad * scale_factor,
         color = "New houses built per year"),
     linewidth = 1.3,
     linetype = "dashed"
   ) +
   geom_point(
-    aes(y = Nieuwbouw * scale_factor,
+    aes(y = huizenvoorraad * scale_factor,
         color = "New houses built per year"),
     size = 2
   ) +
