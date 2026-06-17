@@ -215,21 +215,6 @@ write.csv(welvaart, "data 2.0/Welvaart_van_huishoudens_kerncijfers_nieuw.csv", r
 
 In the dataset bruto_en_besteedbaar_inkomen_leeftijdsgroep, the rows were split into BRUTO INKOMEN and BESTEEDBAAR INKOMEN. However, this was very difficult to analyse and merge later on, so we found it necessary to ask Gemini (chatbot) for assistance. As a result, we created the bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw. 
 
-```{r}
-#Here we modify the dataset bruto_en_besteedbaar_inkomen_leeftijdsgroep
-inkomen <- read.csv("data/bruto_en_besteedbaar_inkomen_leeftijdsgroep.csv")
-inkomen <- inkomen %>%
-  slice(-1) %>%
-  rename(Inkomensbronnen = V1) %>%
-  rename(Jaren = V3) %>%
-  rename(Kenmerken_van_huishoudens = V2) %>%
-  rename(Particuliere_huishoudens_x1000 = V4) %>%
-  rename(Totaal_inkomen_mln.euro = V5) %>%
-  rename(Gemiddeld_inkomen_1000.euro = V6) %>%
-  rename(Mediaan_inkomen_1000.euro = V7) %>%
-  select(Inkomensbronnen, Jaren, Kenmerken_van_huishoudens, Particuliere_huishoudens_x1000, Totaal_inkomen_mln.euro, Gemiddeld_inkomen_1000.euro, Mediaan_inkomen_1000.euro)
-write.csv(inkomen, "data 2.0/bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv", row.names = FALSE)
-```
 
 ```{r}
 #Here we modify the dataset Bestaand_koopwoningen verkoopprijzen
