@@ -348,7 +348,7 @@ ggplot(bevolkingsgroei_nieuwbouw, aes(x = Jaartal)) +
   theme(
     plot.title = element_text(face = "bold", size = 18),
     plot.subtitle = element_text(size = 12),
-    axis.text.x = element_text(size = 10),
+    axis.text.x = element_text(size = 7),
     legend.position = "top"
   )
          
