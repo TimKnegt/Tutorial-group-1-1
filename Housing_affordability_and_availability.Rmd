@@ -8,17 +8,19 @@ output: pdf_document
 # Set-up your environment
 
 ```{r package_install, include=FALSE}
-install.packages("tidyverse")
-install.packages("yaml")
-install.packages("rmarkdown")
-install.packages("readr")
-install.packages("dplyr")
-install.packages("ggplot2")
-install.packages(c(
-  "geodata", "terra", 
-  "janitor", "scales", "patchwork"))
-install.packages("tinytex")
-tinytex::install_tinytex()
+# install.packages("tidyverse")
+# install.packages("yaml")
+# install.packages("rmarkdown")
+# install.packages("readr")
+# install.packages("dplyr")
+# install.packages("ggplot2")
+# install.packages(c(
+#   "geodata", "terra", 
+#   "janitor", "scales", "patchwork"))
+# install.packages("tinytex")
+
+
+
 ```
 
 ```{r packages}
@@ -33,6 +35,7 @@ library(terra)
 library(janitor)
 library(scales)
 library(patchwork)
+library(tinytex)
 
 ```
 
