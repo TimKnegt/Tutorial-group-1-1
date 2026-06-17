@@ -445,13 +445,13 @@ af_newvariable <- af_finaldataset %>%
 write.csv(af_newvariable, "data 2.0/Final_dataset_2.csv", row.names = FALSE)
 ```
 
-Another variable that is valuable, especially in a comparison with the nominal maximum mortgage loan, is the real maximum mortgage loan. In order to calculate this, we set the year 2024 as the base year. In this year, the nominal value is equal to the real value. The real maximum mortgage loan is adjusted for inflation and clearly proves the money illusion and the sudden shocks. In order to create the extra column, it is necessary to use the cumprod() function, as the inflation has to be calculate cumulative.
+Another variable that is valuable, especially in comparison with the nominal maximum mortgage loan, is the real maximum mortgage loan. In order to calculate this, we set the year 2024 as the base year and set the adjustment factor to 1 in 2024. In this year, the nominal value is equal to the real value. The adjustment factor quantifies how much prices have risen with base year of 2024. The real maximum mortgage loan is adjusted for inflation and clearly proves the money illusion and the sudden inflation shocks. In order to create the extra column, it is necessary to use the cumprod() function, as prices rise exponential.
 
 ```{r gen_var2}
-af_extravariable <- af_newvariable %>%
+af_extranewvariable <- af_newvariable %>%
   arrange (Jaartal) %>%
-  mutate (prijs_index_2011 = cumprod((1 + Inflatie)/100 , )
-
+  mutate (price_index_2011 = cumprod(1 + (Inflatie/100)) , adjustment_factor_2024 = price_index_2011 [Jaartal == 2024] / price_index_2011, Max_real_mortgage_loan_1000.euro = Max_nominal_mortgage_loan_1000.euro * adjustment_factor_2024 )
+write.csv(af_extranewvariable, "data 2.0/Final_dataset_with_new_variables.csv", row.names = FALSE)
 ```
 
 ## 3.3 Visualize temporal variation
