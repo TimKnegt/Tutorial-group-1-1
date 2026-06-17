@@ -452,7 +452,12 @@ The first, necessary variable added is the maximal nominal mortgage loan that yo
 The Netherlands has one of the highest mortgage debts of Europe, which states that the Dutch housing market is really dependent on credits (DNB, n.d.). Because the Dutch housing market for buyers is fundamentally credit-driven and reliant on the LTI, variables solely addressing income are not enough to model the maximum purchasing capacity of young adults. However, this nominal borrowing ceiling is the variable that can demonstrate the maximum buying capacity of young adults. Moreover, this variable can be rightfully compared to the housing prices. All in all, the maximal nominal mortgage loan more or less serves as the baseline for the study regarding housing affordability. 
 
 ```{r gen_var1}
-
+af_finaldataset <- read_csv("data 2.0/Final_dataset.csv")
+af_newvariable <- af_finaldataset %>%
+  mutate(Max_nominal_mortgage_loan_1000.euro = Mediaan_bruto_inkomen_1000.euro * 4.5)
+af_newvariable %>% 
+  select(Jaartal, Mediaan_bruto_inkomen_1000.euro, Max_nominal_mortgage_loan_1000.euro)
+write.csv(af_newvariable, "data 2.0/Final_dataset_2.csv", row.names = FALSE)
 ```
 
 Variable 2
