@@ -17,15 +17,17 @@ install.packages("ggplot2")
 install.packages(c(
   "geodata", "terra", 
   "janitor", "scales", "patchwork"))
+install.packages("tinytex")
+tinytex::install_tinytex()
 ```
 
 ```{r packages}
-require(tidyverse)
-require(rmarkdown)
-require(yaml)
-require(readr)
-require(dplyr)
-require(ggplot2)
+library(tidyverse)
+library(rmarkdown)
+library(yaml)
+library(readr)
+library(dplyr)
+library(ggplot2)
 library(geodata)
 library(terra)
 library(janitor)
@@ -108,7 +110,7 @@ ggplot(df_nat, aes(jaartal, nieuwbouw)) +
   scale_x_continuous(breaks = seq(2005, 2024, 3)) +
   scale_y_continuous(limits = c(0, 110000), labels = comma) +
   labs(title = "New housing construction remains below target",
-       x = "Year", y = "Number of new-build homes") +
+       x = "Year", y = "Number of new-built homes") +
   theme_minimal()
 
 df_intensiteit <- df |> 
@@ -120,7 +122,7 @@ ggplot(df_intensiteit, aes(jaartal, per_1000)) +
   facet_wrap(~ provincie) +
   scale_x_continuous(breaks = seq(2005, 2024, 5)) +
   labs(title = "Construction intensity by province",
-       x = "", y = "New-build homes per 1,000") +
+       x = "", y = "New-built homes per 1,000") +
   theme_minimal()
 
 ```
