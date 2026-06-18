@@ -1,8 +1,6 @@
 ---
 title: "The change of affordability and availability in the housing market for young adults in the Netherlands from 2005 until 2025."
 author: "Björn Hildering 2887258, Tim Knegt 2882977, Willem van Beuningen 2787054, Robin Versnel 2862644, Seeger Tromp, Jaydane Levant 2851422"
-tutorial group 1
-C. Schouwenaar
 date: "`r Sys.Date()`"
 output: pdf_document
 ---
@@ -42,6 +40,8 @@ library(tinytex)
 ```
 
 
+tutorial group 1
+C. Schouwenaar
 # Part 1 - Identify a Social Problem
 The Dutch housing market has changed significantly over the past two decades. For young adults, finding suitable housing has become increasingly difficult due to rising house prices, higher rents, and a continuing housing shortage (Nederlands Jeugdinstituut, n.d.). As a result, many young people struggle to enter the housing market.
 
@@ -73,7 +73,6 @@ inflatie <- read.csv("data/Inflatie.csv")
 welvaart <- read.csv("data/Welvaart_van_huishoudens__kerncijfers.csv")
 bevolkingsgroei <-read.csv("data/Bevolkingsgroei_opbouw_2005_2019.csv")
 Bestaande_koopwoningen_verkoopprijzen_woningtype <- read.csv("data/Bestaande_koopwoningen_verkoopprijzen_woningtype.csv")
-bruto_en_besteedbaar_inkomen <- read.csv("data/bruto_en_besteedbaar_inkomen_leeftijdsgroep.csv")
 brutoinkomen <- read_csv("data 2.0/bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv")
 
 ```
@@ -161,14 +160,14 @@ write.csv(samenvoeging2, "data 2.0/Final_dataset.csv", row.names = FALSE)
 To get started we will change the dataset containing the information about population growth and rename the columns using the rename() function, so it is easier to comprehend. After that we only select the useful information via transmute(). And lastly we put the variable for time in the first columns to improve the look of the table.
 ```{r}
 #Here we modify the dataset bevolkingsgroei to only keep the relevant information and use the right years.
-bevolkingsgroei <- bevolkingsgroei %>%
+bevolkingsgroei_nieuw <- bevolkingsgroei %>%
   rename( jong_volwassenen_20_tot_45_jaar = Bevolking.op.1.januari.Naar.leeftijd.20.tot.45.jaar..x.1.000.) %>%
   transmute(jong_volwassenen_20_tot_45_jaar) %>%
   mutate(Jaar = 2005:2019) %>%
   relocate(Jaar) %>%
   rename(Jaartal = Jaar)
 
-write.csv(bevolkingsgroei, "data 2.0/Bevolkingsgroei_nieuw.csv", row.names = FALSE)
+write.csv(bevolkingsgroei_nieuw, "data 2.0/Bevolkingsgroei_nieuw.csv", row.names = FALSE)
 ```
 
 The next part is dedicated to gather information about the number of new houses being built in the Netherlands. In the first part of code we again change collumn names and select the useful comments.
@@ -196,8 +195,8 @@ tabel_per_jaar <- huizenvoorraad %>%
 Now that we have two clear datasets we still need to merge them to be able to plot them into the same graph. We decided to join the two datasets on using years, since we want to look at the change over time and the trend that is going on. We used the left join to join the newly built housing dataset onto the population growth dataset. We did this because the first named spands across the least amount of years. Using the left join we ensure that we don't get Na's where we do not want them.
 ```{r}
 #Here we merge the datasets
-bevolkingsgroei_nieuwbouw <- left_join(bevolkingsgroei, tabel_per_jaar, by = "Jaartal")
-write.csv(bevolkingsgroei_nieuwbouw, "data 2.0/bevolkingsgroei_nieuwbouw")
+bevolkingsgroei_nieuwbouw <- left_join(bevolkingsgroei_nieuw, tabel_per_jaar, by = "Jaartal")
+write.csv(bevolkingsgroei_nieuwbouw, "data 2.0/bevolkingsgroei_nieuwbouw.csv")
 
 ```
 
@@ -229,7 +228,7 @@ write.csv(af_extranewvariable, "data 2.0/Final_dataset_with_new_variables.csv", 
 ```{r}
 #Here we create a graph to compare the amount of new houses built and the population growth of young adults.
 
-bevolkingsgroei_nieuwbouw <- read.csv("data 2.0/bevolkingsgroei_nieuwbouw")
+bevolkingsgroei_nieuwbouw <- read.csv("data 2.0/bevolkingsgroei_nieuwbouw.csv")
 # d
 scale_factor <- max(bevolkingsgroei_nieuwbouw$jong_volwassenen_20_tot_45_jaar, na.rm = TRUE) /
                 max(bevolkingsgroei_nieuwbouw$huizenvoorraad, na.rm = TRUE)
