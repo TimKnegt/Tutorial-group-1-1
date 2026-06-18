@@ -183,6 +183,21 @@ result <- left_join(welvaart, inflatie, by = "Jaartal")
 write.csv2(result,"data 2.0/Samenvoeging1.csv" , row.names = FALSE)
 ```
 
+```{r}
+#Start joining dataset Samenvoeging1 and bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv
+samenvoeging <- read_csv2("data 2.0/Samenvoeging1.csv")
+samenvoeging2 <- left_join(brutoinkomen, samenvoeging, by = "Jaartal")
+write.csv(samenvoeging2, "data 2.0/Samenvoeging2.csv" , row.names = FALSE)
+head(samenvoeging2)
+```
+
+```{r}
+#Deleting a column that was mentioned twice
+samenvoeging2 <- read.csv("data 2.0/Samenvoeging2.csv")
+samenvoeging2 <- samenvoeging2 %>%
+  select (-leeftijd_kostwinner)
+write.csv(samenvoeging2, "data 2.0/Final_dataset.csv", row.names = FALSE)
+```
 
 #Chapter 4: Housing availability
 
@@ -387,21 +402,6 @@ The map shows a clear centre–periphery pattern. Growth is highest in the centr
 
 #Chapter 5 Housing affordability
 ##Temporal variation
-```{r}
-#Start joining dataset Samenvoeging1 and bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv
-samenvoeging <- read_csv2("data 2.0/Samenvoeging1.csv")
-samenvoeging2 <- left_join(brutoinkomen, samenvoeging, by = "Jaartal")
-write.csv(samenvoeging2, "data 2.0/Samenvoeging2.csv" , row.names = FALSE)
-head(samenvoeging2)
-```
-
-```{r}
-#Deleting a column that was mentioned twice
-samenvoeging2 <- read.csv("data 2.0/Samenvoeging2.csv")
-samenvoeging2 <- samenvoeging2 %>%
-  select (-leeftijd_kostwinner)
-write.csv(samenvoeging2, "data 2.0/Final_dataset.csv", row.names = FALSE)
-```
 ## 5.1 Variables
 
 The first, necessary variable added is the maximal nominal mortgage loan that young adults can loan at the bank. The maximal nominal mortgage loan is based on the LTI and the median gross income. The LTI (Loan-to-Income) is the ratio between the gross income and the mortgage loan. This ratio decides the maximum amount that can be borrowed, which usually is around 4.5 times the gross income in the Netherlands (Homefinance Hypotheken, n.d.). The choice to use the median gross income over the average gross income is supported by the fact that the mean usually is distorted by high extremes, whilst the median gives a representative reflection of the "typical" young adult. 
