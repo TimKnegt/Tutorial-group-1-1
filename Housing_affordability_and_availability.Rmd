@@ -61,7 +61,7 @@ bevolkingsgroei <-read.csv("data/Bevolkingsgroei_opbouw_2005_2019.csv")
 huizenvoorraad <-read.csv("data/Huizenprijzen_Huizenvoorraad.csv")
 Bestaande_koopwoningen_verkoopprijzen_woningtype <- read.csv("data/Bestaande_koopwoningen_verkoopprijzen_woningtype.csv")
 brutoinkomen <- read_csv("data 2.0/bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv")
-Huizenprijzen & Huizenvoorraad per provincie <- read_csv("data 2.0/Huizenprijzen_Huizenvoorraad_nieuw.csv")
+Huizenprijzen_en_Huizenvoorraad_per_provincie <- read_csv("data 2.0/Huizenprijzen_Huizenvoorraad_nieuw.csv")
 
 ```
 
@@ -92,13 +92,14 @@ While these administrative datasets are highly reliable, we face several limitat
 # Chapter 3 - Quantifying
 
 ## 3.1 Data cleaning
-We clean all of our datasets to make it more clear and simplified. We do this because by default some have strange and long titles that make it hard to work with. In this part we use 4 function to clean up and/or merge each dataset.
+We clean all of our datasets to make it more clear and simplified. We do this because by default some have strange and long titles that make it hard to work with. In this part we use 5 functions to clean up and/or merge each dataset.
 
 1) rename() : to change the column titles.
 2) select() : to select only the useful information.
 3) group_by() : to split the datagroups based on a variable.
 4) summarise() : to group the right data togther.
 4) left_join() : to join datasets together.
+5) pivot_wider(): to widen datasets.
 ```{r}
 #Here we modify the dataset bevolkingsgroei to only keep the relevant information and use the right years.
 bevolkingsgroei_nieuw <- bevolkingsgroei %>%
@@ -166,8 +167,16 @@ Bestaande_koopwoningen_verkoopprijzen_woningtype <- Bestaande_koopwoningen_verko
 ```
 
 ```{r}
+#Here we transform the dataset from a long format into a wide format, so it will be easier to merge
+d_widened <- Bestaande_koopwoningen_verkoopprijzen_woningtype %>%
+  filter (Jaartal >= 2011 & Jaartal <= 2024) %>%
+  pivot_wider(names_from = Woningtype, values_from = c(Aantal_verkochte_woningen, Gemiddelde_verkoopprijs_euro), names_glue = "{.value}_{Woningtype}")
+write.csv(d_widened, "data 2.0/Bestaande_koopwoningen_widened_nieuw.csv", row.names = FALSE)
+```
+
+```{r}
  
-#Start joining dataset inflatie_nieuw and Welvaart_van_huishoudens_kerncijfers_nieuw
+#Start merging dataset inflatie_nieuw and Welvaart_van_huishoudens_kerncijfers_nieuw
 welvaart <- read_csv("data 2.0/Welvaart_van_huishoudens_kerncijfers_nieuw.csv")
 inflatie <- read_csv("data 2.0/Inflatie_nieuw.csv")
 result <- left_join(welvaart, inflatie, by = "Jaartal")
