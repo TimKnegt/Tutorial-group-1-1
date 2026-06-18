@@ -263,7 +263,7 @@ ggplot(bevolkingsgroei_nieuwbouw, aes(x = Jaartal)) +
 ```
 One thing to keep in mind beforehand is that New houses built, is a yearly growth variable and the population is the total population of the young adults in that year.
 
-Taking this into account, we can see that there is a subtle downward trend in the population of young adults in the Netherlands. This trend is similar to other countries in Europe and is mainly caused by falling birth rates(Krzysztoszek, 2025). The other key thing to take away is that after 2009 the building of new houses declined rapidly until 2014. The shocks are of this brief decline are still felt years later. This decline is caused by the uncertainty after the credit crisis of 2008(Liefting & Berkhout, 2025). After 2014 we see an upward trend, but not by enough to compensate for the temporal decline.
+Taking this into account, we can see that there is a subtle downward trend in the population of young adults in the Netherlands. This trend is similar to other countries in Europe and is mainly caused by falling birth rates(Krzysztoszek, 2025). The other key thing to take away is that after 2009 the building of new houses declined rapidly until 2014. The shocks are of this brief decline are still felt years later. This decline is caused by one event. Namely the credit crisis of 2008. the uncertainty after this crisis causes slow down of building in the Netherlands(Liefting & Berkhout, 2025). After 2014 we see an upward trend, but not by enough to compensate for the temporal decline.
 
 Unfortunately we could not find numbers of population growth of this age group after 2019, so our analysis is limited in this area. Our expectations are however that the population will remain approximately equal. Our expectations of new houses being built are quite different. This is mainly based on the "stikstofcrisis". Thus, we expect less houses to built from 2019-2026(Liefting & Berkhout, 2025).
 
@@ -377,7 +377,7 @@ The map shows a clear centre–periphery pattern. Growth is highest in the centr
 
 
 #Chapter 5 Housing affordability
-
+##Temporal variation
 ```{r}
 #Start joining dataset Samenvoeging1 and bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv
 samenvoeging <- read_csv2("data 2.0/Samenvoeging1.csv")
