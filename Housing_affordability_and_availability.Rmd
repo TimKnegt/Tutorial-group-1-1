@@ -1,6 +1,8 @@
 ---
 title: "The change of affordability and availability in the housing market for young adults in the Netherlands from 2005 until 2025."
 author: "Björn Hildering 2887258, Tim Knegt 2882977, Willem van Beuningen 2787054, Robin Versnel 2862644, Seeger Tromp, Jaydane Levant 2851422"
+tutorial group 1
+C. Schouwenaar
 date: "`r Sys.Date()`"
 output: pdf_document
 ---
@@ -39,13 +41,6 @@ library(tinytex)
 
 ```
 
-# Title Page
-
-Include your names
-
-Include the tutorial group number
-
-Include your tutorial lecturer's name
 
 # Part 1 - Identify a Social Problem
 The Dutch housing market has changed significantly over the past two decades. For young adults, finding suitable housing has become increasingly difficult due to rising house prices, higher rents, and a continuing housing shortage (Nederlands Jeugdinstituut, n.d.). As a result, many young people struggle to enter the housing market.
@@ -309,7 +304,7 @@ ggplot(bevolkingsgroei_nieuwbouw, aes(x = Jaartal)) +
   ) +
   scale_y_continuous(
     #left axis
-    name = "Young adults (20-45 years old)",
+    name = "Young adults (20-45 years old) x1000",
     limits = c(3000, 6000),
     labels = label_number(big.mark = ".", decimal.mark = ","),
     breaks = c(3000, 4000, 5000, 6000),
@@ -355,20 +350,11 @@ ggplot(bevolkingsgroei_nieuwbouw, aes(x = Jaartal)) +
          
          
 ```
+One thing to keep in mind beforehand is that New houses built, is a yearly growth variable and the population is the total population of the young adults in that year.
 
-``` r
-inline_code = TRUE
-```
+Taking this into account, we can see that there is a subtle downward trend in the population of young adults in the Netherlands. This trend is similar to other countries in Europe and is mainly caused by falling birth rates(Krzysztoszek, 2025). The other key thing to take away is that after 2009 the building of new houses declined rapidly until 2014. The shocks are of this brief decline are still felt years later. This decline is caused by the uncertainty after the credit crisis of 2008(Liefting & Berkhout, 2025). After 2014 we see an upward trend, but not by enough to compensate for the temporal decline.
 
-```{r}
-#Here we modify the dataset Huizenprijzen_verschillende_woningtypes
-huizenprijzen <- read_csv("data/Huizenprijzen_verschillende_woningtypes.csv")
-names(huizenprijzen)[names(huizenprijzen) == "Perioden"] <- "Jaren"
-names(huizenprijzen)[names(huizenprijzen) == "Type.woning"] <- "Woningtype"
-names(huizenprijzen)[names(huizenprijzen) == "Prijsindex.bestaande.koopwoningen.Prijsindex.verkoopprijzen..2020.100."] <- "Verkoopprijzen.bestaande.koopwoningen"
-names(huizenprijzen)[names(huizenprijzen) == "Prijsindex.bestaande.koopwoningen.Ontwikkeling..t.o.v..een.jaar.eerder...."] <- "Verkoopprijzen.tov.voorgaand.jaar"
-write.csv(huizenprijzen, "data 2.0/nieuw_Huizenprijzen_per_woningtype.csv" , row.names = FALSE)
-```
+Unfortunately we could not find numbers of population growth of this age group after 2019, so our analysis is limited in this area. Our expectations are however that the population will remain approximately equal. Our expectations of new houses being built are quite different. This is mainly based on the "stikstofcrisis". Thus, we expect less houses to built from 2019-2026(Liefting & Berkhout, 2025).
 
 
 
@@ -394,13 +380,10 @@ While these administrative datasets are highly reliable, we face several limitat
 **Level of Aggregation:** Because the data is highly aggregated by the CBS to protect privacy, we can only join these files on the macro-level using the temporal dimension (`Jaartal`/`Jaren`) and the regional dimension (`Provincies`). We lack micro-data, meaning we cannot track individual household trajectories or specific cross-sections over time.
 ---
 
-*For the sake of this example, I will continue with the assignment...*
 
 # Part 3 - Quantifying
 
 ## 3.1 Data cleaning
-
-Say we want to include only larger distances (above 2) in our dataset, we can filter for this.
 
 ```{r data_cleaning}
  
@@ -430,7 +413,7 @@ write.csv(samenvoeging2, "data 2.0/Final_dataset.csv", row.names = FALSE)
 
 
 
-Please use a separate 'R block' of code for each type of cleaning. So, e.g. one for missing values, a new one for removing unnecessary variables etc.
+
 
 ## 3.2 Generate necessary variables
 
@@ -491,12 +474,18 @@ Here you provide a description of why the plot above is relevant to your specifi
 
 ## 5.1 Github repository link
 
-Provide the link to your PUBLIC repository here: ...
+This is the link to our public repository: https://github.com/TimKnegt/Tutorial-group-1-1
 
 ## 5.2 Reference list
 https://www.dnb.nl/actuele-economische-vraagstukken/woningmarkt/onze-hoge-hypotheekschulden-risico-s-en-oplossingen/   
 https://www.homefinance.nl/hypotheek/informatie/lti-hypotheek/
 
--Centraal Bureau voor de Statistiek. (2023, December 15). Centraal Bureau Voor De Statistiek. Bevolking, huishoudens en bevolkingsontwikkeling; 1899-2019. Retrieved 5 june, 2026, from https://www.cbs.nl/nl-nl/cijfers/detail/37556?dl=34F0C
+-CBS Statline. (2023, December 15). Centraal Bureau Voor De Statistiek. Bevolking, huishoudens en bevolkingsontwikkeling; 1899-2019. Retrieved 5 june, 2026, from https://www.cbs.nl/nl-nl/cijfers/detail/37556?dl=34F0C
 
--Centraal Bureau voor de Statistiek. (1995, season-01). Centraal Bureau voor de Statistiek. Bestaande Koopwoningen; Verkoopprijzen; Woningtype; Prijsindex 2020=100. Retrieved June 4, 2026, from https://opendata.cbs.nl/#/CBS/nl/dataset/85791NED/table
+-CBS Statline. (1995, season-01). Centraal Bureau voor de Statistiek. Bestaande Koopwoningen; Verkoopprijzen; Woningtype; Prijsindex 2020=100. Retrieved June 4, 2026, from https://opendata.cbs.nl/#/CBS/nl/dataset/85791NED/table
+
+-CBS Statline. (2026, June 9). Centraal Bureau voor de Statistiek. Jaarmutatie Consumentenprijsindex; Vanaf 1963. Retrieved June 10, 2026, from https://opendata.cbs.nl/#/CBS/nl/dataset/70936ned/table
+
+-Krzysztoszek, A. (2025, June 12). Europe faces crisis as birth rates drop, population ages. Pulse Z. https://www.pulse-z.eu/nl/de-europese-economie-loopt-gevaar-nu-het-geboortecijfer-daalt-en-de-bevolking-vergrijst/
+
+-Liefting, R., & Berkhout, K. B. (2025, May 9). Zeven redenen waarom er in Nederland te weinig huizen worden gebouwd – Dutilhhuis. NRC. https://www.nrc.nl/nieuws/2025/05/09/zeven-redenen-waarom-er-in-nederland-te-weinig-huizen-worden-gebouwd-a4892667
