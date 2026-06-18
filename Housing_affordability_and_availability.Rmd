@@ -170,12 +170,12 @@ Bestaande_koopwoningen_verkoopprijzen_woningtype <- Bestaande_koopwoningen_verko
 #Here we transform the dataset from a long format into a wide format, so it will be easier to merge
 d_widened <- Bestaande_koopwoningen_verkoopprijzen_woningtype %>%
   filter (Jaartal >= 2011 & Jaartal <= 2024) %>%
-  pivot_wider(names_from = Woningtype, values_from = c(Aantal_verkochte_woningen, Gemiddelde_verkoopprijs_euro), names_glue = "{.value}_{Woningtype}")
+  pivot_wider(names_from = Woningtype, values_from = c(Aantal_verkochte_woningen, Gemiddelde_verkoopprijs_euro), names_glue = "{.value}_{Woningtype}") %>%
+  select(!contains("Onbekend"))
 write.csv(d_widened, "data 2.0/Bestaande_koopwoningen_widened_nieuw.csv", row.names = FALSE)
 ```
 
 ```{r}
- 
 #Start merging dataset inflatie_nieuw and Welvaart_van_huishoudens_kerncijfers_nieuw
 welvaart <- read_csv("data 2.0/Welvaart_van_huishoudens_kerncijfers_nieuw.csv")
 inflatie <- read_csv("data 2.0/Inflatie_nieuw.csv")
