@@ -72,6 +72,7 @@ Include the following:
 inflatie <- read.csv("data/Inflatie.csv")
 welvaart <- read.csv("data/Welvaart_van_huishoudens__kerncijfers.csv")
 bevolkingsgroei <-read.csv("data/Bevolkingsgroei_opbouw_2005_2019.csv")
+huizenvoorraad <-read.csv("data/Huizenprijzen_Huizenvoorraad.csv")
 Bestaande_koopwoningen_verkoopprijzen_woningtype <- read.csv("data/Bestaande_koopwoningen_verkoopprijzen_woningtype.csv")
 brutoinkomen <- read_csv("data 2.0/bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv")
 
@@ -176,7 +177,6 @@ The next part is dedicated to gather information about the number of new houses 
 There is however a hurdle in this dataset that we have to overcome. That is that the number of new houses built is grouped per province, while we would like to look at the number of the entire Netherlands. To achieve this, we used the goup_by() and summarise() functions.
 ```{r}
 #Here we modify the dataset Huizenprijzen_Huizenvoorraad
-huizenvoorraad <-read.csv("data/Huizenprijzen_Huizenvoorraad.csv")
 huizenvoorraad <- huizenvoorraad %>%
   rename(Jaartal = Perioden) %>%
   rename(Provincies = Regio.s) %>%
