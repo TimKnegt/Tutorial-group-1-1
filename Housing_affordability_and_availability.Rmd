@@ -5,8 +5,9 @@ date: "`r Sys.Date()`"
 output: pdf_document
 ---
 
-# Set-up your environment
+**Tutorial group 1** **C. Schouwenaar**
 
+# Set-up your environment
 ```{r package_install, include=FALSE}
 # install.packages("tidyverse")
 # install.packages("yaml")
@@ -18,9 +19,6 @@ output: pdf_document
 #   "geodata", "terra", 
 #   "janitor", "scales", "patchwork"))
 # install.packages("tinytex")
-
-
-
 ```
 
 ```{r packages}
@@ -40,9 +38,7 @@ library(tinytex)
 ```
 
 
-tutorial group 1
-C. Schouwenaar
-# Part 1 - Identify a Social Problem
+# Chapter 1: Identify a Social Problem
 The Dutch housing market has changed significantly over the past two decades. For young adults, finding suitable housing has become increasingly difficult due to rising house prices, higher rents, and a continuing housing shortage (Nederlands Jeugdinstituut, n.d.). As a result, many young people struggle to enter the housing market.
 
 This research examines how housing affordability and availability for young adults in the Netherlands changed between 2005 and 2025. It focuses on trends in house prices, rental costs, incomes and housing shortages to understand the main developments during this period.
@@ -61,46 +57,45 @@ Include the following:
 
 -   ...
 
-# Part 2 - Data Sourcing
+# Chapter 2: Data Sourcing
 
 ## 2.1 Load in the data
-
-
-
 ```{r loading_data}
 #Here we load in the datasets. The last one is the only one we immediately saved to data 2.0 since it was already good for use
 inflatie <- read.csv("data/Inflatie.csv")
 welvaart <- read.csv("data/Welvaart_van_huishoudens__kerncijfers.csv")
 bevolkingsgroei <-read.csv("data/Bevolkingsgroei_opbouw_2005_2019.csv")
+<<<<<<< Updated upstream
 huizenvoorraad <-read.csv("data/Huizenprijzen_Huizenvoorraad.csv")
 Bestaande_koopwoningen_verkoopprijzen_woningtype <- read.csv("data/Bestaande_koopwoningen_verkoopprijzen_woningtype.csv")
+=======
+Bestaande_koopwoningen_verkoopprijzen_woningtype <-       read.csv("data/Bestaande_koopwoningen_verkoopprijzen_woningtype.csv")
+>>>>>>> Stashed changes
 brutoinkomen <- read_csv("data 2.0/bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv")
 
 ```
 
 
-## 2.2 Provide a short summary of the dataset(s)
+## 2.2 Short summary of the datasets
 We chose these datasets since they give us valuable information about affordability and availability of housing in the Netherlands.
 
 
-## 2.3 Describe the type of variables included
-
 ---
-### Description and Data Collection
+### 2.3 Description and Data Collection
 The variables included in our project are **quantitative** in nature. They consist of continuous economic indicators—such as monetary values (income, house prices) and percentages (inflation)—as well as discrete metrics tracking physical counts (population size, housing stock). Categorical (nominal) variables such as `Provincies` and `Woningtype` are utilized to allow for spatial and structural segmentation.
 
 Unlike survey data which relies on self-reported interviews, these datasets are sourced entirely from **administrative registries** compiled by Statistics Netherlands (CBS). Specifically, the socio-economic and income data is derived from the Dutch Tax Authority (Belastingdienst), while the housing metrics are registered through the Municipal Base Registry for Housing (BAG) and the Dutch Land Registry (Kadaster). This administrative nature ensures high data coverage and eliminates traditional interview biases such as recall or non-response bias.
 
-### Stated limitations of this data
+### 2.4 Stated limitations of this data
 While these administrative datasets are highly reliable, we face several limitations when merging and analyzing them to study young adults:
 
 **Inconsistent Demographic Definitions:** The datasets categorize "young adults" differently. The income datasets slice data by the age of the primary wage earner (`leeftijd_kostwinner`), whereas the demographic dataset tracks individuals aged 20 to 45 (`jong_volwassenen_20_tot_45_jaar`). This structural mismatch limits our ability to perfectly isolate a single, uniform age bracket.
-**Temporal Truncation:** The demographic tracking for population build-up (`Bevolkingsgroei_opbouw.csv`) is currently limited to the 2005–2019 period within our data folder. This creates a data gap for the final years of our 2005–2025 analysis window.
+**Temporal Truncation:** The demographic tracking for population build-up (`Bevolkingsgroei_opbouw_2005_2019.csv`) is currently limited to the 2005–2019 period within our data folder. This creates a data gap for the final years of our 2005–2025 analysis window.
 **Level of Aggregation:** Because the data is highly aggregated by the CBS to protect privacy, we can only join these files on the macro-level using the temporal dimension (`Jaartal`/`Jaren`) and the regional dimension (`Provincies`). We lack micro-data, meaning we cannot track individual household trajectories or specific cross-sections over time.
 ---
 
 
-# Part 3 - Quantifying
+# Chapter 3 - Quantifying
 
 ## 3.1 Data cleaning
 ```{r}
@@ -159,6 +154,9 @@ samenvoeging2 <- samenvoeging2 %>%
 write.csv(samenvoeging2, "data 2.0/Final_dataset.csv", row.names = FALSE)
 ```
 
+#Chapter 4: Housing availability
+
+##4.1 Population growth and new houses built
 To get started we will change the dataset containing the information about population growth and rename the columns using the rename() function, so it is easier to comprehend. After that we only select the useful information via transmute(). And lastly we put the variable for time in the first columns to improve the look of the table.
 ```{r}
 #Here we modify the dataset bevolkingsgroei to only keep the relevant information and use the right years.
@@ -200,31 +198,6 @@ bevolkingsgroei_nieuwbouw <- left_join(bevolkingsgroei_nieuw, tabel_per_jaar, by
 write.csv(bevolkingsgroei_nieuwbouw, "data 2.0/bevolkingsgroei_nieuwbouw.csv")
 
 ```
-
-
-## 3.2 Generate necessary variables
-
-The first, necessary variable added is the maximal nominal mortgage loan that young adults can loan at the bank. The maximal nominal mortgage loan is based on the LTI and the median gross income. The LTI (Loan-to-Income) is the ratio between the gross income and the mortgage loan. This ratio decides the maximum amount that can be borrowed, which usually is around 4.5 times the gross income in the Netherlands (Homefinance Hypotheken, n.d.). The choice to use the median gross income over the average gross income is supported by the fact that the mean usually is distorted by high extremes, whilst the median gives a representative reflection of the "typical" young adult. 
-
-The Netherlands has one of the highest mortgage debts of Europe, which states that the Dutch housing market is really dependent on credits (DNB, n.d.). Because the Dutch housing market for buyers is fundamentally credit-driven and reliant on the LTI, variables solely addressing income are not enough to model the maximum purchasing capacity of young adults. However, this nominal borrowing ceiling is the variable that can demonstrate the maximum buying capacity of young adults. Moreover, this variable can be rightfully compared to the housing prices. All in all, the maximal nominal mortgage loan more or less serves as the baseline for the study regarding housing affordability. 
-
-```{r gen_var1}
-af_finaldataset <- read_csv("data 2.0/Final_dataset.csv")
-af_newvariable <- af_finaldataset %>%
-  mutate(Max_nominal_mortgage_loan_1000.euro = Mediaan_bruto_inkomen_1000.euro * 4.5)
-write.csv(af_newvariable, "data 2.0/Final_dataset_2.csv", row.names = FALSE)
-```
-
-Another variable that is valuable, especially in comparison with the nominal maximum mortgage loan, is the real maximum mortgage loan. In order to calculate this, we set the year 2024 as the base year and set the adjustment factor to 1 in 2024. In this year, the nominal value is equal to the real value. The adjustment factor quantifies how much prices have risen with base year of 2024. The real maximum mortgage loan is adjusted for inflation and clearly proves the money illusion and the sudden inflation shocks. In order to create the extra column, it is necessary to use the cumprod() function, as prices rise exponential.
-
-```{r gen_var2}
-af_extranewvariable <- af_newvariable %>%
-  arrange (Jaartal) %>%
-  mutate (price_index_2011 = cumprod(1 + (Inflatie/100)) , adjustment_factor_2024 = price_index_2011 [Jaartal == 2024] / price_index_2011, Max_real_mortgage_loan_1000.euro = Max_nominal_mortgage_loan_1000.euro * adjustment_factor_2024 )
-write.csv(af_extranewvariable, "data 2.0/Final_dataset_with_new_variables.csv", row.names = FALSE)
-```
-
-## 3.3 Visualize temporal variation
 
 ```{r}
 #Here we create a graph to compare the amount of new houses built and the population growth of young adults.
@@ -313,7 +286,8 @@ Taking this into account, we can see that there is a subtle downward trend in th
 
 Unfortunately we could not find numbers of population growth of this age group after 2019, so our analysis is limited in this area. Our expectations are however that the population will remain approximately equal. Our expectations of new houses being built are quite different. This is mainly based on the "stikstofcrisis". Thus, we expect less houses to built from 2019-2026(Liefting & Berkhout, 2025).
 
-# trendgrafieken per provincie Huizenprijzen/voorraad
+## 4.2 Housing per province
+### trendgrafieken per provincie Huizenprijzen/voorraad
 
 ```{r}
 
@@ -363,13 +337,11 @@ ggplot(df_intensiteit, aes(jaartal, per_1000)) +
   theme_minimal()
 
 ```
-#Explanation
+###Explanation
 I put the housing data into three charts, because housing stock and new construction are actually two different things. The stock is the total number of homes that exist, and new construction is what gets added each year. Putting those two in one chart with the same index would be a bit misleading, since the stock rises slowly while new construction jumps up and down a lot from year to year. In the first chart I set the stock per province to 2005 = 100, which makes the provinces comparable even though some are much bigger than others. In the second chart I added up new construction nationally per year and put a line at 100,000, the number the government wants to build each year. One caveat: my figures only cover actual new construction, while that target also counts things like offices turned into homes, so the line is an indicative lower bound and not an exact match. The third chart shows building intensity (new construction per 1,000 existing homes), which corrects for how big a province is. I left 2025 out for new construction, because that value is missing from the dataset, so I don't draw conclusions about that year.
 
-#Conclusion
+###Conclusion
 Over time the housing stock grew steadily in every province, but new construction tells the more interesting story. After a peak around 2009 it dropped to a low of about 45,000 homes in 2014, and only climbed back to around 74,000 by 2022, never reaching the target of 100,000. The timing of that dip lines up with the 2008 credit crisis, but this is an association and not proof: the decline only set in with a delay (building has a long pipeline), and the later recovery was also shaped by other things like low interest rates and rising demand after 2020, so the crisis alone can't explain the whole pattern. It's also important to say that my data only measures supply, not the shortage itself. The link to demand comes from outside sources: the number of households has been growing faster than the housing stock (Rijksoverheid, n.d.), which left a statistical shortage of roughly 396,000 homes in 2025 (Volkshuisvesting Nederland, 2025). I can't show that shortage from my own data alone, but putting the two together suggests that for young adults the problem isn't only about prices, but also about availability: too few homes were added to keep up with the growing demand.
-
-## 3.4 Visualize spatial variation
 
 
 ```{r}
@@ -420,40 +392,48 @@ ggplot(plotdata, aes(long, lat, group = group, fill = groei_pct)) +
 
 
 
-#Explanation
+###Explanation
 To show where in the country the growth happened, I mapped the total growth of the housing stock per province between 2005 and 2025. For each province I worked out the percentage change in the stock and used that to colour the map. The province borders come from a public CBS/cartomap file that I read in as a GeoJSON, so I didn't need any extra mapping software. One small caveat: the province labels sit at the average of each province's border points, which is only a rough centre, so for oddly shaped provinces the label can land slightly off. The colours and the actual figures aren't affected by that.
-#Conclusion
+
+###Conclusion
 The map shows a clear centre–periphery pattern. Growth is highest in the central provinces Flevoland (+34%) and Utrecht (+30%) and lowest in the ones on the edges, with Limburg in the far southeast (+13%) and the coastal provinces Zeeland and Fryslân (around +15%) at the bottom. This matters for the research question, because the stock grew fastest exactly in the central regions where demand from students and young workers is highest, while the quieter provinces on the edges grew the least. So the new supply wasn't added where it would help the most, which helps explain why housing stayed hard to find for young adults in precisely the areas they most want to live.
 
 
+#Chapter 5 Housing affordability
 
-```{r visualise_map}
+## 5.1 Variables
 
+The first, necessary variable added is the maximal nominal mortgage loan that young adults can loan at the bank. The maximal nominal mortgage loan is based on the LTI and the median gross income. The LTI (Loan-to-Income) is the ratio between the gross income and the mortgage loan. This ratio decides the maximum amount that can be borrowed, which usually is around 4.5 times the gross income in the Netherlands (Homefinance Hypotheken, n.d.). The choice to use the median gross income over the average gross income is supported by the fact that the mean usually is distorted by high extremes, whilst the median gives a representative reflection of the "typical" young adult. 
+
+The Netherlands has one of the highest mortgage debts of Europe, which states that the Dutch housing market is really dependent on credits (DNB, n.d.). Because the Dutch housing market for buyers is fundamentally credit-driven and reliant on the LTI, variables solely addressing income are not enough to model the maximum purchasing capacity of young adults. However, this nominal borrowing ceiling is the variable that can demonstrate the maximum buying capacity of young adults. Moreover, this variable can be rightfully compared to the housing prices. All in all, the maximal nominal mortgage loan more or less serves as the baseline for the study regarding housing affordability. 
+
+```{r gen_var1}
+af_finaldataset <- read_csv("data 2.0/Final_dataset.csv")
+af_newvariable <- af_finaldataset %>%
+  mutate(Max_nominal_mortgage_loan_1000.euro = Mediaan_bruto_inkomen_1000.euro * 4.5)
+write.csv(af_newvariable, "data 2.0/Final_dataset_2.csv", row.names = FALSE)
 ```
 
-Here you provide a description of why the plot above is relevant to your specific social problem.
+Another variable that is valuable, especially in comparison with the nominal maximum mortgage loan, is the real maximum mortgage loan. In order to calculate this, we set the year 2024 as the base year and set the adjustment factor to 1 in 2024. In this year, the nominal value is equal to the real value. The adjustment factor quantifies how much prices have risen with base year of 2024. The real maximum mortgage loan is adjusted for inflation and clearly proves the money illusion and the sudden inflation shocks. In order to create the extra column, it is necessary to use the cumprod() function, as prices rise exponential.
 
-## 3.7 Event analysis
-
-Analyze the relationship between two variables.
-
-```{r analysis}
-
+```{r gen_var2}
+af_extranewvariable <- af_newvariable %>%
+  arrange (Jaartal) %>%
+  mutate (price_index_2011 = cumprod(1 + (Inflatie/100)) , adjustment_factor_2024 = price_index_2011 [Jaartal == 2024] / price_index_2011, Max_real_mortgage_loan_1000.euro = Max_nominal_mortgage_loan_1000.euro * adjustment_factor_2024 )
+write.csv(af_extranewvariable, "data 2.0/Final_dataset_with_new_variables.csv", row.names = FALSE)
 ```
 
-Here you provide a description of why the plot above is relevant to your specific social problem.
+# Chapter 6 - Discussion
 
-# Part 4 - Discussion
+## 6.1 Discuss your findings
 
-## 4.1 Discuss your findings
+# Chapter 7 - Reproducibility
 
-# Part 5 - Reproducibility
-
-## 5.1 Github repository link
+## 7.1 Github repository link
 
 This is the link to our public repository: https://github.com/TimKnegt/Tutorial-group-1-1
 
-## 5.2 Reference list
+## 7.2 Reference list
 https://www.dnb.nl/actuele-economische-vraagstukken/woningmarkt/onze-hoge-hypotheekschulden-risico-s-en-oplossingen/   
 https://www.homefinance.nl/hypotheek/informatie/lti-hypotheek/
 
