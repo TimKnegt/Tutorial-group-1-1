@@ -497,4 +497,6 @@ Provide the link to your PUBLIC repository here: ...
 https://www.dnb.nl/actuele-economische-vraagstukken/woningmarkt/onze-hoge-hypotheekschulden-risico-s-en-oplossingen/   
 https://www.homefinance.nl/hypotheek/informatie/lti-hypotheek/
 
-Use APA referencing throughout your document.
+-Centraal Bureau voor de Statistiek. (2023, December 15). Centraal Bureau Voor De Statistiek. Bevolking, huishoudens en bevolkingsontwikkeling; 1899-2019. Retrieved 5 june, 2026, from https://www.cbs.nl/nl-nl/cijfers/detail/37556?dl=34F0C
+
+-Centraal Bureau voor de Statistiek. (1995, season-01). Centraal Bureau voor de Statistiek. Bestaande Koopwoningen; Verkoopprijzen; Woningtype; Prijsindex 2020=100. Retrieved June 4, 2026, from https://opendata.cbs.nl/#/CBS/nl/dataset/85791NED/table
