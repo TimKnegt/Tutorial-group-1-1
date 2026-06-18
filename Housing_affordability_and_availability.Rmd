@@ -154,6 +154,7 @@ write.csv(samenvoeging2, "data 2.0/Final_dataset.csv", row.names = FALSE)
 
 ##4.1 Population growth and new houses built
 To get started we will change the dataset containing the information about population growth and rename the columns using the rename() function, so it is easier to comprehend. After that we only select the useful information via transmute(). And lastly we put the variable for time in the first columns to improve the look of the table.
+
 ```{r}
 #Here we modify the dataset bevolkingsgroei to only keep the relevant information and use the right years.
 bevolkingsgroei_nieuw <- bevolkingsgroei %>%
