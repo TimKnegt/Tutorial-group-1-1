@@ -65,12 +65,8 @@ Include the following:
 inflatie <- read.csv("data/Inflatie.csv")
 welvaart <- read.csv("data/Welvaart_van_huishoudens__kerncijfers.csv")
 bevolkingsgroei <-read.csv("data/Bevolkingsgroei_opbouw_2005_2019.csv")
-<<<<<<< Updated upstream
 huizenvoorraad <-read.csv("data/Huizenprijzen_Huizenvoorraad.csv")
 Bestaande_koopwoningen_verkoopprijzen_woningtype <- read.csv("data/Bestaande_koopwoningen_verkoopprijzen_woningtype.csv")
-=======
-Bestaande_koopwoningen_verkoopprijzen_woningtype <-       read.csv("data/Bestaande_koopwoningen_verkoopprijzen_woningtype.csv")
->>>>>>> Stashed changes
 brutoinkomen <- read_csv("data 2.0/bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv")
 
 ```
