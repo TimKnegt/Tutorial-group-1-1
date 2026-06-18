@@ -1,14 +1,14 @@
 ---
-title: "The change of affordability and availability in the housing market for young adults in the Netherlands from 2005 until 2025."
-author: "Björn Hildering 2887258, Tim Knegt 2882977, Willem van Beuningen 2787054, Robin Versnel 2862644, Seeger Tromp, Jaydane Levant 2851422"
+title: The change of affordability and availability in the housing market for young
+  adults in the Netherlands from 2005 until 2025
+author: Björn Hildering 2887258, Tim Knegt 2882977, Willem van Beuningen 2787054,
+  Robin Versnel 2862644, Seeger Tromp, Jaydane Levant 2851422
 date: "`r Sys.Date()`"
 output: pdf_document
 ---
 
-**Tutorial group 1** **C. Schouwenaar**
-
 # Set-up your environment
-```{r package_install, include=FALSE}
+```{r.content-hidden when-format="pdf"}
 # install.packages("tidyverse")
 # install.packages("yaml")
 # install.packages("rmarkdown")
@@ -21,7 +21,7 @@ output: pdf_document
 # install.packages("tinytex")
 ```
 
-```{r packages}
+```{r}
 library(tidyverse)
 library(rmarkdown)
 library(yaml)
@@ -37,7 +37,7 @@ library(tinytex)
 
 ```
 
-
+Tutorial group 1 C. Schouwenaar
 # Chapter 1: Identify a Social Problem
 The Dutch housing market has changed significantly over the past two decades. For young adults, finding suitable housing has become increasingly difficult due to rising house prices, higher rents, and a continuing housing shortage (Nederlands Jeugdinstituut, n.d.). As a result, many young people struggle to enter the housing market.
 
@@ -51,16 +51,9 @@ The Dutch housing market has become increasingly inaccessible for young adults, 
 
 A combination of sharply increasing house prices, higher rents, and limited supply has created a structural imbalance between demand and availability. These pressures fall disproportionately on first‑time buyers and young renters, widening generational inequality: older households benefit from accumulated housing wealth, while younger cohorts struggle to enter the market at all.
 
-Include the following:
-
--   Why is this relevant?
-
--   ...
-
 # Chapter 2: Data Sourcing
-
 ## 2.1 Load in the data
-```{r loading_data}
+```{r}
 #Here we load in the datasets. The last one is the only one we immediately saved to data 2.0 since it was already good for use
 inflatie <- read.csv("data/Inflatie.csv")
 welvaart <- read.csv("data/Welvaart_van_huishoudens__kerncijfers.csv")
@@ -71,12 +64,16 @@ brutoinkomen <- read_csv("data 2.0/bruto_en_besteedbaar_inkomen_leeftijdsgroep_n
 
 ```
 
-
 ## 2.2 Short summary of the datasets
-We chose these datasets since they give us valuable information about affordability and availability of housing in the Netherlands.
+In our research we use 5 datasets giving us valuable information about housing prices, new-built housing, population growth and inflation:
 
+-Inflatie.csv
+-Welvaart_van_huishoudens__kerncijfers.csv
+-Bevolkingsgroei_opbouw_2005_2019.csv
+-Huizenprijzen_Huizenvoorraad.csv
+-Bestaande_koopwoningen_verkoopprijzen_woningtype.csv
+-bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv
 
----
 ### 2.3 Description and Data Collection
 The variables included in our project are **quantitative** in nature. They consist of continuous economic indicators—such as monetary values (income, house prices) and percentages (inflation)—as well as discrete metrics tracking physical counts (population size, housing stock). Categorical (nominal) variables such as `Provincies` and `Woningtype` are utilized to allow for spatial and structural segmentation.
 
@@ -88,73 +85,19 @@ While these administrative datasets are highly reliable, we face several limitat
 **Inconsistent Demographic Definitions:** The datasets categorize "young adults" differently. The income datasets slice data by the age of the primary wage earner (`leeftijd_kostwinner`), whereas the demographic dataset tracks individuals aged 20 to 45 (`jong_volwassenen_20_tot_45_jaar`). This structural mismatch limits our ability to perfectly isolate a single, uniform age bracket.
 **Temporal Truncation:** The demographic tracking for population build-up (`Bevolkingsgroei_opbouw_2005_2019.csv`) is currently limited to the 2005–2019 period within our data folder. This creates a data gap for the final years of our 2005–2025 analysis window.
 **Level of Aggregation:** Because the data is highly aggregated by the CBS to protect privacy, we can only join these files on the macro-level using the temporal dimension (`Jaartal`/`Jaren`) and the regional dimension (`Provincies`). We lack micro-data, meaning we cannot track individual household trajectories or specific cross-sections over time.
----
+
 
 
 # Chapter 3 - Quantifying
 
 ## 3.1 Data cleaning
-```{r}
+We clean all of our datasets to make it more clear and simplified. We do this because by default some have strange and long titles that make it hard to work with. In this part we use 4 function to clean up and/or merge each dataset.
 
-#Here we modify the dataset Inflatie
-inflatie <- inflatie %>%
-  rename(Jaartal = Perioden) %>%
-  rename(Inflatie = Jaarmutatie.CPI....) %>%
-  select(Jaartal,Inflatie)
-write.csv(inflatie, "data 2.0/Inflatie_nieuw.csv", row.names = FALSE)
-```
-
-```{r}
-#Here we modify the dataset Welvaart_van_huishoudens__kerncijfers
-welvaart <- welvaart %>%
-  rename(leeftijd_kostwinner = Kenmerken.van.huishoudens) %>%
-  rename(Jaartal = Perioden) %>%
-  rename(Gemiddeld_gestandaardiseerd_inkomen_x1000_euro = Gemiddeld.gestandaardiseerd.inkomen..1.000.euro.)
-head(welvaart)
-write.csv(welvaart, "data 2.0/Welvaart_van_huishoudens_kerncijfers_nieuw.csv", row.names = FALSE)
-```
-
-```{r}
-#Here we modify the dataset Bestaand_koopwoningen verkoopprijzen
-Bestaande_koopwoningen_verkoopprijzen_woningtype <- Bestaande_koopwoningen_verkoopprijzen_woningtype %>%
-  rename (Woningtype = Type.woning) %>%
-  rename( Jaartal = Perioden) %>%
-  rename(Aantal_verkochte_woningen = Verkochte.bestaande.koopwoningen.Verkochte.woningen..aantal.)%>%
-  rename( Gemiddelde_verkoopprijs_euro = Gemiddelde.verkoopprijs..euro.)%>%
-  select(Woningtype, Jaartal, Aantal_verkochte_woningen, Gemiddelde_verkoopprijs_euro)
-  write.csv(Bestaande_koopwoningen_verkoopprijzen_woningtype, "data 2.0/Bestaande_koopwoningen_verkoopprijzen_woningtype_nieuw.csv", row.names = FALSE)
-```
-
-```{r data_cleaning}
- 
-#Start joining dataset inflatie_nieuw and Welvaart_van_huishoudens_kerncijfers_nieuw
-welvaart <- read_csv("data 2.0/Welvaart_van_huishoudens_kerncijfers_nieuw.csv")
-inflatie <- read_csv("data 2.0/Inflatie_nieuw.csv")
-result <- left_join(welvaart, inflatie, by = "Jaartal")
-write.csv2(result,"data 2.0/Samenvoeging1.csv" , row.names = FALSE)
-```
-
-```{r}
-#Start joining dataset Samenvoeging1 and bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv
-samenvoeging <- read_csv2("data 2.0/Samenvoeging1.csv")
-samenvoeging2 <- left_join(brutoinkomen, samenvoeging, by = "Jaartal")
-write.csv(samenvoeging2, "data 2.0/Samenvoeging2.csv" , row.names = FALSE)
-head(samenvoeging2)
-```
-
-```{r}
-#Deleting a column that was mentioned twice
-samenvoeging2 <- read.csv("data 2.0/Samenvoeging2.csv")
-samenvoeging2 <- samenvoeging2 %>%
-  select (-leeftijd_kostwinner)
-write.csv(samenvoeging2, "data 2.0/Final_dataset.csv", row.names = FALSE)
-```
-
-#Chapter 4: Housing availability
-
-##4.1 Population growth and new houses built
-To get started we will change the dataset containing the information about population growth and rename the columns using the rename() function, so it is easier to comprehend. After that we only select the useful information via transmute(). And lastly we put the variable for time in the first columns to improve the look of the table.
-
+1) rename() : to change the column titles.
+2) select() : to select only the useful information.
+3) group_by() : to split the datagroups based on a variable.
+4) summarise() : to group the right data togther.
+4) left_join() : to join datasets together.
 ```{r}
 #Here we modify the dataset bevolkingsgroei to only keep the relevant information and use the right years.
 bevolkingsgroei_nieuw <- bevolkingsgroei %>%
@@ -167,9 +110,6 @@ bevolkingsgroei_nieuw <- bevolkingsgroei %>%
 write.csv(bevolkingsgroei_nieuw, "data 2.0/Bevolkingsgroei_nieuw.csv", row.names = FALSE)
 ```
 
-The next part is dedicated to gather information about the number of new houses being built in the Netherlands. In the first part of code we again change collumn names and select the useful comments.
-
-There is however a hurdle in this dataset that we have to overcome. That is that the number of new houses built is grouped per province, while we would like to look at the number of the entire Netherlands. To achieve this, we used the goup_by() and summarise() functions.
 ```{r}
 #Here we modify the dataset Huizenprijzen_Huizenvoorraad
 huizenvoorraad <- huizenvoorraad %>%
@@ -188,7 +128,6 @@ tabel_per_jaar <- huizenvoorraad %>%
   write.csv(tabel_per_jaar, "data 2.0/Huizenvoorraad_nieuw.csv", row.names = FALSE)
 ```
 
-Now that we have two clear datasets we still need to merge them to be able to plot them into the same graph. We decided to join the two datasets on using years, since we want to look at the change over time and the trend that is going on. We used the left join to join the newly built housing dataset onto the population growth dataset. We did this because the first named spands across the least amount of years. Using the left join we ensure that we don't get Na's where we do not want them.
 ```{r}
 #Here we merge the datasets
 bevolkingsgroei_nieuwbouw <- left_join(bevolkingsgroei_nieuw, tabel_per_jaar, by = "Jaartal")
@@ -196,6 +135,49 @@ write.csv(bevolkingsgroei_nieuwbouw, "data 2.0/bevolkingsgroei_nieuwbouw.csv")
 
 ```
 
+```{r}
+#Here we modify the dataset Inflatie
+inflatie <- inflatie %>%
+  rename(Jaartal = Perioden) %>%
+  rename(Inflatie = Jaarmutatie.CPI....) %>%
+  select(Jaartal,Inflatie)
+write.csv(inflatie, "data 2.0/Inflatie_nieuw.csv", row.names = FALSE)
+```
+
+```{r}
+#Here we modify the dataset Welvaart_van_huishoudens__kerncijfers
+welvaart <- welvaart %>%
+  rename(leeftijd_kostwinner = Kenmerken.van.huishoudens) %>%
+  rename(Jaartal = Perioden) %>%
+  rename(Gemiddeld_gestandaardiseerd_inkomen_x1000_euro = Gemiddeld.gestandaardiseerd.inkomen..1.000.euro.)
+write.csv(welvaart, "data 2.0/Welvaart_van_huishoudens_kerncijfers_nieuw.csv", row.names = FALSE)
+```
+
+```{r}
+#Here we modify the dataset Bestaand_koopwoningen verkoopprijzen
+Bestaande_koopwoningen_verkoopprijzen_woningtype <- Bestaande_koopwoningen_verkoopprijzen_woningtype %>%
+  rename (Woningtype = Type.woning) %>%
+  rename( Jaartal = Perioden) %>%
+  rename(Aantal_verkochte_woningen = Verkochte.bestaande.koopwoningen.Verkochte.woningen..aantal.)%>%
+  rename( Gemiddelde_verkoopprijs_euro = Gemiddelde.verkoopprijs..euro.)%>%
+  select(Woningtype, Jaartal, Aantal_verkochte_woningen, Gemiddelde_verkoopprijs_euro)
+  write.csv(Bestaande_koopwoningen_verkoopprijzen_woningtype, "data 2.0/Bestaande_koopwoningen_verkoopprijzen_woningtype_nieuw.csv", row.names = FALSE)
+```
+
+```{r}
+ 
+#Start joining dataset inflatie_nieuw and Welvaart_van_huishoudens_kerncijfers_nieuw
+welvaart <- read_csv("data 2.0/Welvaart_van_huishoudens_kerncijfers_nieuw.csv")
+inflatie <- read_csv("data 2.0/Inflatie_nieuw.csv")
+result <- left_join(welvaart, inflatie, by = "Jaartal")
+write.csv2(result,"data 2.0/Samenvoeging1.csv" , row.names = FALSE)
+```
+
+
+#Chapter 4: Housing availability
+
+##4.1 Population growth and new houses built
+###Event association visualised
 ```{r}
 #Here we create a graph to compare the amount of new houses built and the population growth of young adults.
 
@@ -259,7 +241,8 @@ ggplot(bevolkingsgroei_nieuwbouw, aes(x = Jaartal)) +
   ) +
 
   labs(
-    title = "Growth of young adult population and the building of new houses",
+    title = "Growth of young adult population
+    and the building of new houses",
     subtitle = "Yearly deviations",
     x = "Year",
     color = NULL
@@ -284,11 +267,9 @@ Taking this into account, we can see that there is a subtle downward trend in th
 Unfortunately we could not find numbers of population growth of this age group after 2019, so our analysis is limited in this area. Our expectations are however that the population will remain approximately equal. Our expectations of new houses being built are quite different. This is mainly based on the "stikstofcrisis". Thus, we expect less houses to built from 2019-2026(Liefting & Berkhout, 2025).
 
 ## 4.2 Housing per province
-### trendgrafieken per provincie Huizenprijzen/voorraad
+###Spatial variation
 
 ```{r}
-
-
 df <- read_csv("data 2.0/Huizenprijzen_Huizenvoorraad_nieuw.csv") |> 
   clean_names() |> 
   mutate(provincie = str_remove(provincies, " \\(PV\\)"))
@@ -340,6 +321,8 @@ I put the housing data into three charts, because housing stock and new construc
 ###Conclusion
 Over time the housing stock grew steadily in every province, but new construction tells the more interesting story. After a peak around 2009 it dropped to a low of about 45,000 homes in 2014, and only climbed back to around 74,000 by 2022, never reaching the target of 100,000. The timing of that dip lines up with the 2008 credit crisis, but this is an association and not proof: the decline only set in with a delay (building has a long pipeline), and the later recovery was also shaped by other things like low interest rates and rising demand after 2020, so the crisis alone can't explain the whole pattern. It's also important to say that my data only measures supply, not the shortage itself. The link to demand comes from outside sources: the number of households has been growing faster than the housing stock (Rijksoverheid, n.d.), which left a statistical shortage of roughly 396,000 homes in 2025 (Volkshuisvesting Nederland, 2025). I can't show that shortage from my own data alone, but putting the two together suggests that for young adults the problem isn't only about prices, but also about availability: too few homes were added to keep up with the growing demand.
 
+#4.2 Housing
+###Spatial variation
 
 ```{r}
 library(jsonlite)
@@ -385,10 +368,6 @@ ggplot(plotdata, aes(long, lat, group = group, fill = groei_pct)) +
   theme_void()
 ```
 
-
-
-
-
 ###Explanation
 To show where in the country the growth happened, I mapped the total growth of the housing stock per province between 2005 and 2025. For each province I worked out the percentage change in the stock and used that to colour the map. The province borders come from a public CBS/cartomap file that I read in as a GeoJSON, so I didn't need any extra mapping software. One small caveat: the province labels sit at the average of each province's border points, which is only a rough centre, so for oddly shaped provinces the label can land slightly off. The colours and the actual figures aren't affected by that.
 
@@ -398,13 +377,28 @@ The map shows a clear centre–periphery pattern. Growth is highest in the centr
 
 #Chapter 5 Housing affordability
 
+```{r}
+#Start joining dataset Samenvoeging1 and bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv
+samenvoeging <- read_csv2("data 2.0/Samenvoeging1.csv")
+samenvoeging2 <- left_join(brutoinkomen, samenvoeging, by = "Jaartal")
+write.csv(samenvoeging2, "data 2.0/Samenvoeging2.csv" , row.names = FALSE)
+head(samenvoeging2)
+```
+
+```{r}
+#Deleting a column that was mentioned twice
+samenvoeging2 <- read.csv("data 2.0/Samenvoeging2.csv")
+samenvoeging2 <- samenvoeging2 %>%
+  select (-leeftijd_kostwinner)
+write.csv(samenvoeging2, "data 2.0/Final_dataset.csv", row.names = FALSE)
+```
 ## 5.1 Variables
 
 The first, necessary variable added is the maximal nominal mortgage loan that young adults can loan at the bank. The maximal nominal mortgage loan is based on the LTI and the median gross income. The LTI (Loan-to-Income) is the ratio between the gross income and the mortgage loan. This ratio decides the maximum amount that can be borrowed, which usually is around 4.5 times the gross income in the Netherlands (Homefinance Hypotheken, n.d.). The choice to use the median gross income over the average gross income is supported by the fact that the mean usually is distorted by high extremes, whilst the median gives a representative reflection of the "typical" young adult. 
 
 The Netherlands has one of the highest mortgage debts of Europe, which states that the Dutch housing market is really dependent on credits (DNB, n.d.). Because the Dutch housing market for buyers is fundamentally credit-driven and reliant on the LTI, variables solely addressing income are not enough to model the maximum purchasing capacity of young adults. However, this nominal borrowing ceiling is the variable that can demonstrate the maximum buying capacity of young adults. Moreover, this variable can be rightfully compared to the housing prices. All in all, the maximal nominal mortgage loan more or less serves as the baseline for the study regarding housing affordability. 
 
-```{r gen_var1}
+```{r}
 af_finaldataset <- read_csv("data 2.0/Final_dataset.csv")
 af_newvariable <- af_finaldataset %>%
   mutate(Max_nominal_mortgage_loan_1000.euro = Mediaan_bruto_inkomen_1000.euro * 4.5)
@@ -413,7 +407,7 @@ write.csv(af_newvariable, "data 2.0/Final_dataset_2.csv", row.names = FALSE)
 
 Another variable that is valuable, especially in comparison with the nominal maximum mortgage loan, is the real maximum mortgage loan. In order to calculate this, we set the year 2024 as the base year and set the adjustment factor to 1 in 2024. In this year, the nominal value is equal to the real value. The adjustment factor quantifies how much prices have risen with base year of 2024. The real maximum mortgage loan is adjusted for inflation and clearly proves the money illusion and the sudden inflation shocks. In order to create the extra column, it is necessary to use the cumprod() function, as prices rise exponential.
 
-```{r gen_var2}
+```{r}
 af_extranewvariable <- af_newvariable %>%
   arrange (Jaartal) %>%
   mutate (price_index_2011 = cumprod(1 + (Inflatie/100)) , adjustment_factor_2024 = price_index_2011 [Jaartal == 2024] / price_index_2011, Max_real_mortgage_loan_1000.euro = Max_nominal_mortgage_loan_1000.euro * adjustment_factor_2024 )
