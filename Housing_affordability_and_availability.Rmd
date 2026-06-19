@@ -424,6 +424,17 @@ af_extranewvariable <- af_newvariable %>%
 write.csv(af_extranewvariable, "data 2.0/Final_dataset_with_new_variables.csv", row.names = FALSE)
 ```
 
+```{r}
+bf_widened <- d_widened %>%
+  select(Jaartal, Gemiddelde_verkoopprijs_euro_Totaal_woningen, Gemiddelde_verkoopprijs_euro_Tussenwoning, Gemiddelde_verkoopprijs_euro_Appartement, Gemiddelde_verkoopprijs_euro_Hoekwoning)
+
+bf_extranewvariable <- af_extranewvariable %>%
+  select(Jaartal, Max_nominal_mortgage_loan_1000.euro, Max_real_mortgage_loan_1000.euro)
+
+d_graph <- left_join(bf_extranewvariable, bf_widened, by = "Jaartal")
+```
+
+
 # Chapter 6 - Discussion
 
 ## 6.1 Discuss your findings

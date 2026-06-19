@@ -1,25 +1,25 @@
 "Type.woning","Perioden","Verkochte.bestaande.koopwoningen.Verkochte.woningen..aantal.","Gemiddelde.verkoopprijs..euro.","Totale.waarde.verkoopprijzen..mln.euro."
-"Totaal woningen",2005,206629,222706,46017
-"Totaal woningen",2006,209767,235843,49472
-"Totaal woningen",2007,202401,248325,50261
-"Totaal woningen",2008,182392,254918,46495
-"Totaal woningen",2009,127532,238259,30386
-"Totaal woningen",2010,126127,239530,30211
-"Totaal woningen",2011,120739,240059,28984
-"Totaal woningen",2012,117261,226661,26578
-"Totaal woningen",2013,110094,213353,23489
-"Totaal woningen",2014,153511,222218,34113
-"Totaal woningen",2015,178293,230194,41042
-"Totaal woningen",2016,214793,243837,52374
-"Totaal woningen",2017,241860,263295,63680
-"Totaal woningen",2018,218491,287267,62765
-"Totaal woningen",2019,218595,307978,67322
-"Totaal woningen",2020,235511,334488,78776
-"Totaal woningen",2021,226087,386714,87431
-"Totaal woningen",2022,193103,428591,82762
-"Totaal woningen",2023,182403,416153,75908
-"Totaal woningen",2024,206458,450985,93109
-"Totaal woningen",2025,238695,479527,114461
+"Totaal_woningen",2005,206629,222706,46017
+"Totaal_woningen",2006,209767,235843,49472
+"Totaal_woningen",2007,202401,248325,50261
+"Totaal_woningen",2008,182392,254918,46495
+"Totaal_woningen",2009,127532,238259,30386
+"Totaal_woningen",2010,126127,239530,30211
+"Totaal_woningen",2011,120739,240059,28984
+"Totaal_woningen",2012,117261,226661,26578
+"Totaal_woningen",2013,110094,213353,23489
+"Totaal_woningen",2014,153511,222218,34113
+"Totaal_woningen",2015,178293,230194,41042
+"Totaal_woningen",2016,214793,243837,52374
+"Totaal_woningen",2017,241860,263295,63680
+"Totaal_woningen",2018,218491,287267,62765
+"Totaal_woningen",2019,218595,307978,67322
+"Totaal_woningen",2020,235511,334488,78776
+"Totaal_woningen",2021,226087,386714,87431
+"Totaal_woningen",2022,193103,428591,82762
+"Totaal_woningen",2023,182403,416153,75908
+"Totaal_woningen",2024,206458,450985,93109
+"Totaal_woningen",2025,238695,479527,114461
 "Eengezinswoningen",2005,138721,243706,33807
 "Eengezinswoningen",2006,141791,257208,36470
 "Eengezinswoningen",2007,134988,271472,36645
@@ -104,27 +104,27 @@
 "2-onder-1-kapwoning",2023,19064,442602,8438
 "2-onder-1-kapwoning",2024,20421,483654,9877
 "2-onder-1-kapwoning",2025,22569,526955,11893
-"Vrijstaande woning",2005,21839,369986,8080
-"Vrijstaande woning",2006,22258,389411,8668
-"Vrijstaande woning",2007,22861,413739,9458
-"Vrijstaande woning",2008,19968,424608,8479
-"Vrijstaande woning",2009,12651,393149,4974
-"Vrijstaande woning",2010,12861,386784,4974
-"Vrijstaande woning",2011,13419,384702,5162
-"Vrijstaande woning",2012,13803,349768,4828
-"Vrijstaande woning",2013,12863,327322,4210
-"Vrijstaande woning",2014,18668,334073,6236
-"Vrijstaande woning",2015,21478,352167,7564
-"Vrijstaande woning",2016,26859,366820,9852
-"Vrijstaande woning",2017,33029,392079,12950
-"Vrijstaande woning",2018,30814,419505,12927
-"Vrijstaande woning",2019,29812,445122,13270
-"Vrijstaande woning",2020,33226,488251,16223
-"Vrijstaande woning",2021,31786,571721,18173
-"Vrijstaande woning",2022,25166,628877,15826
-"Vrijstaande woning",2023,23419,605116,14171
-"Vrijstaande woning",2024,26519,650139,17241
-"Vrijstaande woning",2025,28875,709651,20491
+"Vrijstaande_woning",2005,21839,369986,8080
+"Vrijstaande_woning",2006,22258,389411,8668
+"Vrijstaande_woning",2007,22861,413739,9458
+"Vrijstaande_woning",2008,19968,424608,8479
+"Vrijstaande_woning",2009,12651,393149,4974
+"Vrijstaande_woning",2010,12861,386784,4974
+"Vrijstaande_woning",2011,13419,384702,5162
+"Vrijstaande_woning",2012,13803,349768,4828
+"Vrijstaande_woning",2013,12863,327322,4210
+"Vrijstaande_woning",2014,18668,334073,6236
+"Vrijstaande_woning",2015,21478,352167,7564
+"Vrijstaande_woning",2016,26859,366820,9852
+"Vrijstaande_woning",2017,33029,392079,12950
+"Vrijstaande_woning",2018,30814,419505,12927
+"Vrijstaande_woning",2019,29812,445122,13270
+"Vrijstaande_woning",2020,33226,488251,16223
+"Vrijstaande_woning",2021,31786,571721,18173
+"Vrijstaande_woning",2022,25166,628877,15826
+"Vrijstaande_woning",2023,23419,605116,14171
+"Vrijstaande_woning",2024,26519,650139,17241
+"Vrijstaande_woning",2025,28875,709651,20491
 "Appartement",2005,54353,164914,8964
 "Appartement",2006,52657,173973,9161
 "Appartement",2007,54608,185747,10143
