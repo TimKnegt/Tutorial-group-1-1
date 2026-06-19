@@ -302,11 +302,11 @@ ggplot(bevolkingsgroei_nieuwbouw, aes(x = Jaartal)) +
          
 ```
 
-One thing to keep in mind beforehand is that New houses built, is a yearly growth variable and the population is the total population of the young adults in that year.
+## Explanation
+Before starting the analysis, it is helpful to clarify the graph: the number of newly built houses is measured as a yearly growth variable, while the population data represents the total number of young adults in any given year. With that in mind, the data reveals a slight downward trend in the young adult population across the Netherlands. The same shift can be seen in other European countries and primarily driven by declining birth rates(Krysztoszek, 2025). Additionally, there is a sharp shift in housing development. After 2009 the construction of new houses dropped severely, reaching its lowest in 2014. The effect of this decline is still felt today and was triggered directly by the 2008 global financial crisis. This uncertainty halted construction projects throughout the Netherlands(Liefting & Berkhout, 2025). While an upward trend appears after 2014, the pace is not enough to fully make up for the decline.
 
-Taking this into account, we can see that there is a subtle downward trend in the population of young adults in the Netherlands. This trend is similar to other countries in Europe and is mainly caused by falling birth rates(Krzysztoszek, 2025). The other key thing to take away is that after 2009 the building of new houses declined rapidly until 2014. The shocks are of this brief decline are still felt years later. This decline is caused by one event. Namely the credit crisis of 2008. the uncertainty after this crisis causes slow down of building in the Netherlands(Liefting & Berkhout, 2025). After 2014 we see an upward trend, but not by enough to compensate for the temporal decline.
-
-Unfortunately we could not find numbers of population growth of this age group after 2019, so our analysis is limited in this area. Our expectations are however that the population will remain approximately equal. Our expectations of new houses being built are quite different. This is mainly based on the "stikstofcrisis". Thus, we expect less houses to built from 2019-2026(Liefting & Berkhout, 2025).
+## Conclusion
+Our analysis comes with a few limitations, namely that we could not access population growth figures for this specific age group beyond 2019. Even so, we expect population growth will remain relatively stable in the period 2019-2026. On the contrary, new housing construction looks quite different in this period. Development is heavily constrained by the ongoing environmental regulation, particularly the "stikstofcrisis"(nitrogencrisis)(Liefting & Berkhout, 2025). Due to this bottleneck, we expect to see a significant reduction in the number of new homes being built in this timeframe. Taking this into account, we see that the housing shortage is caused by themporal decline in the construction(2009-2014) and expected decline after 2019. All while population growth stays relatively the same.
 
 ## 4.2 Housing per province
 ### Spatial variation
