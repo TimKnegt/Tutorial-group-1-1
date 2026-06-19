@@ -453,11 +453,15 @@ This is the link to our public repository: https://github.com/TimKnegt/Tutorial-
 https://www.dnb.nl/actuele-economische-vraagstukken/woningmarkt/onze-hoge-hypotheekschulden-risico-s-en-oplossingen/   
 https://www.homefinance.nl/hypotheek/informatie/lti-hypotheek/
 
--CBS Statline. (2023, December 15). Centraal Bureau Voor De Statistiek. Bevolking, huishoudens en bevolkingsontwikkeling; 1899-2019. Retrieved 5 june, 2026, from https://www.cbs.nl/nl-nl/cijfers/detail/37556?dl=34F0C
-
 -CBS Statline. (1995, season-01). Centraal Bureau voor de Statistiek. Bestaande Koopwoningen; Verkoopprijzen; Woningtype; Prijsindex 2020=100. Retrieved June 4, 2026, from https://opendata.cbs.nl/#/CBS/nl/dataset/85791NED/table
 
+-CBS Statline. (2023, December 15). Centraal Bureau voor de Statistiek. Bevolking, huishoudens en bevolkingsontwikkeling; 1899-2019. Retrieved June 5, 2026, from https://www.cbs.nl/nl-nl/cijfers/detail/37556?dl=34F0C
+
+-CBS Statline. (2026, February 11). Centraal Bureau voor de Statistiek. Inkomen van huishoudens; inkomensbestanddelen, huishoudenskenmerken. Retrieved June 8, 2026, from https://opendata.cbs.nl/#/CBS/nl/dataset/84493NED/table?ts=1781617294725
+
 -CBS Statline. (2026, June 9). Centraal Bureau voor de Statistiek. Jaarmutatie Consumentenprijsindex; Vanaf 1963. Retrieved June 10, 2026, from https://opendata.cbs.nl/#/CBS/nl/dataset/70936ned/table
+
+-CBS Statline. (2026, February 6). Centraal Bureau voor de Statistiek. Welvaart van particuliere huishoudens; kerncijfers. Retrieved June 8, 2026, from https://opendata.cbs.nl/#/CBS/nl/dataset/86272NED/table?ts=1781772050965.
 
 -Krzysztoszek, A. (2025, June 12). Europe faces crisis as birth rates drop, population ages. Pulse Z. https://www.pulse-z.eu/nl/de-europese-economie-loopt-gevaar-nu-het-geboortecijfer-daalt-en-de-bevolking-vergrijst/
 
