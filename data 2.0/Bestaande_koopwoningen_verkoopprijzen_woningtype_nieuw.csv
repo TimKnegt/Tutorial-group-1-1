@@ -1,25 +1,25 @@
 "Woningtype","Jaartal","Aantal_verkochte_woningen","Gemiddelde_verkoopprijs_euro"
-"Totaal woningen",2005,206629,222706
-"Totaal woningen",2006,209767,235843
-"Totaal woningen",2007,202401,248325
-"Totaal woningen",2008,182392,254918
-"Totaal woningen",2009,127532,238259
-"Totaal woningen",2010,126127,239530
-"Totaal woningen",2011,120739,240059
-"Totaal woningen",2012,117261,226661
-"Totaal woningen",2013,110094,213353
-"Totaal woningen",2014,153511,222218
-"Totaal woningen",2015,178293,230194
-"Totaal woningen",2016,214793,243837
-"Totaal woningen",2017,241860,263295
-"Totaal woningen",2018,218491,287267
-"Totaal woningen",2019,218595,307978
-"Totaal woningen",2020,235511,334488
-"Totaal woningen",2021,226087,386714
-"Totaal woningen",2022,193103,428591
-"Totaal woningen",2023,182403,416153
-"Totaal woningen",2024,206458,450985
-"Totaal woningen",2025,238695,479527
+"Totaal_woningen",2005,206629,222706
+"Totaal_woningen",2006,209767,235843
+"Totaal_woningen",2007,202401,248325
+"Totaal_woningen",2008,182392,254918
+"Totaal_woningen",2009,127532,238259
+"Totaal_woningen",2010,126127,239530
+"Totaal_woningen",2011,120739,240059
+"Totaal_woningen",2012,117261,226661
+"Totaal_woningen",2013,110094,213353
+"Totaal_woningen",2014,153511,222218
+"Totaal_woningen",2015,178293,230194
+"Totaal_woningen",2016,214793,243837
+"Totaal_woningen",2017,241860,263295
+"Totaal_woningen",2018,218491,287267
+"Totaal_woningen",2019,218595,307978
+"Totaal_woningen",2020,235511,334488
+"Totaal_woningen",2021,226087,386714
+"Totaal_woningen",2022,193103,428591
+"Totaal_woningen",2023,182403,416153
+"Totaal_woningen",2024,206458,450985
+"Totaal_woningen",2025,238695,479527
 "Eengezinswoningen",2005,138721,243706
 "Eengezinswoningen",2006,141791,257208
 "Eengezinswoningen",2007,134988,271472
@@ -104,27 +104,27 @@
 "2-onder-1-kapwoning",2023,19064,442602
 "2-onder-1-kapwoning",2024,20421,483654
 "2-onder-1-kapwoning",2025,22569,526955
-"Vrijstaande woning",2005,21839,369986
-"Vrijstaande woning",2006,22258,389411
-"Vrijstaande woning",2007,22861,413739
-"Vrijstaande woning",2008,19968,424608
-"Vrijstaande woning",2009,12651,393149
-"Vrijstaande woning",2010,12861,386784
-"Vrijstaande woning",2011,13419,384702
-"Vrijstaande woning",2012,13803,349768
-"Vrijstaande woning",2013,12863,327322
-"Vrijstaande woning",2014,18668,334073
-"Vrijstaande woning",2015,21478,352167
-"Vrijstaande woning",2016,26859,366820
-"Vrijstaande woning",2017,33029,392079
-"Vrijstaande woning",2018,30814,419505
-"Vrijstaande woning",2019,29812,445122
-"Vrijstaande woning",2020,33226,488251
-"Vrijstaande woning",2021,31786,571721
-"Vrijstaande woning",2022,25166,628877
-"Vrijstaande woning",2023,23419,605116
-"Vrijstaande woning",2024,26519,650139
-"Vrijstaande woning",2025,28875,709651
+"Vrijstaande_woning",2005,21839,369986
+"Vrijstaande_woning",2006,22258,389411
+"Vrijstaande_woning",2007,22861,413739
+"Vrijstaande_woning",2008,19968,424608
+"Vrijstaande_woning",2009,12651,393149
+"Vrijstaande_woning",2010,12861,386784
+"Vrijstaande_woning",2011,13419,384702
+"Vrijstaande_woning",2012,13803,349768
+"Vrijstaande_woning",2013,12863,327322
+"Vrijstaande_woning",2014,18668,334073
+"Vrijstaande_woning",2015,21478,352167
+"Vrijstaande_woning",2016,26859,366820
+"Vrijstaande_woning",2017,33029,392079
+"Vrijstaande_woning",2018,30814,419505
+"Vrijstaande_woning",2019,29812,445122
+"Vrijstaande_woning",2020,33226,488251
+"Vrijstaande_woning",2021,31786,571721
+"Vrijstaande_woning",2022,25166,628877
+"Vrijstaande_woning",2023,23419,605116
+"Vrijstaande_woning",2024,26519,650139
+"Vrijstaande_woning",2025,28875,709651
 "Appartement",2005,54353,164914
 "Appartement",2006,52657,173973
 "Appartement",2007,54608,185747

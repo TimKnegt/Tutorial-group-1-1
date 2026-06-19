@@ -415,7 +415,9 @@ The first, necessary variable added is the maximal nominal mortgage loan that yo
 
 The Netherlands has one of the highest mortgage debts of Europe, which states that the Dutch housing market is really dependent on credits (DNB, n.d.). Because the Dutch housing market for buyers is fundamentally credit-driven and reliant on the LTI, variables solely addressing income are not enough to model the maximum purchasing capacity of young adults. However, this nominal borrowing ceiling is the variable that can demonstrate the maximum buying capacity of young adults. Moreover, this variable can be rightfully compared to the housing prices. All in all, the maximal nominal mortgage loan more or less serves as the baseline for the study regarding housing affordability. 
 
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#Created a new variable named: Max_nominal_mortgage_loan_1000.euro
 af_finaldataset <- read_csv("data 2.0/Final_dataset.csv")
 af_newvariable <- af_finaldataset %>%
   mutate(Max_nominal_mortgage_loan_1000.euro = Mediaan_bruto_inkomen_1000.euro * 4.5)
@@ -424,12 +426,27 @@ write.csv(af_newvariable, "data 2.0/Final_dataset_2.csv", row.names = FALSE)
 
 Another variable that is valuable, especially in comparison with the nominal maximum mortgage loan, is the real maximum mortgage loan. In order to calculate this, we set the year 2024 as the base year and set the adjustment factor to 1 in 2024. In this year, the nominal value is equal to the real value. The adjustment factor quantifies how much prices have risen with base year of 2024. The real maximum mortgage loan is adjusted for inflation and clearly proves the money illusion and the sudden inflation shocks. In order to create the extra column, it is necessary to use the cumprod() function, as prices rise exponential.
 
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#Created a new variable named: Max_real_mortgage_loan_1000.euro
 af_extranewvariable <- af_newvariable %>%
   arrange (Jaartal) %>%
   mutate (price_index_2011 = cumprod(1 + (Inflatie/100)) , adjustment_factor_2024 = price_index_2011 [Jaartal == 2024] / price_index_2011, Max_real_mortgage_loan_1000.euro = Max_nominal_mortgage_loan_1000.euro * adjustment_factor_2024 )
 write.csv(af_extranewvariable, "data 2.0/Final_dataset_with_new_variables.csv", row.names = FALSE)
 ```
+
+```{r}
+# Merged the two datasets, multiplied both Max_nominal and Max_real with 1000 so all variables are the same and rounded the Max_real to wholes.
+bf_widened <- d_widened %>%
+  select(Jaartal, Gemiddelde_verkoopprijs_euro_Totaal_woningen, Gemiddelde_verkoopprijs_euro_Tussenwoning, Gemiddelde_verkoopprijs_euro_Appartement, Gemiddelde_verkoopprijs_euro_Hoekwoning)
+
+bf_extranewvariable <- af_extranewvariable %>%
+  transmute(Jaartal, Max_nominal_mortgage_loan_euro = Max_nominal_mortgage_loan_1000.euro * 1000, Max_real_mortgage_loan_euro = round(Max_real_mortgage_loan_1000.euro * 1000))
+
+d_graph <- left_join(bf_extranewvariable, bf_widened, by = "Jaartal")
+write.csv(d_graph, "data 2.0/a_Graph.csv", row.names = FALSE)
+```
+
 
 # Chapter 6 - Discussion
 
@@ -445,11 +462,15 @@ This is the link to our public repository: https://github.com/TimKnegt/Tutorial-
 https://www.dnb.nl/actuele-economische-vraagstukken/woningmarkt/onze-hoge-hypotheekschulden-risico-s-en-oplossingen/   
 https://www.homefinance.nl/hypotheek/informatie/lti-hypotheek/
 
--CBS Statline. (2023, December 15). Centraal Bureau Voor De Statistiek. Bevolking, huishoudens en bevolkingsontwikkeling; 1899-2019. Retrieved 5 june, 2026, from https://www.cbs.nl/nl-nl/cijfers/detail/37556?dl=34F0C
-
 -CBS Statline. (1995, season-01). Centraal Bureau voor de Statistiek. Bestaande Koopwoningen; Verkoopprijzen; Woningtype; Prijsindex 2020=100. Retrieved June 4, 2026, from https://opendata.cbs.nl/#/CBS/nl/dataset/85791NED/table
 
+-CBS Statline. (2023, December 15). Centraal Bureau voor de Statistiek. Bevolking, huishoudens en bevolkingsontwikkeling; 1899-2019. Retrieved June 5, 2026, from https://www.cbs.nl/nl-nl/cijfers/detail/37556?dl=34F0C
+
+-CBS Statline. (2026, February 11). Centraal Bureau voor de Statistiek. Inkomen van huishoudens; inkomensbestanddelen, huishoudenskenmerken. Retrieved June 8, 2026, from https://opendata.cbs.nl/#/CBS/nl/dataset/84493NED/table?ts=1781617294725
+
 -CBS Statline. (2026, June 9). Centraal Bureau voor de Statistiek. Jaarmutatie Consumentenprijsindex; Vanaf 1963. Retrieved June 10, 2026, from https://opendata.cbs.nl/#/CBS/nl/dataset/70936ned/table
+
+-CBS Statline. (2026, February 6). Centraal Bureau voor de Statistiek. Welvaart van particuliere huishoudens; kerncijfers. Retrieved June 8, 2026, from https://opendata.cbs.nl/#/CBS/nl/dataset/86272NED/table?ts=1781772050965.
 
 -Krzysztoszek, A. (2025, June 12). Europe faces crisis as birth rates drop, population ages. Pulse Z. https://www.pulse-z.eu/nl/de-europese-economie-loopt-gevaar-nu-het-geboortecijfer-daalt-en-de-bevolking-vergrijst/
 
