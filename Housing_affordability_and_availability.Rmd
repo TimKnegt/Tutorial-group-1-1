@@ -1,16 +1,18 @@
 ---
-title: "**The change of affordability and availability in the housing market
-  for young adults in the Netherlands**"
+title: "**The change of affordability and availability in the housing market for young adults in the Netherlands**"
 author: 
-  - Björn Hildering 2887258
-  - Tim Knegt 2882977 
-  - Willem van Beuningen 2787054
-  - Robin Versnel 2862644
-  - Seeger Tromp 2889983
-  - Jaydane Levant 2851422
-date: "`r Sys.Date()`"
-subtitle: Tutorial group 1, C. Shouwenaar
-output: pdf_document
+  - "Björn Hildering 2887258"
+  - "Tim Knegt 2882977"
+  - "Willem van Beuningen 2787054"
+  - "Robin Versnel 2862644"
+  - "Seeger Tromp 2889983"
+  - "Jaydane Levant 2851422"
+date: "June 19, 2026"
+subtitle: "Tutorial group 1, C. Shouwenaar"
+output:
+  pdf_document:
+    toc: true
+    toc_depth: 2
 ---
 
 # Set-up your environment
