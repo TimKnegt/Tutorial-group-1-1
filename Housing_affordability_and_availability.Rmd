@@ -212,6 +212,7 @@ variables <- data.frame(
   Type = c("Integer", "Integer","Integer" ),
   Meaning = c("Year", "Number of young adults in a certain year","Number of new houses built in a certain year")
 )
+print(variables)
 ```
 
 
