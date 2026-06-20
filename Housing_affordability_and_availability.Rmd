@@ -479,11 +479,13 @@ This is the link to our public repository: https://github.com/TimKnegt/Tutorial-
 
 -CBS Statline. (2023, December 15). Centraal Bureau voor de Statistiek. Bevolking, huishoudens en bevolkingsontwikkeling; 1899-2019. Retrieved June 5, 2026, from https://www.cbs.nl/nl-nl/cijfers/detail/37556?dl=34F0C
 
--CBS Statline. (2026, February 6). Centraal Bureau voor de Statistiek. Welvaart van particuliere huishoudens; kerncijfers. Retrieved June 8, 2026, from https://opendata.cbs.nl/#/CBS/nl/dataset/86272NED/table?ts=1781772050965
-
 -CBS Statline. (2026, February 11). Centraal Bureau voor de Statistiek. Inkomen van huishoudens; inkomensbestanddelen, huishoudenskenmerken. Retrieved June 8, 2026, from https://opendata.cbs.nl/#/CBS/nl/dataset/84493NED/table?ts=1781617294725
 
 -CBS Statline. (2026, June 9). Centraal Bureau voor de Statistiek. Jaarmutatie Consumentenprijsindex; Vanaf 1963. Retrieved June 10, 2026, from https://opendata.cbs.nl/#/CBS/nl/dataset/70936ned/table
+
+-CBS STatline. (2026, March 6). Centraal Bureau voor de Statistiek. Regionale kerncijfers Nederland. Retrieve June 3, 2026, from https://opendata.cbs.nl/#/CBS/nl/dataset/70072NED/table
+
+-CBS Statline. (2026, February 6). Centraal Bureau voor de Statistiek. Welvaart van particuliere huishoudens; kerncijfers. Retrieved June 8, 2026, from https://opendata.cbs.nl/#/CBS/nl/dataset/86272NED/table?ts=1781772050965
 
 -DNB. (n.d.). Onze hoge hypotheekschulden – risico’s en oplossingen. De Nederlandsche Bank. https://www.dnb.nl/actuele-economische-vraagstukken/woningmarkt/onze-hoge-hypotheekschulden-risico-s-en-oplossingen/
 
