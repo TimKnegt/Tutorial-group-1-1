@@ -424,7 +424,6 @@ The map shows a clear centre–periphery pattern. Growth is highest in the centr
 
 
 # Chapter 5 Housing affordability
-## Temporal variation
 ## 5.1 New variables
 
 The first, necessary variable added is the maximal nominal mortgage loan that young adults can borrow from the bank. The maximal nominal mortgage loan is based on the LTI and the median gross income. The LTI (Loan-to-Income) is the ratio between the gross income and the mortgage loan. This ratio decides the maximum amount that can be borrowed, which usually is around 4.5 times the gross income in the Netherlands (Homefinance Hypotheken, n.d.). The choice to use the median gross income over the average gross income is supported by the fact that the mean usually is distorted by high extremes, while the median gives a representative reflection of the "typical" young adult. 
@@ -442,7 +441,7 @@ write.csv(af_newvariable, "data 2.0/Final_dataset_2.csv", row.names = FALSE)
 
 Another variable that is valuable, especially in comparison with the nominal maximum mortgage loan, is the real maximum mortgage loan. In order to calculate this, we set the year 2024 as the base year and set the adjustment factor to 1 in 2024. In this year, the nominal value is equal to the real value. The adjustment factor quantifies how much prices have risen with base year of 2024. The real maximum mortgage loan is adjusted for inflation and clearly proves the money illusion and the sudden inflation shocks. In order to create the extra column, it is necessary to use the cumprod() function, as prices rise exponentially.
 
-##5.2 Affordability gap in the housing market
+##5.2 Temporal variation: Affordability gap in the housing market 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #Created a new variable named: Max_real_mortgage_loan_1000.euro
 af_extranewvariable <- af_newvariable %>%
@@ -497,16 +496,62 @@ geom_line(linewidth = 1.3) +
   theme_minimal(base_size = 14) +
   
   theme( plot.title = element_text(face = "bold", size = 16, color = "black"),
-    plot.subtitle = element_text(size = 12, color = "black", margin = margin(b=15)),
+    plot.subtitle = element_text(size = 9, color = "black", margin = margin(b=15)),
     axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
     legend.position = "top",
     panel.grid.minor = element_blank())
   
 ```
-##Explanation
+###Explanation
 aaa
 
-##Conclusion
+###Conclusion
+aaa
+
+##5.3 Subgroup analysis: The development of prices by property type
+```{r}
+#Change the names of the variables and using the pivot_longer() command, so it makes it easier to plot the graph
+
+data_graph2 <- d_graph %>%
+  select(Jaartal, "Apartment" = Gemiddelde_verkoopprijs_euro_Appartement, 
+         "Terraced house" = Gemiddelde_verkoopprijs_euro_Tussenwoning, 
+         "Corner house" = Gemiddelde_verkoopprijs_euro_Hoekwoning) %>%
+  rename(Year = Jaartal) %>%
+  pivot_longer(cols = -Year, names_to = "marker", values_to = "numbers")
+
+#Start constructing the second graph
+
+ggplot(data_graph2, aes(x = Year, y = numbers, color = marker)) +
+
+geom_line(linewidth = 1.3) +
+  geom_point (size = 2.5) +
+  
+  scale_y_continuous(labels = label_number(big.mark = ".", decimal.mark = ",", suffix = "€")) +
+  
+  scale_x_continuous(breaks = seq(2011, 2024, by = 1)) +
+  
+  scale_color_manual(values = c("Apartment" = "darkorange",
+                                "Terraced house" = "yellow", 
+                                "Corner house" = "pink")) +
+  
+  labs(title = "The development of prices by property type",
+       subtitle = "The average selling price of Apartments, Corner houses and Terraced houses",
+       x = "Year",
+       y = NULL,
+       color = NULL) +
+  
+  theme_minimal(base_size = 14) +
+  
+  theme( plot.title = element_text(face = "bold", size = 16, color = "black"),
+    plot.subtitle = element_text(size = 12, color = "black", margin = margin(b=15)),
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+    legend.position = "top",
+    panel.grid.minor = element_blank())
+```
+###Explanation
+aaa
+
+###Conclusion
 aaa
 
 # Chapter 6 - Discussion
