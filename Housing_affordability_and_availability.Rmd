@@ -218,6 +218,55 @@ variables <- data.frame(
 )
 knitr::kable(variables, format = "markdown")
 ```
+```{r}
+variables <- data.frame(
+  Variable = c(
+    "Jaartal/Jaren",
+    "jong_volwassenen_20_tot_45_jaar",
+    "Huizenvoorraad",
+    "Max_nominal_mortgage_loan_euro",
+    "Max_real_mortgage_loan_euro",
+    "Gemiddelde_verkoopprijs_euro_Totaal_woningen",
+    "Gemiddelde_verkoopprijs_euro_Tussenwoning",
+    "Gemiddelde_verkoopprijs_euro_Appartement",
+    "Gemiddelde_verkoopprijs_euro_Hoekwoning",
+    "provincie",
+    "index",
+    "per_1000"
+  ),
+  Type = c(
+    "Integer",
+    "Integer",
+    "Integer",
+    "Integer",
+    "Integer",
+    "Numeric",
+    "Numeric",
+    "Numeric",
+    "Numeric",
+    "Character",
+    "Numeric",
+    "Numeric"
+  ),
+  Meaning = c(
+    "Year",
+    "Number of young adults in a certain year",
+    "Number of new houses built in a certain year",
+    "Maximum nominal mortgage loan (euro)",
+    "Maximum real (inflation-adjusted) mortgage loan (euro)",
+    "Average sale price of all dwellings (euro)",
+    "Average sale price of a terraced/mid-row house (euro)",
+    "Average sale price of an apartment (euro)",
+    "Average sale price of a corner house (euro)",
+    "Province name (with the \" (PV)\" suffix removed)",
+    "Housing stock indexed to 2005 = 100",
+    "New-built homes per 1,000 existing homes"
+  )
+)
+knitr::kable(variables, format = "markdown")
+```
+
+
 
 
 # Chapter 4: Housing availability
