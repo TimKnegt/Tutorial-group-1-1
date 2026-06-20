@@ -1,5 +1,5 @@
 ---
-title: "**The change of affordability and availability in the housing market for young adults in the Netherlands**"
+title: "**The evolution of affordability and availability in the housing market for young adults in the Netherlands**"
 author: 
   - "Björn Hildering 2887258"
   - "Tim Knegt 2882977"
@@ -102,14 +102,14 @@ While these administrative datasets are highly reliable, we face several limitat
 # Chapter 3 - Quantifying
 
 ## 3.1 Data cleaning
-We clean all of our datasets to make it more clear and simplified. We do this because by default some have strange and long titles that make it hard to work with. In this part we use 5 functions to clean up and/or merge each dataset.
+We clean all of our datasets to make it clearer and simpler. We do this because by default some have strange and long titles that make it hard to work with. In this part we use 6 functions to clean up and/or merge each dataset.
 
 1) rename() : to change the column titles.
 2) select() : to select only the useful information.
 3) group_by() : to split the datagroups based on a variable.
-4) summarise() : to group the right data togther.
-4) left_join() : to join datasets together.
-5) pivot_wider(): to widen datasets.
+4) summarise() : to group the right data together.
+5) left_join() : to join datasets together.
+6) pivot_wider(): to widen datasets.
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #Here we modify the dataset bevolkingsgroei to only keep the relevant information and use the right years.
 bevolkingsgroei_nieuw <- bevolkingsgroei %>%
@@ -223,7 +223,7 @@ knitr::kable(variables, format = "markdown")
 # Chapter 4: Housing availability
 
 ## 4.1 Population growth and new houses built
-### Event association visualised
+### Visualizing event associations
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #Here we create a graph to compare the amount of new houses built and the population growth of young adults.
 
@@ -308,13 +308,13 @@ ggplot(bevolkingsgroei_nieuwbouw, aes(x = Jaartal)) +
 ```
 
 ## Explanation
-Before starting the analysis, it is helpful to clarify the graph: the number of newly built houses is measured as a yearly growth variable, while the population data represents the total number of young adults in any given year. With that in mind, the data reveals a slight downward trend in the young adult population across the Netherlands. The same shift can be seen in other European countries and primarily driven by declining birth rates(Krysztoszek, 2025). Additionally, there is a sharp shift in housing development. After 2009 the construction of new houses dropped severely, reaching its lowest in 2014. The effect of this decline is still felt today and was triggered directly by the 2008 global financial crisis. This uncertainty halted construction projects throughout the Netherlands(Liefting & Berkhout, 2025). While an upward trend appears after 2014, the pace is not enough to fully make up for the decline.
+Before starting the analysis, it is helpful to clarify the graph: the number of newly built houses is measured as a yearly growth variable, while the population data represents the total number of young adults in any given year. With that in mind, the data reveals a slight downward trend in the young adult population across the Netherlands. The same shift can be seen in other European countries and primarily driven by declining birth rates (Krysztoszek, 2025). Additionally, there is a sharp shift in housing development. After 2009, the construction of new houses dropped severely, reaching its lowest in 2014. The effect of this decline is still felt today and was triggered directly by the 2008 global financial crisis. This uncertainty halted construction projects throughout the Netherlands (Liefting & Berkhout, 2025). While an upward trend appears after 2014, the pace is not enough to fully make up for the decline.
 
 ## Conclusion
-Our analysis comes with a few limitations, namely that we could not access population growth figures for this specific age group beyond 2019. Even so, we expect population growth will remain relatively stable in the period 2019-2026. On the contrary, new housing construction looks quite different in this period. Development is heavily constrained by the ongoing environmental regulation, particularly the "stikstofcrisis"(nitrogencrisis)(Liefting & Berkhout, 2025). Due to this bottleneck, we expect to see a significant reduction in the number of new homes being built in this timeframe. Taking this into account, we see that the housing shortage is caused by themporal decline in the construction(2009-2014) and expected decline after 2019. All while population growth stays relatively the same.
+Our analysis comes with a few limitations, namely that we could not access population growth figures for this specific age group beyond 2019. Even so, we expect population growth will remain relatively stable in the period 2019-2026. On the contrary, new housing construction looks quite different in this period. Development is heavily constrained by the ongoing environmental regulation, particularly the "stikstofcrisis" (nitrogencrisis)(Liefting & Berkhout, 2025). Due to this bottleneck, we expect to see a significant reduction in the number of new homes being built in this timeframe. Taking this into account, we see that the housing shortage is caused by a temporal decline in the construction(2009-2014) and expected decline after 2019. All while population growth stays relatively the same.
 
 ## 4.2 Housing per province
-### Spatial variation
+### Temporal
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 df <- read_csv("data 2.0/Huizenprijzen_Huizenvoorraad_nieuw.csv") |> 
@@ -367,7 +367,7 @@ ggplot(df_intensiteit, aes(jaartal, per_1000)) +
 We put the housing data into three charts, because housing stock and new construction are actually two different things. The stock is the total number of homes that exist, and new construction is what gets added each year. Putting those two in one chart with the same index would be a bit misleading, since the stock rises slowly while new construction jumps up and down a lot from year to year. In the first chart we set the stock per province to 2005 = 100, which makes the provinces comparable even though some are much bigger than others. In the second chart we added up new construction nationally per year and put a line at 100,000, the number the government wants to build each year. One caveat: our figures only cover actual new construction, while that target also counts things like offices turned into homes, so the line is an indicative lower bound and not an exact match. The third chart shows building intensity (new construction per 1,000 existing homes), which corrects for how big a province is. We left 2025 out for new construction, because that value is missing from the dataset, so we don't draw conclusions about that year.
 
 ### Conclusion
-Over time the housing stock grew steadily in every province, but new construction tells the more interesting story. After a peak around 2009 it dropped to a low of about 45,000 homes in 2014, and only climbed back to around 74,000 by 2022, never reaching the target of 100,000. The timing of that dip lines up with the 2008 credit crisis, but this is an association and not proof: the decline only set in with a delay (building has a long pipeline), and the later recovery was also shaped by other things like low interest rates and rising demand after 2020, so the crisis alone can't explain the whole pattern. It's also important to say that my data only measures supply, not the shortage itself. The link to demand comes from outside sources: the number of households has been growing faster than the housing stock (Rijksoverheid, n.d.), which left a statistical shortage of roughly 396,000 homes in 2025 (Volkshuisvesting Nederland, 2025). We can't show that shortage from our own data alone, but putting the two together suggests that for young adults the problem isn't only about prices, but also about availability: too few homes were added to keep up with the growing demand.
+Over time the housing stock grew steadily in every province, but new construction tells the more interesting story. After a peak around 2009 it dropped to a low of about 45,000 homes in 2014, and only climbed back to around 74,000 by 2022, never reaching the target of 100,000. The timing of that dip lines up with the 2008 credit crisis, but this is an association and not proof: the decline only set in with a delay (building has a long pipeline), and the later recovery was also shaped by other things like low interest rates and rising demand after 2020, so the crisis alone can't explain the whole pattern. It's also important to say that our data only measures supply, not the shortage itself. The link to demand comes from outside sources: the number of households has been growing faster than the housing stock (Rijksoverheid, n.d.), which left a statistical shortage of roughly 396,000 homes in 2025 (Volkshuisvesting Nederland, 2025). We cannot show that shortage from our own data alone, but putting the two together suggests that for young adults the problem isn't only about prices, but also about availability: too few homes were added to keep up with the growing demand.
 
 # 4.2 Housing
 ### Spatial variation
@@ -427,9 +427,9 @@ The map shows a clear centre–periphery pattern. Growth is highest in the centr
 ## Temporal variation
 ## 5.1 Variables
 
-The first, necessary variable added is the maximal nominal mortgage loan that young adults can loan at the bank. The maximal nominal mortgage loan is based on the LTI and the median gross income. The LTI (Loan-to-Income) is the ratio between the gross income and the mortgage loan. This ratio decides the maximum amount that can be borrowed, which usually is around 4.5 times the gross income in the Netherlands (Homefinance Hypotheken, n.d.). The choice to use the median gross income over the average gross income is supported by the fact that the mean usually is distorted by high extremes, whilst the median gives a representative reflection of the "typical" young adult. 
+The first, necessary variable added is the maximal nominal mortgage loan that young adults can borrow from the bank. The maximal nominal mortgage loan is based on the LTI and the median gross income. The LTI (Loan-to-Income) is the ratio between the gross income and the mortgage loan. This ratio decides the maximum amount that can be borrowed, which usually is around 4.5 times the gross income in the Netherlands (Homefinance Hypotheken, n.d.). The choice to use the median gross income over the average gross income is supported by the fact that the mean usually is distorted by high extremes, while the median gives a representative reflection of the "typical" young adult. 
 
-The Netherlands has one of the highest mortgage debts of Europe, which states that the Dutch housing market is really dependent on credits (DNB, n.d.). Because the Dutch housing market for buyers is fundamentally credit-driven and reliant on the LTI, variables solely addressing income are not enough to model the maximum purchasing capacity of young adults. However, this nominal borrowing ceiling is the variable that can demonstrate the maximum buying capacity of young adults. Moreover, this variable can be rightfully compared to the housing prices. All in all, the maximal nominal mortgage loan more or less serves as the baseline for the study regarding housing affordability. 
+The Netherlands has one of the highest mortgage debts of Europe, which indicates that the Dutch housing market is really dependent on credits (DNB, n.d.). Because the Dutch housing market for buyers is fundamentally credit-driven and reliant on the LTI, variables solely addressing income are not enough to model the maximum purchasing capacity of young adults. However, this nominal borrowing ceiling is the variable that can demonstrate the maximum buying capacity of young adults. Moreover, this variable can be rightfully compared to the housing prices. All in all, the maximal nominal mortgage loan more or less serves as the baseline for the study regarding housing affordability. 
 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
@@ -440,7 +440,7 @@ af_newvariable <- af_finaldataset %>%
 write.csv(af_newvariable, "data 2.0/Final_dataset_2.csv", row.names = FALSE)
 ```
 
-Another variable that is valuable, especially in comparison with the nominal maximum mortgage loan, is the real maximum mortgage loan. In order to calculate this, we set the year 2024 as the base year and set the adjustment factor to 1 in 2024. In this year, the nominal value is equal to the real value. The adjustment factor quantifies how much prices have risen with base year of 2024. The real maximum mortgage loan is adjusted for inflation and clearly proves the money illusion and the sudden inflation shocks. In order to create the extra column, it is necessary to use the cumprod() function, as prices rise exponential.
+Another variable that is valuable, especially in comparison with the nominal maximum mortgage loan, is the real maximum mortgage loan. In order to calculate this, we set the year 2024 as the base year and set the adjustment factor to 1 in 2024. In this year, the nominal value is equal to the real value. The adjustment factor quantifies how much prices have risen with base year of 2024. The real maximum mortgage loan is adjusted for inflation and clearly proves the money illusion and the sudden inflation shocks. In order to create the extra column, it is necessary to use the cumprod() function, as prices rise exponentially.
 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
