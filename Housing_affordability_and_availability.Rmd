@@ -15,8 +15,9 @@ output:
     toc_depth: 2
 ---
 
-# Set-up your environment
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#Installing the packages
 # install.packages("tidyverse")
 # install.packages("yaml")
 # install.packages("rmarkdown")
@@ -30,6 +31,7 @@ output:
 ```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#Loading in the packages
 library(tidyverse)
 library(rmarkdown)
 library(yaml)
@@ -46,7 +48,7 @@ library(tinytex)
 ```
 
 
-# Chapter 1: Identify a Social Problem
+# Chapter 1: Identifying the Social Problem
 The Dutch housing market has changed significantly over the past two decades. For young adults, finding suitable housing has become increasingly difficult due to rising house prices, higher rents, and a continuing housing shortage (Nederlands Jeugdinstituut, n.d.). As a result, many young people struggle to enter the housing market.
 
 This research examines how housing affordability and availability for young adults in the Netherlands changed between 2005 and 2025. It focuses on trends in house prices, rental costs, incomes and housing shortages to understand the main developments during this period.
@@ -54,7 +56,7 @@ This research examines how housing affordability and availability for young adul
 
 
 
-## 1.1 Describe the Social Problem
+## 1.1 Describing the Social Problem
 The Dutch housing market has become increasingly inaccessible for young adults, making the move toward independent living far more difficult. This is socially relevant because stable and affordable housing is a foundation for financial independence, mental well‑being, and equal life opportunities. When young people cannot secure a home, they delay major life steps such as studying, working full‑time, or forming households—effects that ripple through society. The OECD notes that the Netherlands is among the countries where young adults face the greatest barriers to affordable housing due to rising prices and persistent shortages (OECD, 2023).
 
 A combination of sharply increasing house prices, higher rents, and limited supply has created a structural imbalance between demand and availability. These pressures fall disproportionately on first‑time buyers and young renters, widening generational inequality: older households benefit from accumulated housing wealth, while younger cohorts struggle to enter the market at all.
@@ -66,7 +68,7 @@ A combination of sharply increasing house prices, higher rents, and limited supp
 inflatie <- read.csv("data/Inflatie.csv")
 welvaart <- read.csv("data/Welvaart_van_huishoudens__kerncijfers.csv")
 bevolkingsgroei <-read.csv("data/Bevolkingsgroei_opbouw_2005_2019.csv")
-huizenvoorraad <-read.csv("data/Huizenprijzen_Huizenvoorraad.csv")
+df <-read.csv("data/Huizenprijzen_Huizenvoorraad.csv")
 Bestaande_koopwoningen_verkoopprijzen_woningtype <- read.csv("data/Bestaande_koopwoningen_verkoopprijzen_woningtype.csv")
 brutoinkomen <- read_csv("data 2.0/bruto_en_besteedbaar_inkomen_leeftijdsgroep_nieuw.csv")
 Huizenprijzen_en_Huizenvoorraad_per_provincie <- read_csv("data 2.0/Huizenprijzen_Huizenvoorraad_nieuw.csv")
@@ -122,14 +124,14 @@ write.csv(bevolkingsgroei_nieuw, "data 2.0/Bevolkingsgroei_nieuw.csv", row.names
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #Here we modify the dataset Huizenprijzen_Huizenvoorraad
-huizenvoorraad <- huizenvoorraad %>%
+df <- df %>%
   rename(Jaartal = Perioden) %>%
   rename(Provincies = Regio.s) %>%
   rename(Woningvoorraad_1_januari = Bouwen.en.wonen.Woningvoorraad.Voorraad.op.1.januari..aantal.)%>%
   rename(Nieuwbouw = Bouwen.en.wonen.Woningvoorraad.Nieuwbouw..aantal.) %>%
   select(Jaartal, Provincies, Woningvoorraad_1_januari, Nieuwbouw)
   
-tabel_per_jaar <- huizenvoorraad %>%
+tabel_per_jaar <- df %>%
   group_by(Jaartal) %>%
   summarise(
     Woningvoorraad_1_januari = sum(Woningvoorraad_1_januari, na.rm = TRUE),
@@ -214,7 +216,7 @@ variables <- data.frame(
   Type = c("Integer", "Integer","Integer" ),
   Meaning = c("Year", "Number of young adults in a certain year","Number of new houses built in a certain year")
 )
-print(variables)
+knitr::kable(variables, format = "markdown")
 ```
 
 
@@ -473,18 +475,19 @@ write.csv(d_graph, "data 2.0/a_Graph.csv", row.names = FALSE)
 This is the link to our public repository: https://github.com/TimKnegt/Tutorial-group-1-1
 
 ## 7.2 Reference list
-https://www.dnb.nl/actuele-economische-vraagstukken/woningmarkt/onze-hoge-hypotheekschulden-risico-s-en-oplossingen/   
-https://www.homefinance.nl/hypotheek/informatie/lti-hypotheek/
-
 -CBS Statline. (1995, season-01). Centraal Bureau voor de Statistiek. Bestaande Koopwoningen; Verkoopprijzen; Woningtype; Prijsindex 2020=100. Retrieved June 4, 2026, from https://opendata.cbs.nl/#/CBS/nl/dataset/85791NED/table
 
 -CBS Statline. (2023, December 15). Centraal Bureau voor de Statistiek. Bevolking, huishoudens en bevolkingsontwikkeling; 1899-2019. Retrieved June 5, 2026, from https://www.cbs.nl/nl-nl/cijfers/detail/37556?dl=34F0C
+
+-CBS Statline. (2026, February 6). Centraal Bureau voor de Statistiek. Welvaart van particuliere huishoudens; kerncijfers. Retrieved June 8, 2026, from https://opendata.cbs.nl/#/CBS/nl/dataset/86272NED/table?ts=1781772050965
 
 -CBS Statline. (2026, February 11). Centraal Bureau voor de Statistiek. Inkomen van huishoudens; inkomensbestanddelen, huishoudenskenmerken. Retrieved June 8, 2026, from https://opendata.cbs.nl/#/CBS/nl/dataset/84493NED/table?ts=1781617294725
 
 -CBS Statline. (2026, June 9). Centraal Bureau voor de Statistiek. Jaarmutatie Consumentenprijsindex; Vanaf 1963. Retrieved June 10, 2026, from https://opendata.cbs.nl/#/CBS/nl/dataset/70936ned/table
 
--CBS Statline. (2026, February 6). Centraal Bureau voor de Statistiek. Welvaart van particuliere huishoudens; kerncijfers. Retrieved June 8, 2026, from https://opendata.cbs.nl/#/CBS/nl/dataset/86272NED/table?ts=1781772050965.
+-DNB. (n.d.). Onze hoge hypotheekschulden – risico’s en oplossingen. De Nederlandsche Bank. https://www.dnb.nl/actuele-economische-vraagstukken/woningmarkt/onze-hoge-hypotheekschulden-risico-s-en-oplossingen/
+
+-Hypotheken, H. (2026, June 20). Wat is de LTI hypotheek en hoe bepaalt het jouw maximale hypotheek? HomeFinance. https://www.homefinance.nl/hypotheek/informatie/lti-hypotheek/
 
 -Krzysztoszek, A. (2025, June 12). Europe faces crisis as birth rates drop, population ages. Pulse Z. https://www.pulse-z.eu/nl/de-europese-economie-loopt-gevaar-nu-het-geboortecijfer-daalt-en-de-bevolking-vergrijst/
 
