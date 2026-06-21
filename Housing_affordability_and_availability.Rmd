@@ -212,24 +212,16 @@ write.csv(samenvoeging2, "data 2.0/Final_dataset.csv", row.names = FALSE)
 We have many datasets and therefore many different variables. To name all of them would result in a long chaotic list. Therefore we chose to only name the ones that are important for our visualization.
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 variables <- data.frame(
-  Variable = c("Jaartal/Jaren", "jong_volwassenen_20_tot_45_jaar","Huizenvoorraad", "Max_nominal_mortgage_loan_euro", "Max_real_mortgage_loan_euro", "Gemiddelde_verkoopprijs_euro_Totaal_woningen", "Gemiddelde_verkoopprijs_euro_Tussenwoning" ,"Gemiddelde_verkoopprijs_euro_Appartement", "Gemiddelde_verkoopprijs_euro_Hoekwoning"),
-  Type = c("Integer", "Integer","Integer" ),
-  Meaning = c("Year", "Number of young adults in a certain year","Number of new houses built in a certain year")
-)
-knitr::kable(variables, format = "markdown")
-```
-```{r}
-variables <- data.frame(
   Variable = c(
     "Jaartal/Jaren",
     "jong_volwassenen_20_tot_45_jaar",
     "Huizenvoorraad",
     "Max_nominal_mortgage_loan_euro",
     "Max_real_mortgage_loan_euro",
-    "Gemiddelde_verkoopprijs_euro_Totaal_woningen",
-    "Gemiddelde_verkoopprijs_euro_Tussenwoning",
-    "Gemiddelde_verkoopprijs_euro_Appartement",
-    "Gemiddelde_verkoopprijs_euro_Hoekwoning",
+    "Gemiddelde_verkoopprijs_euro_<br> Totaal_woningen",
+    "Gemiddelde_verkoopprijs_euro_<br> Tussenwoning",
+    "Gemiddelde_verkoopprijs_euro_<br> Appartement",
+    "Gemiddelde_verkoopprijs_euro_<br> Hoekwoning",
     "provincie",
     "index",
     "per_1000"
@@ -265,9 +257,6 @@ variables <- data.frame(
 )
 knitr::kable(variables, format = "markdown")
 ```
-
-
-
 
 # Chapter 4: Housing availability
 
@@ -357,10 +346,10 @@ ggplot(bevolkingsgroei_nieuwbouw, aes(x = Jaartal)) +
 ```
 
 ## Explanation
-Before starting the analysis, it is helpful to clarify the graph: the number of newly built houses is measured as a yearly growth variable, while the population data represents the total number of young adults in any given year. With that in mind, the data reveals a slight downward trend in the young adult population across the Netherlands. The same shift can be seen in other European countries and primarily driven by declining birth rates (Krysztoszek, 2025). Additionally, there is a sharp shift in housing development. After 2009, the construction of new houses dropped severely, reaching its lowest in 2014. The effect of this decline is still felt today and was triggered directly by the 2008 global financial crisis. This uncertainty halted construction projects throughout the Netherlands (Liefting & Berkhout, 2025). While an upward trend appears after 2014, the pace is not enough to fully make up for the decline.
+The graph compares newly built houses (yearly growth) with the total population of young adults. The data shows a slight drop in young adults across the Netherlands, a European-wide trend driven by lower birth rates (Krysztoszek, 2025). Meanwhile, housing development shifted sharply. After the 2008 global financial crisis, construction plummeted, hitting bottom in 2014 as uncertainty stalled projects (Liefting & Berkhout, 2025). Construction picks up after 2014, but not enough to make up for the lost years.
 
 ## Conclusion
-Our analysis comes with a few limitations, namely that we could not access population growth figures for this specific age group beyond 2019. Even so, we expect population growth will remain relatively stable in the period 2019-2026. On the contrary, new housing construction looks quite different in this period. Development is heavily constrained by the ongoing environmental regulation, particularly the "stikstofcrisis" (nitrogencrisis)(Liefting & Berkhout, 2025). Due to this bottleneck, we expect to see a significant reduction in the number of new homes being built in this timeframe. Taking this into account, we see that the housing shortage is caused by a temporal decline in the construction(2009-2014) and expected decline after 2019. All while population growth stays relatively the same.
+We couldn't get population data for this age group past 2019, but we expect it to stay pretty stable through 2026. Housing construction is a different story. It's getting heavily restricted right now by environmental rules, specifically the "stikstofcrisis" (Liefting & Berkhout, 2025). Because of this bottleneck, we'll likely see a big drop in new homes being built. Putting it all together, the housing shortage is caused by that dip in construction from 2009-2014 and this expected new drop after 2019, all while the population stays about the same.
 
 ## 4.2 Housing per province
 ### Temporal
@@ -490,7 +479,7 @@ write.csv(af_newvariable, "data 2.0/Final_dataset_2.csv", row.names = FALSE)
 
 Another variable that is valuable, especially in comparison with the nominal maximum mortgage loan, is the real maximum mortgage loan. In order to calculate this, we set the year 2024 as the base year and set the adjustment factor to 1 in 2024. In this year, the nominal value is equal to the real value. The adjustment factor quantifies how much prices have risen with base year of 2024. The real maximum mortgage loan is adjusted for inflation and clearly proves the money illusion and the sudden inflation shocks. In order to create the extra column, it is necessary to use the cumprod() function, as prices rise exponentially.
 
-##5.2 Temporal variation: Affordability gap in the housing market 
+## 5.2 Temporal variation: Affordability gap in the housing market 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #Created a new variable named: Max_real_mortgage_loan_1000.euro
 af_extranewvariable <- af_newvariable %>%
@@ -499,7 +488,7 @@ af_extranewvariable <- af_newvariable %>%
 write.csv(af_extranewvariable, "data 2.0/Final_dataset_with_new_variables.csv", row.names = FALSE)
 ```
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 # Merged the two datasets, multiplied both Max_nominal and Max_real with 1000 so all variables are the same and rounded the Max_real to wholes.
 bf_widened <- d_widened %>%
   select(Jaartal, Gemiddelde_verkoopprijs_euro_Totaal_woningen, Gemiddelde_verkoopprijs_euro_Tussenwoning, Gemiddelde_verkoopprijs_euro_Appartement, Gemiddelde_verkoopprijs_euro_Hoekwoning)
@@ -511,7 +500,7 @@ d_graph <- left_join(bf_extranewvariable, bf_widened, by = "Jaartal")
 write.csv(d_graph, "data 2.0/a_Graph.csv", row.names = FALSE)
 ```
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #Change the names of the variables and using the pivot_longer() command, so it makes it easier to plot the graph
 
 data_graph1 <- d_graph %>%
@@ -551,14 +540,15 @@ geom_line(linewidth = 1.3) +
     panel.grid.minor = element_blank())
   
 ```
-###Explanation
+
+### Explanation
 aaa
 
-###Conclusion
+### Conclusion
 aaa
 
-##5.3 Subgroup analysis: The development of prices by property type
-```{r}
+## 5.3 Subgroup analysis: The development of prices by property type
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #Change the names of the variables and using the pivot_longer() command, so it makes it easier to plot the graph
 
 data_graph2 <- d_graph %>%
@@ -597,10 +587,11 @@ geom_line(linewidth = 1.3) +
     legend.position = "top",
     panel.grid.minor = element_blank())
 ```
-###Explanation
+
+### Explanation
 aaa
 
-###Conclusion
+### Conclusion
 aaa
 
 # Chapter 6 - Discussion
