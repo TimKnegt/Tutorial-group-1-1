@@ -589,10 +589,10 @@ geom_line(linewidth = 1.3) +
 ```
 
 ### Explanation
-aaa
+This graph illustrates the trajectory of average selling prices of three different types of houses: Apartments, terraced houses and corner houses. These three segments of houses are selected because they represent the most accessible and realistic entry point for first-time buyers on the housing market. Apartments are relatively the cheapest option for starters, and corner houses are relatively the most expensive for first-time buyers. Following the economic crisis in 2008, the prices of all houses in the Netherlands kept dropping. From 2013 onwards, the purchase prices of all types of houses in the Netherlands started to rise structured and synchronized, which is clearly visible in the graph.
 
 ### Conclusion
-aaa
+In conclusion, the data processed in the graph indicates the deep concerns of first-time buyers regarding the affordability of a house in the Netherlands. Before 2018, a starters borrowing power was enough to finance an apartment, terraced house or a corner house. After 2018, however, this has drastically changed. The pressure on starters keeps increasing due to the continuous rise of housing prices of all different types of houses. Apartments seem like the only option left, but with the extreme high prices of almost €400,000 in 2024, starters have to do everything in their power to be able to buy their 'dream house'. 
 
 # Chapter 6 - Discussion
 
