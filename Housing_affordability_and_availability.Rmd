@@ -596,7 +596,20 @@ aaa
 
 # Chapter 6 - Discussion
 
-## 6.1 Discuss your findings
+## 6.1 Discussion of Findings
+Looking at our results, young adults are under pressure from two different sides: housing availability has become more limited, while prices have risen much faster than wages.
+
+First, the drop in construction after 2009 was very severe. This happened after the 2008 financial crisis, when many building projects slowed down or stopped. Even though construction recovered a bit later on, we never reached the government target of 100,000 new homes per year. Because housing projects take years to plan and build, the market did not fully recover from those lost years. Our map also shows clear regional differences. Utrecht and Flevoland had the strongest growth in housing stock, while provinces like Limburg, Zeeland, and Fryslân stayed behind. This shows that housing supply did not grow equally across the country.
+
+For affordability, our new variables show that the problem is deeper than just low incomes. wages increased over time, but the maximum nominal mortgage, based on 4.5 times the gross income, stayed relatively flat. At the same time, house prices rose sharply. This created a large affordability gap from 2018 onwards, which widened even faster after 2021. In 2022, our graph shows a visible dip in the real mortgage loan. This happened in the same period as the inflation shock after the war in Ukraine, when purchasing power came under pressure.
+
+Putting it all together, the housing crisis for young adults is not driven by one single factor. Instead, limited housing supply and declining affordability make it increasingly difficult to enter the Dutch housing market.
+
+
+## 6.2 Limitations and Causal Caveats
+We also need to be critical of our own data. A major limitation is that our demographic data on the young adult population stops in 2019. Because of this, we cannot verify the exact numbers after 2019. Furthermore, because of how CBS aggregates data, we had to use slightly different definitions for "young adults" across datasets. Sometimes this was based on individual age, while in other cases it was based on the age of the primary wage earner. This made merging the datasets less precise.
+
+Additionally, we must remember that association is not definitive proof of causality. construction declined after the 2008 crisis and later stagnated around the nitrogen crisis, but we cannot prove these were the single causes. Building a residential area takes years and depends on many unobserved factors, like municipal zoning delays, labor shortages, and changing interest rates. Because we used macro-level data and could not track individual household trajectories, we must be careful with making strict causal claims.
 
 # Chapter 7 - Reproducibility
 
