@@ -261,7 +261,7 @@ knitr::kable(variables, format = "markdown")
 # Chapter 4: Housing availability
 
 ## 4.1 Population growth and new houses built
-### Visualizing event associations
+### Event associations
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #Here we create a graph to compare the amount of new houses built and the population growth of young adults.
 
@@ -352,7 +352,7 @@ The graph compares newly built houses (yearly growth) with the total population 
 We couldn't get population data for this age group past 2019, but we expect it to stay pretty stable through 2026. Housing construction is a different story. It's getting heavily restricted right now by environmental rules, specifically the "stikstofcrisis" (Liefting & Berkhout, 2025). Because of this bottleneck, we'll likely see a big drop in new homes being built. Putting it all together, the housing shortage is caused by that dip in construction from 2009-2014 and this expected new drop after 2019, all while the population stays about the same.
 
 ## 4.2 Housing per province
-### Temporal
+### Temporal variation
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 df <- read_csv("data 2.0/Huizenprijzen_Huizenvoorraad_nieuw.csv") |> 
@@ -407,7 +407,7 @@ We put the housing data into three charts, because housing stock and new constru
 ### Conclusion
 Over time the housing stock grew steadily in every province, but new construction tells the more interesting story. After a peak around 2009 it dropped to a low of about 45,000 homes in 2014, and only climbed back to around 74,000 by 2022, never reaching the target of 100,000. The timing of that dip lines up with the 2008 credit crisis, but this is an association and not proof: the decline only set in with a delay (building has a long pipeline), and the later recovery was also shaped by other things like low interest rates and rising demand after 2020, so the crisis alone can't explain the whole pattern. It's also important to say that our data only measures supply, not the shortage itself. The link to demand comes from outside sources: the number of households has been growing faster than the housing stock (Rijksoverheid, n.d.), which left a statistical shortage of roughly 396,000 homes in 2025 (Volkshuisvesting Nederland, 2025). We cannot show that shortage from our own data alone, but putting the two together suggests that for young adults the problem isn't only about prices, but also about availability: too few homes were added to keep up with the growing demand.
 
-# 4.2 Housing
+## 4.3 Housing stock growth per province
 ### Spatial variation
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
@@ -479,7 +479,8 @@ write.csv(af_newvariable, "data 2.0/Final_dataset_2.csv", row.names = FALSE)
 
 Another variable that is valuable, especially in comparison with the nominal maximum mortgage loan, is the real maximum mortgage loan. In order to calculate this, we set the year 2024 as the base year and set the adjustment factor to 1 in 2024. In this year, the nominal value is equal to the real value. The adjustment factor quantifies how much prices have risen with base year of 2024. The real maximum mortgage loan is adjusted for inflation and clearly proves the money illusion and the sudden inflation shocks. In order to create the extra column, it is necessary to use the cumprod() function, as prices rise exponentially.
 
-## 5.2 Temporal variation: Affordability gap in the housing market 
+## 5.2 Affordability gap in the housing market 
+### Temporal variation
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #Created a new variable named: Max_real_mortgage_loan_1000.euro
 af_extranewvariable <- af_newvariable %>%
@@ -547,7 +548,8 @@ This graph illustrates the relation between the average purchase price of houses
 ### Conclusion
 As displayed in the graph, the affordability gap structurally emerged from 2018. In 2018, the line of the average purchase price of houses first crossed the line of the maximal nominal mortgage. This implies that a house no longer can be completely financed with a mortgage. This implies that the starters on the market need to have a starting budget to finance the purchase of the house. In the year 2021 the average purchase price became more than the maximal real mortgage. This implies that the affordability gap structurally widened from 2021 onwards. As explained earlier, this underscores that a certain starting budget is necessary to enter the housing market. This may force starters into cheaper market segments, like homes of a different property type.
 
-## 5.3 Subgroup analysis: The development of prices by property type
+## 5.3 The development of prices by property type
+### Subgroup analysis
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #Change the names of the variables and using the pivot_longer() command, so it makes it easier to plot the graph
 
@@ -609,7 +611,7 @@ Putting it all together, the housing crisis for young adults is not driven by on
 ## 6.2 Limitations and Causal Caveats
 We also need to be critical of our own data. A major limitation is that our demographic data on the young adult population stops in 2019. Because of this, we cannot verify the exact numbers after 2019. Furthermore, because of how CBS aggregates data, we had to use slightly different definitions for "young adults" across datasets. Sometimes this was based on individual age, while in other cases it was based on the age of the primary wage earner. This made merging the datasets less precise.
 
-Additionally, we must remember that association is not definitive proof of causality. construction declined after the 2008 crisis and later stagnated around the nitrogen crisis, but we cannot prove these were the single causes. Building a residential area takes years and depends on many unobserved factors, like municipal zoning delays, labor shortages, and changing interest rates. Because we used macro-level data and could not track individual household trajectories, we must be careful with making strict causal claims.
+Additionally, we must remember that association is not definitive proof of causality. Construction declined after the 2008 crisis and later stagnated around the nitrogen crisis, but we cannot prove these were the single causes. Building a residential area takes years and depends on many unobserved factors, like municipal zoning delays, labor shortages and changing interest rates. Because we used macro-level data and could not track individual household trajectories, we must be careful with making strict causal claims.
 
 # Chapter 7 - Reproducibility
 
